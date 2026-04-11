@@ -18,13 +18,9 @@ const recentPosts = sortedPosts;
 <Layout>
   <Header />
   <main id="main-content" data-layout="index" class="app-layout">
-    <section id="hero" class:list={["pt-8 pb-6", "border-b border-border"]}>
-    </section>
-
     {
       recentPosts.length > 0 && (
-        <section id="recent-posts" class="pt-12 pb-6">
-          <h2 class="text-2xl font-semibold tracking-wide">最新文章</h2>
+        <section id="recent-posts" class="pb-6">
           <ul>
             {recentPosts.map(
               (data, index) =>
