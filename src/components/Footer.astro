@@ -40,9 +40,18 @@ const { noMarginTop = false, class: className, ...attrs } = Astro.props;
     </a>
 
     <Socials />
-    <div class="my-2 flex flex-col items-center whitespace-nowrap sm:flex-row">
-      <span>版权所有 &#169; {currentYear}</span>
-      <span class="hidden sm:inline">&nbsp;|&nbsp;</span>
+    <div class="my-2 flex flex-col items-center">
+      <span>
+        版权所有 &#169; {currentYear}
+        <a
+          href="/rss.xml"
+          class="ms-2 underline decoration-dashed underline-offset-4 hover:opacity-80"
+          aria-label="RSS 订阅"
+          title="RSS 订阅"
+        >
+          RSS
+        </a>
+      </span>
       <span>保留所有权利。</span>
     </div>
   </div>
