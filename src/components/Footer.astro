@@ -22,6 +22,23 @@ const { noMarginTop = false, class: className, ...attrs } = Astro.props;
       "flex flex-col items-center justify-between sm:flex-row-reverse",
     ]}
   >
+    <a
+      href="https://q2.qlogo.cn/headimg_dl?dst_uin=242531778&spec=0"
+      target="_blank"
+      rel="noopener noreferrer"
+      class="mb-3 inline-flex sm:order-3 sm:mb-0"
+      aria-label="Mingalaba 头像"
+      title="查看头像"
+    >
+      <img
+        src="https://q2.qlogo.cn/headimg_dl?dst_uin=242531778&spec=0"
+        alt="Mingalaba 头像"
+        class="h-14 w-14 rounded-full border border-border object-cover"
+        loading="lazy"
+        decoding="async"
+      />
+    </a>
+
     <Socials />
     <div class="my-2 flex flex-col items-center whitespace-nowrap sm:flex-row">
       <span>版权所有 &#169; {currentYear}</span>
