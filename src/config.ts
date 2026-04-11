@@ -2,7 +2,7 @@ export const SITE = {
   website: "https://242531778.xyz/", // replace this with your deployed domain
   author: "ShiMahiru",
   profile: "https://satnaing.dev/",
-  desc: "A minimal, responsive and SEO-friendly Astro blog theme.",
+  desc: "一个简约、响应式且对 SEO 友好的 Astro 博客主题。",
   title: "AstroPaper",
   ogImage: "astropaper-og.jpg",
   lightAndDarkMode: true,
@@ -13,7 +13,7 @@ export const SITE = {
   showBackButton: true, // show back button in post detail
   editPost: {
     enabled: true,
-    text: "Edit page",
+    text: "编辑页面",
     url: "https://github.com/ShiMahiru/astro-paper/edit/main/",
   },
   dynamicOgImage: true,

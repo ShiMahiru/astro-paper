@@ -23,6 +23,10 @@ function getPreferTheme(): string {
 
 // Use existing theme value from inline script if available, otherwise detect
 let themeValue = window.theme?.themeValue ?? getPreferTheme();
+const themeLabelMap: Record<string, string> = {
+  [LIGHT]: "浅色模式",
+  [DARK]: "深色模式",
+};
 
 function setPreference(): void {
   localStorage.setItem(THEME, themeValue);
@@ -32,7 +36,9 @@ function setPreference(): void {
 function reflectPreference(): void {
   document.firstElementChild?.setAttribute("data-theme", themeValue);
 
-  document.querySelector("#theme-btn")?.setAttribute("aria-label", themeValue);
+  document
+    .querySelector("#theme-btn")
+    ?.setAttribute("aria-label", themeLabelMap[themeValue] ?? "主题模式");
 
   // Get a reference to the body element
   const body = document.body;
