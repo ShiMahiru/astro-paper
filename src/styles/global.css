@@ -42,7 +42,9 @@ html {
 
 body {
   @apply flex min-h-svh flex-col bg-background font-app text-foreground selection:bg-accent/70 selection:text-background;
-  background-image: linear-gradient(to bottom, rgb(10 14 24 / 0.56), rgb(10 14 24 / 0.68)), var(--site-bg-image);
+  background-image:
+    linear-gradient(to bottom, rgb(10 14 24 / 0.56), rgb(10 14 24 / 0.68)),
+    var(--site-bg-image);
   background-position: center;
   background-repeat: no-repeat;
   background-size: cover;
@@ -179,11 +181,15 @@ button:not(:disabled),
 }
 
 .article-card {
-  @apply grid items-start gap-4 md:grid-cols-[minmax(0,1fr)_11rem];
+  @apply grid grid-cols-[minmax(0,1fr)_7.5rem] items-start gap-3 sm:grid-cols-[minmax(0,1fr)_9rem] sm:gap-4 md:grid-cols-[minmax(0,1fr)_10rem];
+}
+
+.article-content {
+  @apply min-w-0;
 }
 
 .article-title-link {
-  @apply inline-block text-lg leading-snug font-semibold text-foreground sm:text-xl;
+  @apply inline-block text-base leading-snug font-semibold text-foreground sm:text-lg;
 }
 
 .article-title-link:hover {
@@ -191,11 +197,11 @@ button:not(:disabled),
 }
 
 .article-desc {
-  @apply mt-1.5 line-clamp-2 text-sm leading-6 text-foreground/78;
+  @apply mt-1 line-clamp-2 text-sm leading-6 text-foreground/78;
 }
 
 .meta-row {
-  @apply mt-2 flex flex-wrap gap-1.5;
+  @apply mt-1.5 flex flex-wrap gap-1.5;
 }
 
 .meta-chip {
@@ -203,11 +209,21 @@ button:not(:disabled),
 }
 
 .article-cover-link {
-  @apply block overflow-hidden rounded-lg;
+  @apply relative block w-full overflow-hidden rounded-lg border border-white/10 bg-white/5;
+  aspect-ratio: 16 / 10;
+}
+
+.article-cover,
+.article-cover-placeholder {
+  @apply absolute inset-0 h-full w-full;
 }
 
 .article-cover {
-  @apply aspect-[3/2] h-auto w-full object-cover;
+  @apply object-cover;
+}
+
+.article-cover-placeholder {
+  @apply flex items-center justify-center bg-white/6 text-xs font-medium tracking-wide text-foreground/55;
 }
 
 .pagination-shell {
@@ -254,10 +270,24 @@ button:not(:disabled),
   }
 
   .article-card {
-    @apply grid-cols-1 gap-2.5;
+    @apply grid-cols-[minmax(0,1fr)_6.25rem] gap-2.5;
   }
 
-  .article-cover {
-    @apply aspect-[16/9];
+  .article-desc {
+    @apply line-clamp-2;
+  }
+
+  .meta-row {
+    @apply gap-1;
+  }
+}
+
+@media (max-width: 399px) {
+  .article-card {
+    @apply grid-cols-[minmax(0,1fr)_5.5rem];
+  }
+
+  .article-desc {
+    @apply line-clamp-1;
   }
 }
