@@ -1,50 +1,64 @@
 ---
 import Breadcrumb from "@/components/Breadcrumb.astro";
 import HomeSidebar from "@/components/HomeSidebar.astro";
+import ToolbarButton from "@/components/ToolbarButton.astro";
 import { SITE } from "@/config";
 
 type StringTitle = { pageTitle: string };
 type ArrayTitle = { pageTitle: [string, string]; titleTransition: string };
 
-type Props = (StringTitle | ArrayTitle) & { pageDesc?: string };
+type Props = (StringTitle | ArrayTitle) & {
+  pageDesc?: string;
+  showListToolbar?: boolean;
+};
 
-const { props } = Astro;
+const props = Astro.props as Props;
+const { pageDesc, showListToolbar = true } = props;
 
 const backUrl = SITE.showBackButton ? Astro.url.pathname : "/";
+const isHome = Astro.url.pathname === "/";
 ---
 
 <Breadcrumb />
 <div class="home-desktop-grid app-layout">
   <HomeSidebar />
-  <main
-    data-backUrl={backUrl}
-    id="main-content"
-    class="home-main-panel pb-2"
-  >
-  {
-    "titleTransition" in props ? (
-      <h1 class="text-2xl font-semibold sm:text-3xl">
-        {props.pageTitle[0]}
-        <span transition:name={props.titleTransition}>
-          {props.pageTitle[1]}
-        </span>
-      </h1>
-    ) : (
-      <h1 class="text-2xl font-semibold sm:text-3xl">{props.pageTitle}</h1>
-    )
-  }
-  <p class="mt-1 mb-4 italic">{props.pageDesc}</p>
-  <slot />
+  <main data-backurl={backUrl} id="main-content" class="home-main-panel">
+    <section class="content-shell">
+      {
+        "titleTransition" in props ? (
+          <h1 class="text-2xl font-semibold sm:text-3xl">
+            {props.pageTitle[0]}
+            <span transition:name={props.titleTransition}>{props.pageTitle[1]}</span>
+          </h1>
+        ) : (
+          <h1 class="text-2xl font-semibold sm:text-3xl">{props.pageTitle}</h1>
+        )
+      }
+
+      {pageDesc && <p class="mt-1 text-foreground/80">{pageDesc}</p>}
+
+      {
+        showListToolbar && (
+          <div class="content-toolbar" data-toolbar>
+            <ToolbarButton href="/" selected={isHome}>最新</ToolbarButton>
+            <ToolbarButton href="/posts" selected={Astro.url.pathname.startsWith("/posts")}>文章</ToolbarButton>
+            <ToolbarButton href="/archives" selected={Astro.url.pathname.startsWith("/archives")}>归档</ToolbarButton>
+            <ToolbarButton href="/tags" selected={Astro.url.pathname.startsWith("/tags")}>标签</ToolbarButton>
+          </div>
+        )
+      }
+
+      <slot />
+    </section>
   </main>
 </div>
 
 <script>
   document.addEventListener("astro:page-load", () => {
-    const mainContent: HTMLElement | null =
-      document.querySelector("#main-content");
-    const backUrl = mainContent?.dataset?.backurl;
-    if (backUrl) {
-      sessionStorage.setItem("backUrl", backUrl);
+    const mainContent = document.querySelector("#main-content") as HTMLElement | null;
+    const savedBackUrl = mainContent?.dataset?.backurl;
+    if (savedBackUrl) {
+      sessionStorage.setItem("backUrl", savedBackUrl);
     }
   });
 </script>

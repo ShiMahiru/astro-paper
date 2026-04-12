@@ -3,31 +3,48 @@ import type { CollectionEntry } from "astro:content";
 import { slugifyStr } from "@/utils/slugify";
 import { getPath } from "@/utils/getPath";
 import Datetime from "./Datetime.astro";
+import MetaChip from "./MetaChip.astro";
+import MetaRow from "./MetaRow.astro";
 
 type Props = {
   variant?: "h2" | "h3";
 } & CollectionEntry<"blog">;
 
-const { variant: Heading = "h2", id, data, filePath } = Astro.props;
+const { variant: Heading = "h2", id, data, body, filePath } = Astro.props;
 
-const { title, description, ...props } = data;
+const { title, description, ogImage, ...props } = data;
+const coverSrc =
+  typeof ogImage === "string"
+    ? ogImage
+    : ogImage?.src ?? "/astropaper-og.jpg";
+
+const wordCount = (body ?? "")
+  .replace(/```[\s\S]*?```/g, "")
+  .replace(/`[^`]*`/g, "")
+  .trim()
+  .split(/\s+/)
+  .filter(Boolean).length;
+const readingMinutes = Math.max(1, Math.round(wordCount / 220));
 ---
 
-<li class="home-post-card">
-  <a
-    href={getPath(id, filePath)}
-    class:list={[
-      "inline-block text-lg font-medium text-accent",
-      "decoration-dashed underline-offset-4 hover:underline",
-      "focus-visible:no-underline focus-visible:underline-offset-0",
-    ]}
-  >
-    <Heading
-      style={{ viewTransitionName: slugifyStr(title.replaceAll(".", "-")) }}
-    >
-      {title}
-    </Heading>
-  </a>
-  <Datetime {...props} />
-  <p>{description}</p>
+<li class="article-list-item" data-title={title} data-ts={new Date(data.pubDatetime).getTime()}>
+  <article class="article-card">
+    <div class="article-content">
+      <a href={getPath(id, filePath)} class="article-title-link">
+        <Heading style={{ viewTransitionName: slugifyStr(title.replaceAll(".", "-")) }}>
+          {title}
+        </Heading>
+      </a>
+      <p class="article-desc">{description}</p>
+      <MetaRow>
+        <Datetime {...props} />
+        <MetaChip>{wordCount} 字</MetaChip>
+        <MetaChip>{readingMinutes} 分钟阅读</MetaChip>
+      </MetaRow>
+    </div>
+
+    <a href={getPath(id, filePath)} class="article-cover-link" aria-label={title}>
+      <img src={coverSrc} alt="" loading="lazy" decoding="async" class="article-cover" />
+    </a>
+  </article>
 </li>
