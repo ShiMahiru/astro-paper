@@ -13,7 +13,7 @@ type Props = (StringTitle | ArrayTitle) & {
 };
 
 const props = Astro.props as Props;
-const { pageDesc, showListToolbar = true } = props;
+const { pageDesc, showListToolbar = false } = props;
 
 const backUrl = SITE.showBackButton ? Astro.url.pathname : "/";
 const isHome = Astro.url.pathname === "/";
