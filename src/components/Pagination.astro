@@ -79,7 +79,7 @@ const getPaginationItems = (currentPage: number, lastPage: number) => {
 const paginationItems = getPaginationItems(page.currentPage, page.lastPage);
 
 const controlBaseClass =
-  "flex h-9 w-9 items-center justify-center rounded-md border border-border bg-background text-foreground transition hover:border-accent hover:text-accent sm:h-10 sm:w-10";
+  "flex h-9 w-9 items-center justify-center rounded-md bg-background text-foreground transition hover:text-accent sm:h-10 sm:w-10";
 
 const disabledClass = "pointer-events-none opacity-40";
 ---
@@ -109,11 +109,11 @@ const disabledClass = "pointer-events-none opacity-40";
           </span>
         )}
 
-        <div class="rounded-md border border-border bg-background px-3 py-2 text-sm text-foreground/80 sm:hidden">
+        <div class="rounded-md bg-background px-3 py-2 text-sm text-foreground/80 sm:hidden">
           第 {page.currentPage} / {page.lastPage} 页
         </div>
 
-        <ul class="hidden items-center gap-1 rounded-md border border-border bg-background p-1 sm:flex">
+        <ul class="hidden items-center gap-1 rounded-md bg-background p-1 sm:flex">
           {paginationItems.map(item => (
             <li>
               {item === "ellipsis" ? (
