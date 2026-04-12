@@ -1,0 +1,71 @@
+---
+import { GISCUS } from "@/config";
+
+const giscusTheme =
+  Astro.cookies.get("theme")?.value === "dark"
+    ? "dark"
+    : "preferred_color_scheme";
+---
+
+{
+  GISCUS.enabled && (
+    <section class="mt-10" aria-label="评论区">
+      <h2 class="mb-4 text-lg font-semibold">评论</h2>
+      <div id="giscus-container">
+        <script
+          is:inline
+          src="https://giscus.app/client.js"
+          data-repo={GISCUS.repo}
+          data-repo-id={GISCUS.repoId}
+          data-category={GISCUS.category}
+          data-category-id={GISCUS.categoryId}
+          data-mapping={GISCUS.mapping}
+          data-strict={GISCUS.strict}
+          data-reactions-enabled={GISCUS.reactionsEnabled}
+          data-emit-metadata={GISCUS.emitMetadata}
+          data-input-position={GISCUS.inputPosition}
+          data-theme={giscusTheme}
+          data-lang={GISCUS.lang}
+          data-loading={GISCUS.loading}
+          crossorigin="anonymous"
+          async
+        ></script>
+      </div>
+    </section>
+  )
+}
+
+<script is:inline>
+  const setGiscusTheme = () => {
+    const theme =
+      document.documentElement.getAttribute("data-theme") === "dark"
+        ? "dark"
+        : "light";
+
+    const giscusFrame = document.querySelector("iframe.giscus-frame");
+
+    if (!giscusFrame?.contentWindow) return;
+
+    giscusFrame.contentWindow.postMessage(
+      {
+        giscus: {
+          setConfig: {
+            theme,
+          },
+        },
+      },
+      "https://giscus.app"
+    );
+  };
+
+  const initGiscusThemeSync = () => {
+    setGiscusTheme();
+    const themeBtn = document.querySelector("#theme-btn");
+    themeBtn?.addEventListener("click", () => {
+      window.setTimeout(setGiscusTheme, 0);
+    });
+  };
+
+  initGiscusThemeSync();
+  document.addEventListener("astro:after-swap", initGiscusThemeSync);
+</script>
