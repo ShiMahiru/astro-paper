@@ -3,6 +3,7 @@ import { render, type CollectionEntry } from "astro:content";
 import Layout from "@/layouts/Layout.astro";
 import Header from "@/components/Header.astro";
 import Footer from "@/components/Footer.astro";
+import HomeSidebar from "@/components/HomeSidebar.astro";
 import Tag from "@/components/Tag.astro";
 import Datetime from "@/components/Datetime.astro";
 import EditPost from "@/components/EditPost.astro";
@@ -83,13 +84,17 @@ const nextPost =
 ---
 
 <Layout {...layoutProps}>
-  <Header />
-  <BackButton />
-  <main
-    id="main-content"
-    class:list={["app-layout pb-12", { "mt-8": !SITE.showBackButton }]}
-    data-pagefind-body
-  >
+  <div class="home-shell">
+    <Header />
+    <div class="home-desktop-grid app-layout">
+      <HomeSidebar />
+      <section class="home-main-panel">
+        <BackButton />
+        <main
+          id="main-content"
+          class:list={["pb-12", { "mt-8": !SITE.showBackButton }]}
+          data-pagefind-body
+        >
     <h1
       transition:name={slugifyStr(title.replaceAll(".", "-"))}
       class="inline-block text-2xl font-bold text-accent sm:text-3xl"
@@ -159,8 +164,11 @@ const nextPost =
         )
       }
     </div>
-  </main>
-  <Footer />
+        </main>
+      </section>
+    </div>
+    <Footer />
+  </div>
 </Layout>
 
 <script is:inline data-astro-rerun>
