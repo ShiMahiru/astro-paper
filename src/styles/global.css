@@ -12,8 +12,8 @@ html[data-theme="light"] {
   --border: #ece9e9;
   --desktop-content-max-width: 72rem;
   --desktop-home-sidebar-width: 18rem;
-  --shell-bg: var(--background);
-  --panel-bg: var(--background);
+  --shell-bg: color-mix(in srgb, #ffffff 38%, transparent);
+  --panel-bg: color-mix(in srgb, #ffffff 52%, transparent);
   --panel-border: color-mix(in srgb, var(--border) 65%, transparent);
 }
 
@@ -23,8 +23,8 @@ html[data-theme="dark"] {
   --accent: #ff6b01;
   --muted: #343f60;
   --border: #ab4b08;
-  --shell-bg: var(--background);
-  --panel-bg: var(--background);
+  --shell-bg: color-mix(in srgb, #111827 34%, transparent);
+  --panel-bg: color-mix(in srgb, #111827 45%, transparent);
   --panel-border: color-mix(in srgb, var(--border) 55%, transparent);
 }
 
@@ -47,7 +47,17 @@ html {
 }
 body {
   @apply flex min-h-svh flex-col bg-background font-app text-foreground selection:bg-accent/75 selection:text-background;
-  background-image: none;
+  background-image:
+    linear-gradient(
+      to bottom,
+      color-mix(in srgb, var(--background) 40%, transparent),
+      color-mix(in srgb, var(--background) 55%, transparent)
+    ),
+    var(--site-bg-image);
+  background-position: center;
+  background-repeat: no-repeat;
+  background-size: cover;
+  background-attachment: fixed;
 }
 a,
 button {
@@ -61,11 +71,13 @@ button:not(:disabled),
 .app-glass-shell {
   @apply mx-auto min-h-svh w-full;
   background-color: transparent;
+  backdrop-filter: blur(2px);
 }
 
 .app-glass-shell :is(header, main, footer, article, section, aside, nav) {
   background-color: var(--panel-bg);
-  border: 0;
+  border: 1px solid var(--panel-border);
+  backdrop-filter: blur(16px) saturate(120%);
   box-shadow: none;
 }
 
@@ -90,7 +102,7 @@ button:not(:disabled),
 }
 
 @utility app-layout {
-  @apply w-full max-w-none px-0;
+  @apply w-full max-w-none px-4 sm:px-6 lg:px-10;
 }
 
 .home-fuwari-layout {
@@ -107,15 +119,15 @@ button:not(:disabled),
 
 @media (min-width: 1024px) {
   .home-fuwari-layout {
-    @apply grid w-full max-w-none grid-cols-[20rem_minmax(0,1fr)] gap-10 px-0;
+    @apply grid w-full max-w-none grid-cols-[20rem_minmax(0,1fr)] gap-10 px-4 sm:px-6 lg:px-10;
   }
 
   .home-fuwari-sidebar :is(header, footer) {
-    @apply mx-0 max-w-none px-0;
+    @apply mx-0 max-w-none px-2;
   }
 
   .home-fuwari-main {
-    @apply max-w-none px-0 pt-0;
+    @apply max-w-none px-2 pt-0;
   }
 }
 
@@ -198,6 +210,7 @@ button:not(:disabled),
     @apply px-2;
     background-color: var(--panel-bg);
     box-shadow: none;
+    border-bottom: 1px solid var(--panel-border);
   }
 
   .home-desktop-grid {
@@ -227,7 +240,7 @@ button:not(:disabled),
   }
 
   .home-main-panel {
-    @apply max-w-none px-2 py-2;
+    @apply max-w-none px-3 py-3;
     border-bottom: 1px solid var(--panel-border);
   }
 
