@@ -1,0 +1,21 @@
+---
+import Socials from "@/components/Socials.astro";
+import { SITE } from "@/config";
+
+const avatarUrl = "https://q2.qlogo.cn/headimg_dl?dst_uin=242531778&spec=0";
+---
+
+<aside class="home-profile-card hidden lg:block">
+  <img
+    src={avatarUrl}
+    alt={`${SITE.title} 头像`}
+    class="home-profile-avatar"
+    loading="lazy"
+    decoding="async"
+  />
+  <h2 class="home-profile-name">{SITE.author}</h2>
+  <p class="home-profile-desc">欢迎来到这里，希望你能找到想要的内容。</p>
+  <div class="home-profile-socials">
+    <Socials />
+  </div>
+</aside>

@@ -7,6 +7,7 @@ import Header from "@/components/Header.astro";
 import Footer from "@/components/Footer.astro";
 import Card from "@/components/Card.astro";
 import Pagination from "@/components/Pagination.astro";
+import HomeSidebar from "@/components/HomeSidebar.astro";
 import getSortedPosts from "@/utils/getSortedPosts";
 import { SITE } from "@/config";
 
@@ -33,21 +34,42 @@ const indexPagination = {
 ---
 
 <Layout>
-  <Header />
-  <main id="main-content" data-layout="index" class="app-layout">
-    {
-      allPosts.length > 0 && (
-        <section id="recent-posts" class="pb-6">
-          <ul>
-            {allPosts.map(data => (
-              <Card variant="h3" {...data} />
-            ))}
-          </ul>
-          <Pagination page={indexPagination} />
+  <div class="home-shell">
+    <Header />
+
+    <div class="home-desktop-grid app-layout">
+      <HomeSidebar />
+
+      <main id="main-content" data-layout="index" class="home-main-panel pb-8">
+        <section class="home-notice-card mb-6 hidden lg:flex">
+          <p>🎉 恭喜本站加入十年之约，感谢一直以来的支持！</p>
         </section>
-      )
-    }
-  </main>  <Footer />
+
+        <section class="home-action-card mb-6 hidden lg:flex">
+          <div>
+            <h2>你好，这里是我的博客</h2>
+            <p>看看最近更新的文章与教程整理。</p>
+          </div>
+          <a href="/archives" class="home-action-btn">查看归档</a>
+        </section>
+
+        {
+          allPosts.length > 0 && (
+            <section id="recent-posts" class="pb-6">
+              <ul>
+                {allPosts.map(data => (
+                  <Card variant="h3" {...data} />
+                ))}
+              </ul>
+              <Pagination page={indexPagination} />
+            </section>
+          )
+        }
+      </main>
+    </div>
+
+    <Footer />
+  </div>
 </Layout>
 
 <script>
