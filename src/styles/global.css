@@ -78,7 +78,8 @@ button:not(:disabled),
   background-color: var(--panel-bg);
   backdrop-filter: blur(16px) saturate(130%);
   -webkit-backdrop-filter: blur(16px) saturate(130%);
-  border-color: var(--panel-border);
+  border-color: transparent;
+  box-shadow: none;
 }
 
 .app-glass-shell .bg-background {
@@ -144,10 +145,11 @@ button:not(:disabled),
 
   .desktop-side-footer .desktop-side-footer-inner {
     border-top: 0;
-    border: 1px solid var(--panel-border);
+    border: 0;
     border-radius: 0.75rem;
     padding: 0.9rem;
     background-color: var(--panel-bg);
+    box-shadow: none;
     display: flex;
     flex-direction: column;
     align-items: flex-start;
@@ -183,9 +185,9 @@ button:not(:disabled),
   }
 
   .home-header .home-header-inner {
-    @apply rounded-2xl border px-6 backdrop-blur-md;
-    border-color: var(--panel-border);
+    @apply rounded-2xl px-6 backdrop-blur-md;
     background-color: var(--panel-bg);
+    box-shadow: none;
   }
 
   .home-desktop-grid {
@@ -193,9 +195,9 @@ button:not(:disabled),
   }
 
   .home-profile-card {
-    @apply sticky top-8 rounded-2xl border p-4 text-center backdrop-blur-md;
-    border-color: var(--panel-border);
+    @apply sticky top-8 rounded-2xl p-4 text-center backdrop-blur-md;
     background-color: var(--panel-bg);
+    box-shadow: none;
   }
 
   .home-profile-avatar {
@@ -221,9 +223,9 @@ button:not(:disabled),
   .home-notice-card,
   .home-action-card,
   .home-post-card {
-    @apply rounded-2xl border px-6 py-5 backdrop-blur-md;
-    border-color: var(--panel-border);
+    @apply rounded-2xl px-6 py-5 backdrop-blur-md;
     background-color: var(--panel-bg);
+    box-shadow: none;
   }
 
   .home-action-card {
@@ -247,7 +249,7 @@ button:not(:disabled),
   }
 
   .home-post-card {
-    @apply my-0 border-b-0;
+    @apply my-0;
   }
 
   .home-post-card p {
