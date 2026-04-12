@@ -37,36 +37,34 @@ html[data-theme="dark"] {
   --color-border: var(--border);
 }
 
-@layer base {
-  * {
-    @apply border-border outline-accent/75;
-    scrollbar-width: auto;
-    scrollbar-color: var(--color-muted) transparent;
-  }
-  html {
-    @apply overflow-y-scroll scroll-smooth;
-  }
-  body {
-    @apply flex min-h-svh flex-col bg-background font-app text-foreground selection:bg-accent/75 selection:text-background;
-    background-image:
-      linear-gradient(
-        color-mix(in srgb, var(--color-background) 14%, transparent),
-        color-mix(in srgb, var(--color-background) 24%, transparent)
-      ),
-      var(--site-bg-image, none);
-    background-position: center;
-    background-repeat: no-repeat;
-    background-size: cover;
-    background-attachment: fixed;
-  }
-  a,
-  button {
-    @apply outline-offset-1 outline-accent focus-visible:no-underline focus-visible:outline-2 focus-visible:outline-dashed;
-  }
-  button:not(:disabled),
-  [role="button"]:not(:disabled) {
-    cursor: pointer;
-  }
+* {
+  @apply border-border outline-accent/75;
+  scrollbar-width: auto;
+  scrollbar-color: var(--color-muted) transparent;
+}
+html {
+  @apply overflow-y-scroll scroll-smooth;
+}
+body {
+  @apply flex min-h-svh flex-col bg-background font-app text-foreground selection:bg-accent/75 selection:text-background;
+  background-image:
+    linear-gradient(
+      color-mix(in srgb, var(--color-background) 14%, transparent),
+      color-mix(in srgb, var(--color-background) 24%, transparent)
+    ),
+    var(--site-bg-image, none);
+  background-position: center;
+  background-repeat: no-repeat;
+  background-size: cover;
+  background-attachment: fixed;
+}
+a,
+button {
+  @apply outline-offset-1 outline-accent focus-visible:no-underline focus-visible:outline-2 focus-visible:outline-dashed;
+}
+button:not(:disabled),
+[role="button"]:not(:disabled) {
+  cursor: pointer;
 }
 
 .app-glass-shell {
