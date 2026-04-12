@@ -3,16 +3,15 @@ import { getCollection } from "astro:content";
 import type { Page } from "astro";
 import type { CollectionEntry } from "astro:content";
 import Layout from "@/layouts/Layout.astro";
+import Main from "@/layouts/Main.astro";
 import Header from "@/components/Header.astro";
 import Footer from "@/components/Footer.astro";
 import Card from "@/components/Card.astro";
 import Pagination from "@/components/Pagination.astro";
-import HomeSidebar from "@/components/HomeSidebar.astro";
 import getSortedPosts from "@/utils/getSortedPosts";
 import { SITE } from "@/config";
 
 const posts = await getCollection("blog");
-
 const sortedPosts = getSortedPosts(posts);
 const allPosts = sortedPosts.slice(0, SITE.postPerIndex);
 const pageCount = Math.ceil(sortedPosts.length / SITE.postPerPage);
@@ -27,10 +26,7 @@ const indexPagination = {
     prev: undefined,
     next: pageCount > 1 ? "/posts/2/" : undefined,
   },
-} satisfies Pick<
-  Page<CollectionEntry<"blog">>,
-  "currentPage" | "lastPage" | "url"
->;
+} satisfies Pick<Page<CollectionEntry<"blog">>, "currentPage" | "lastPage" | "url">;
 ---
 
 <Layout>
@@ -58,18 +54,7 @@ const indexPagination = {
           )
         }
       </main>
-    </div>
-
+    </div
     <Footer />
   </div>
 </Layout>
-
-<script>
-  document.addEventListener("astro:page-load", () => {
-    const indexLayout = (document.querySelector("#main-content") as HTMLElement)
-      ?.dataset?.layout;
-    if (indexLayout) {
-      sessionStorage.setItem("backUrl", "/");
-    }
-  });
-</script>

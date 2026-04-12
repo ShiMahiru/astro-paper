@@ -3,14 +3,25 @@ import type { CollectionEntry } from "astro:content";
 import { slugifyStr } from "@/utils/slugify";
 import { getPath } from "@/utils/getPath";
 import Datetime from "./Datetime.astro";
+import MetaChip from "./MetaChip.astro";
+import MetaRow from "./MetaRow.astro";
 
 type Props = {
   variant?: "h2" | "h3";
 } & CollectionEntry<"blog">;
 
-const { variant: Heading = "h2", id, data, filePath } = Astro.props;
+const { variant: Heading = "h2", id, data, body, filePath } = Astro.props;
 
-const { title, description, ...props } = data;
+const { title, description, ogImage, ...props } = data;
+const coverSrc = typeof ogImage === "string" ? ogImage : ogImage?.src;
+const hasCover = Boolean(coverSrc);
+const wordCount = (body ?? "")
+  .replace(/```[\s\S]*?```/g, "")
+  .replace(/`[^`]*`/g, "")
+  .trim()
+  .split(/\s+/)
+  .filter(Boolean).length;
+const readingMinutes = Math.max(1, Math.round(wordCount / 220));
 ---
 
 <li class="home-post-card">
@@ -24,10 +35,23 @@ const { title, description, ...props } = data;
   >
     <Heading
       style={{ viewTransitionName: slugifyStr(title.replaceAll(".", "-")) }}
+
     >
-      {title}
-    </Heading>
-  </a>
-  <Datetime {...props} />
-  <p>{description}</p>
+      {
+        hasCover ? (
+          <img
+            src={coverSrc}
+            alt=""
+            loading="lazy"
+            decoding="async"
+            class="article-cover"
+          />
+        ) : (
+          <span class="article-cover-placeholder" aria-hidden="true">
+            暂无封面
+          </span>
+        )
+      }
+    </a>
+  </article>
 </li>

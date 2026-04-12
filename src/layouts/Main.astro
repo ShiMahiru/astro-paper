@@ -1,16 +1,22 @@
 ---
 import Breadcrumb from "@/components/Breadcrumb.astro";
 import HomeSidebar from "@/components/HomeSidebar.astro";
+import ToolbarButton from "@/components/ToolbarButton.astro";
 import { SITE } from "@/config";
 
 type StringTitle = { pageTitle: string };
 type ArrayTitle = { pageTitle: [string, string]; titleTransition: string };
 
-type Props = (StringTitle | ArrayTitle) & { pageDesc?: string };
+type Props = (StringTitle | ArrayTitle) & {
+  pageDesc?: string;
+  showListToolbar?: boolean;
+};
 
-const { props } = Astro;
+const props = Astro.props as Props;
+const { pageDesc, showListToolbar = false } = props;
 
 const backUrl = SITE.showBackButton ? Astro.url.pathname : "/";
+const isHome = Astro.url.pathname === "/";
 ---
 
 <Breadcrumb />
@@ -35,16 +41,45 @@ const backUrl = SITE.showBackButton ? Astro.url.pathname : "/";
   }
   <p class="mt-1 mb-4 italic">{props.pageDesc}</p>
   <slot />
+
   </main>
 </div>
 
 <script>
   document.addEventListener("astro:page-load", () => {
-    const mainContent: HTMLElement | null =
-      document.querySelector("#main-content");
-    const backUrl = mainContent?.dataset?.backurl;
-    if (backUrl) {
-      sessionStorage.setItem("backUrl", backUrl);
+    const mainContent = document.querySelector("#main-content") as HTMLElement | null;
+    const savedBackUrl = mainContent?.dataset?.backurl;
+    if (savedBackUrl) {
+      sessionStorage.setItem("backUrl", savedBackUrl);
     }
+
+    const toolbar = document.querySelector("[data-toolbar]");
+    if (!toolbar) return;
+
+    const buttons = toolbar.querySelectorAll("[data-sort]");
+    const list = document.querySelector("[data-article-list]");
+    if (!list) return;
+
+    buttons.forEach(button => {
+      button.addEventListener("click", () => {
+        const sortType = button.getAttribute("data-sort");
+        const items = Array.from(list.children);
+        items.sort((a, b) => {
+          const aEl = a;
+          const bEl = b;
+          if (sortType === "title") {
+            return (aEl.getAttribute("data-title") || "").localeCompare(
+              bEl.getAttribute("data-title") || "",
+              "zh-Hans-CN"
+            );
+          }
+          return Number(bEl.getAttribute("data-ts")) - Number(aEl.getAttribute("data-ts"));
+        });
+
+        items.forEach(item => list.appendChild(item));
+        buttons.forEach(btn => btn.classList.remove("is-selected"));
+        button.classList.add("is-selected");
+      });
+    });
   });
 </script>

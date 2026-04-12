@@ -10,9 +10,7 @@ type Props = {
 
 const { page } = Astro.props;
 
-const ensureTrailingSlash = (url: string) =>
-  url.endsWith("/") ? url : `${url}/`;
-
+const ensureTrailingSlash = (url: string) => (url.endsWith("/") ? url : `${url}/`);
 const stripPageNumber = (url: string) => url.replace(/\/(?:\d+)\/?$/, "/");
 
 const resolveFirstPageUrl = () => {
@@ -24,64 +22,34 @@ const resolveFirstPageUrl = () => {
     page.url.prev ? stripPageNumber(page.url.prev) : undefined,
     page.url.next ? stripPageNumber(page.url.next) : undefined,
   ];
-
   const firstPageUrl = candidates.find((url): url is string => Boolean(url));
-
   return ensureTrailingSlash(firstPageUrl ?? "/");
 };
 
 const getPageUrl = (targetPage: number) => {
   const firstPageUrl = resolveFirstPageUrl();
-
-  if (targetPage <= 1) {
-    return firstPageUrl;
-  }
-
-  if (firstPageUrl === "/") {
-    return `/${targetPage}/`;
-  }
-
+  if (targetPage <= 1) return firstPageUrl;
+  if (firstPageUrl === "/") return `/${targetPage}/`;
   return `${firstPageUrl}${targetPage}/`;
 };
 
 const getPaginationItems = (currentPage: number, lastPage: number) => {
-  if (lastPage <= 7) {
-    return Array.from({ length: lastPage }, (_, index) => index + 1);
-  }
-
-  const pageSet = new Set([
-    1,
-    lastPage,
-    currentPage,
-    currentPage - 1,
-    currentPage + 1,
-  ]);
-
+  if (lastPage <= 7) return Array.from({ length: lastPage }, (_, index) => index + 1);
+  const pageSet = new Set([1, lastPage, currentPage, currentPage - 1, currentPage + 1]);
   const pages = Array.from(pageSet)
     .filter(pageNum => pageNum >= 1 && pageNum <= lastPage)
     .sort((a, b) => a - b);
 
   const items: Array<number | "ellipsis"> = [];
-
   for (const pageNum of pages) {
     const prevItem = items[items.length - 1];
-
-    if (typeof prevItem === "number" && pageNum - prevItem > 1) {
-      items.push("ellipsis");
-    }
-
+    if (typeof prevItem === "number" && pageNum - prevItem > 1) items.push("ellipsis");
     items.push(pageNum);
   }
-
   return items;
 };
 
 const paginationItems = getPaginationItems(page.currentPage, page.lastPage);
-
-const controlBaseClass =
-  "flex h-9 w-9 items-center justify-center text-foreground transition hover:text-accent sm:h-10 sm:w-10";
-
-const disabledClass = "pointer-events-none opacity-40";
 ---
 
 {

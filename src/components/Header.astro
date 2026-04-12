@@ -1,22 +1,19 @@
 ---
 import IconX from "@/assets/icons/IconX.svg";
 import IconMoon from "@/assets/icons/IconMoon.svg";
-import IconSearch from "@/assets/icons/IconSearch.svg";
 import IconSunHigh from "@/assets/icons/IconSunHigh.svg";
 import IconMenuDeep from "@/assets/icons/IconMenuDeep.svg";
-import LinkButton from "./LinkButton.astro";
+import ToolbarButton from "@/components/ToolbarButton.astro";
+import SearchInput from "@/components/SearchInput.astro";
 import { SITE } from "@/config";
 
 const { pathname } = Astro.url;
-
-// Remove trailing slash from current pathname if exists
 const currentPath =
   pathname.endsWith("/") && pathname !== "/" ? pathname.slice(0, -1) : pathname;
 
 const isActive = (path: string) => {
   const currentPathArray = currentPath.split("/").filter(p => p.trim());
   const pathArray = path.split("/").filter(p => p.trim());
-
   return currentPath === path || currentPathArray[0] === pathArray[0];
 };
 ---
@@ -24,7 +21,7 @@ const isActive = (path: string) => {
 <a
   id="skip-to-content"
   href="#main-content"
-  class="absolute start-16 -top-full z-50 px-3 py-2 text-accent transition-all focus:top-4"
+  class="absolute start-6 -top-full z-50 px-3 py-2 text-accent transition-all focus:top-4"
 >
   跳转到正文
 </a>
@@ -124,37 +121,57 @@ const isActive = (path: string) => {
             ]}
             title="搜索"
             aria-label="搜索"
-          >
-            <IconSearch />
-            <span class="sr-only">搜索</span>
-          </LinkButton>
-        </li>
 
-        {
-          SITE.lightAndDarkMode && (
-            <li class="col-span-1 flex items-center justify-center">
-              <button
-                id="theme-btn"
-                class="focus-outline relative size-12 p-4 sm:size-8 hover:[&>svg]:stroke-accent"
-                title="切换主题"
-                aria-label="auto"
-                aria-live="polite"
-              >
-                <IconMoon class="absolute top-[50%] left-[50%] -translate-[50%] scale-100 rotate-0 transition-all dark:scale-0 dark:-rotate-90" />
-                <IconSunHigh class="absolute top-[50%] left-[50%] -translate-[50%] scale-0 rotate-90 transition-all dark:scale-100 dark:rotate-0" />
-              </button>
-            </li>
-          )
-        }
-      </ul>
-    </nav>
+          >
+            <IconMoon class="theme-icon scale-100 rotate-0 dark:scale-0 dark:-rotate-90" />
+            <IconSunHigh class="theme-icon scale-0 rotate-90 dark:scale-100 dark:rotate-0" />
+          </button>
+        )}
+        <button
+          id="menu-btn"
+          class="toolbar-icon-btn sm:hidden"
+          aria-label="打开菜单"
+          aria-expanded="false"
+          aria-controls="menu-items"
+        >
+          <IconX id="close-icon" class="hidden size-5" />
+          <IconMenuDeep id="menu-icon" class="size-5" />
+        </button>
+      </div>
+    </div>
+
+    <div class="topbar-nav-desktop">
+      <nav class="topbar-nav" aria-label="主导航">
+        <ToolbarButton href="/" selected={currentPath === "/"}>首页</ToolbarButton>
+        <ToolbarButton href="/posts" selected={isActive("/posts")}>文章</ToolbarButton>
+        <ToolbarButton href="/tags" selected={isActive("/tags")}>标签</ToolbarButton>
+        {SITE.showArchives && (
+          <ToolbarButton href="/archives" selected={isActive("/archives")}>归档</ToolbarButton>
+        )}
+        <ToolbarButton href="/about" selected={isActive("/about")}>关于</ToolbarButton>
+      </nav>
+      <SearchInput id="desktop-search" />
+    </div>
+
+    <div id="menu-items" class="mobile-menu hidden" aria-label="主导航">
+      <nav class="mobile-menu-links">
+        <ToolbarButton href="/" selected={currentPath === "/"}>首页</ToolbarButton>
+        <ToolbarButton href="/posts" selected={isActive("/posts")}>文章</ToolbarButton>
+        <ToolbarButton href="/tags" selected={isActive("/tags")}>标签</ToolbarButton>
+        {SITE.showArchives && (
+          <ToolbarButton href="/archives" selected={isActive("/archives")}>归档</ToolbarButton>
+        )}
+        <ToolbarButton href="/about" selected={isActive("/about")}>关于</ToolbarButton>
+      </nav>
+      <SearchInput id="mobile-search" />
+    </div>
   </div>
 </header>
 
 <script>
   function toggleNav() {
-    const menuBtn = document.querySelector("#menu-btn");
-    const menuItems = document.querySelector("#menu-items");
+    const menuBtn = document.querySelector("#menu-btn") as HTMLButtonElement | null;
+    const menuItems = document.querySelector("#menu-items") as HTMLElement | null;
     const menuIcon = document.querySelector("#menu-icon");
     const closeIcon = document.querySelector("#close-icon");
 
@@ -164,7 +181,6 @@ const isActive = (path: string) => {
       const openMenu = menuBtn.getAttribute("aria-expanded") === "true";
       menuBtn.setAttribute("aria-expanded", openMenu ? "false" : "true");
       menuBtn.setAttribute("aria-label", openMenu ? "打开菜单" : "关闭菜单");
-
       menuItems.classList.toggle("hidden");
       menuIcon.classList.toggle("hidden");
       closeIcon.classList.toggle("hidden");
@@ -172,7 +188,5 @@ const isActive = (path: string) => {
   }
 
   toggleNav();
-
-  // Runs on view transitions navigation
   document.addEventListener("astro:after-swap", toggleNav);
 </script>

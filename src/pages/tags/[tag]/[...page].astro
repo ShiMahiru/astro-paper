@@ -39,7 +39,7 @@ const { page, tagName } = Astro.props;
     pageDesc={`所有带有“${tagName}”标签的文章。`}
   >
     <h1 slot="title" transition:name={tag}>{`标签：${tag}`}</h1>
-    <ul>
+    <ul data-article-list class="article-list">
       {page.data.map(data => <Card {...data} />)}
     </ul>
     <Pagination {page} />

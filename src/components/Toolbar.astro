@@ -1,0 +1,11 @@
+---
+import type { HTMLAttributes } from "astro/types";
+import GlassPanel from "@/components/GlassPanel.astro";
+
+type Props = HTMLAttributes<"section">;
+const { class: className, ...attrs } = Astro.props;
+---
+
+<GlassPanel level="subtle" class:list={["toolbar", className]} {...attrs}>
+  <slot />
+</GlassPanel>
