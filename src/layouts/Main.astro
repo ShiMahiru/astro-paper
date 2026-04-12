@@ -14,6 +14,10 @@ type Props = (StringTitle | ArrayTitle) & {
 
 const props = Astro.props as Props;
 const { pageDesc, showListToolbar = false } = props;
+const hasPageTitle =
+  "titleTransition" in props
+    ? props.pageTitle.some(titlePart => titlePart.trim().length > 0)
+    : props.pageTitle.trim().length > 0;
 
 const backUrl = SITE.showBackButton ? Astro.url.pathname : "/";
 const isHome = Astro.url.pathname === "/";
@@ -25,16 +29,15 @@ const isHome = Astro.url.pathname === "/";
   <main data-backurl={backUrl} id="main-content" class="home-main-panel">
     <section class="content-shell">
 
-      {
-        "titleTransition" in props ? (
+      {hasPageTitle &&
+        ("titleTransition" in props ? (
           <h1 class="text-2xl font-semibold sm:text-3xl">
             {props.pageTitle[0]}
             <span transition:name={props.titleTransition}>{props.pageTitle[1]}</span>
           </h1>
         ) : (
           <h1 class="text-2xl font-semibold sm:text-3xl">{props.pageTitle}</h1>
-        )
-      }
+        ))}
 
       {pageDesc && <p class="mt-1 text-foreground/80">{pageDesc}</p>}
 
