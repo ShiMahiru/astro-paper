@@ -1,0 +1,30 @@
+---
+type Props = {
+  action?: string;
+  id?: string;
+  name?: string;
+  placeholder?: string;
+  value?: string;
+};
+
+const {
+  action = "/search",
+  id = "global-search",
+  name = "q",
+  placeholder = "搜索文章...",
+  value = "",
+} = Astro.props;
+---
+
+<form action={action} method="get" class="search-input-wrap">
+  <label for={id} class="sr-only">搜索文章</label>
+  <input
+    id={id}
+    name={name}
+    type="search"
+    value={value}
+    placeholder={placeholder}
+    class="search-input"
+  />
+  <button type="submit" class="search-submit">搜索</button>
+</form>

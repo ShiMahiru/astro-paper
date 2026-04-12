@@ -3,6 +3,7 @@ import type { Page } from "astro";
 import type { CollectionEntry } from "astro:content";
 import IconChevronLeft from "@/assets/icons/IconChevronLeft.svg";
 import IconChevronRight from "@/assets/icons/IconChevronRight.svg";
+import GlassPanel from "@/components/GlassPanel.astro";
 
 type Props = {
   page: Pick<Page<CollectionEntry<"blog">>, "currentPage" | "lastPage" | "url">;
@@ -10,9 +11,7 @@ type Props = {
 
 const { page } = Astro.props;
 
-const ensureTrailingSlash = (url: string) =>
-  url.endsWith("/") ? url : `${url}/`;
-
+const ensureTrailingSlash = (url: string) => (url.endsWith("/") ? url : `${url}/`);
 const stripPageNumber = (url: string) => url.replace(/\/(?:\d+)\/?$/, "/");
 
 const resolveFirstPageUrl = () => {
@@ -24,113 +23,65 @@ const resolveFirstPageUrl = () => {
     page.url.prev ? stripPageNumber(page.url.prev) : undefined,
     page.url.next ? stripPageNumber(page.url.next) : undefined,
   ];
-
   const firstPageUrl = candidates.find((url): url is string => Boolean(url));
-
   return ensureTrailingSlash(firstPageUrl ?? "/");
 };
 
 const getPageUrl = (targetPage: number) => {
   const firstPageUrl = resolveFirstPageUrl();
-
-  if (targetPage <= 1) {
-    return firstPageUrl;
-  }
-
-  if (firstPageUrl === "/") {
-    return `/${targetPage}/`;
-  }
-
+  if (targetPage <= 1) return firstPageUrl;
+  if (firstPageUrl === "/") return `/${targetPage}/`;
   return `${firstPageUrl}${targetPage}/`;
 };
 
 const getPaginationItems = (currentPage: number, lastPage: number) => {
-  if (lastPage <= 7) {
-    return Array.from({ length: lastPage }, (_, index) => index + 1);
-  }
-
-  const pageSet = new Set([
-    1,
-    lastPage,
-    currentPage,
-    currentPage - 1,
-    currentPage + 1,
-  ]);
-
+  if (lastPage <= 7) return Array.from({ length: lastPage }, (_, index) => index + 1);
+  const pageSet = new Set([1, lastPage, currentPage, currentPage - 1, currentPage + 1]);
   const pages = Array.from(pageSet)
     .filter(pageNum => pageNum >= 1 && pageNum <= lastPage)
     .sort((a, b) => a - b);
 
   const items: Array<number | "ellipsis"> = [];
-
   for (const pageNum of pages) {
     const prevItem = items[items.length - 1];
-
-    if (typeof prevItem === "number" && pageNum - prevItem > 1) {
-      items.push("ellipsis");
-    }
-
+    if (typeof prevItem === "number" && pageNum - prevItem > 1) items.push("ellipsis");
     items.push(pageNum);
   }
-
   return items;
 };
 
 const paginationItems = getPaginationItems(page.currentPage, page.lastPage);
-
-const controlBaseClass =
-  "flex h-9 w-9 items-center justify-center text-foreground transition hover:text-accent sm:h-10 sm:w-10";
-
-const disabledClass = "pointer-events-none opacity-40";
 ---
 
 {
   page.lastPage > 1 && (
-    <nav
-      class="my-5 flex flex-col items-center gap-2 border-t border-border/70 pt-4 sm:my-6 sm:gap-2 sm:pt-5"
-      role="navigation"
-      aria-label="分页导航"
-    >
-      <div class="flex items-center justify-center gap-2">
+    <GlassPanel level="subtle" class="pagination-shell">
+      <nav class="pagination-nav" role="navigation" aria-label="分页导航">
         {page.url.prev ? (
-          <a
-            href={page.url.prev}
-            aria-label="前往上一页"
-            class={controlBaseClass}
-          >
+          <a href={page.url.prev} aria-label="前往上一页" class="pagination-control">
             <IconChevronLeft class="h-4 w-4 sm:h-5 sm:w-5" />
           </a>
         ) : (
-          <span
-            aria-hidden="true"
-            class:list={[controlBaseClass, disabledClass]}
-          >
+          <span aria-hidden="true" class="pagination-control is-disabled">
             <IconChevronLeft class="h-4 w-4 sm:h-5 sm:w-5" />
           </span>
         )}
 
-        <div class="px-2 py-1 text-sm text-foreground/80 sm:hidden">
+        <div class="pagination-compact sm:hidden">
           第 {page.currentPage} / {page.lastPage} 页
         </div>
 
-        <ul class="hidden items-center gap-1 sm:flex">
+        <ul class="hidden items-center gap-2 sm:flex">
           {paginationItems.map(item => (
             <li>
               {item === "ellipsis" ? (
-                <span class="flex h-10 min-w-8 items-center justify-center px-1 text-sm text-foreground/70">
-                  …
-                </span>
+                <span class="pagination-ellipsis">…</span>
               ) : (
                 <a
                   href={getPageUrl(item)}
                   aria-label={`前往第 ${item} 页`}
                   aria-current={item === page.currentPage ? "page" : undefined}
-                  class:list={[
-                    "flex h-10 min-w-10 items-center justify-center px-2 text-sm font-medium transition",
-                    item === page.currentPage
-                      ? "border-b-2 border-accent text-accent"
-                      : "text-foreground/80 hover:text-accent",
-                  ]}
+                  class:list={["pagination-control", { "is-selected": item === page.currentPage }]}
                 >
                   {item}
                 </a>
@@ -140,22 +91,15 @@ const disabledClass = "pointer-events-none opacity-40";
         </ul>
 
         {page.url.next ? (
-          <a
-            href={page.url.next}
-            aria-label="前往下一页"
-            class={controlBaseClass}
-          >
+          <a href={page.url.next} aria-label="前往下一页" class="pagination-control">
             <IconChevronRight class="h-4 w-4 sm:h-5 sm:w-5" />
           </a>
         ) : (
-          <span
-            aria-hidden="true"
-            class:list={[controlBaseClass, disabledClass]}
-          >
+          <span aria-hidden="true" class="pagination-control is-disabled">
             <IconChevronRight class="h-4 w-4 sm:h-5 sm:w-5" />
           </span>
         )}
-      </div>
-    </nav>
+      </nav>
+    </GlassPanel>
   )
 }

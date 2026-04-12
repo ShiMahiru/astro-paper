@@ -1,0 +1,23 @@
+---
+import type { HTMLAttributes } from "astro/types";
+
+type Props = {
+  level?: "base" | "elevated" | "subtle";
+} & HTMLAttributes<"div">;
+
+const { level = "base", class: className, ...attrs } = Astro.props;
+---
+
+<div
+  class:list={[
+    "glass-panel",
+    {
+      "glass-panel-elevated": level === "elevated",
+      "glass-panel-subtle": level === "subtle",
+    },
+    className,
+  ]}
+  {...attrs}
+>
+  <slot />
+</div>
