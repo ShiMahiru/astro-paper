@@ -8,6 +8,7 @@ import Header from "@/components/Header.astro";
 import Footer from "@/components/Footer.astro";
 import Card from "@/components/Card.astro";
 import Pagination from "@/components/Pagination.astro";
+import SearchInput from "@/components/SearchInput.astro";
 import getSortedPosts from "@/utils/getSortedPosts";
 import { SITE } from "@/config";
 
@@ -32,7 +33,10 @@ const indexPagination = {
 <Layout>
   <div class="home-shell">
     <Header />
-    <Main pageTitle="最新文章">
+    <Main pageTitle="">
+      <div class="mb-5">
+        <SearchInput id="home-search" />
+      </div>
       {
         allPosts.length > 0 && (
           <section id="recent-posts" class="pb-2">
