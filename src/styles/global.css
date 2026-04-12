@@ -125,7 +125,7 @@ html[data-theme="dark"] {
   }
 
   .home-fuwari-main {
-    @apply max-w-none px-0 pt-8;
+    @apply max-w-none px-0 pt-0;
   }
 }
 
@@ -199,7 +199,7 @@ html[data-theme="dark"] {
   }
 
   .home-header {
-    @apply pt-6;
+    @apply pt-0;
   }
 
   .home-header .home-header-inner {
@@ -213,7 +213,7 @@ html[data-theme="dark"] {
   }
 
   .home-desktop-grid {
-    @apply grid w-full max-w-none grid-cols-[var(--desktop-home-sidebar-width)_minmax(0,1fr)] gap-8 pt-6;
+    @apply grid w-full max-w-none grid-cols-[var(--desktop-home-sidebar-width)_minmax(0,1fr)] gap-8 pt-0;
   }
 
   .home-profile-card {
