@@ -30,6 +30,7 @@ const resolveFirstPageUrl = () => {
 const getPageUrl = (targetPage: number) => {
   const firstPageUrl = resolveFirstPageUrl();
 
+
   if (targetPage <= 1) {
     return firstPageUrl;
   }
@@ -39,6 +40,7 @@ const getPageUrl = (targetPage: number) => {
   }
 
   return `${firstPageUrl}${targetPage}/`;
+
 };
 
 const getPaginationItems = (currentPage: number, lastPage: number) => {
