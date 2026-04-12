@@ -78,8 +78,20 @@ button:not(:disabled),
   background-color: var(--panel-bg);
   backdrop-filter: blur(16px) saturate(130%);
   -webkit-backdrop-filter: blur(16px) saturate(130%);
-  border-color: transparent;
+  border: 0;
   box-shadow: none;
+}
+
+/* Keep container surfaces background-only (no borders / shadows). */
+.app-glass-shell
+  :is(
+    [class*="container"],
+    [class*="shell"],
+    [class*="panel"],
+    [class*="card"]
+  ) {
+  border: 0 !important;
+  box-shadow: none !important;
 }
 
 .app-glass-shell .bg-background {
