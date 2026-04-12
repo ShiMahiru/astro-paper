@@ -42,9 +42,8 @@ const { page, tagName } = Astro.props;
     <ul>
       {page.data.map(data => <Card {...data} />)}
     </ul>
+    <Pagination {page} />
   </Main>
-
-  <Pagination {page} />
 
   <Footer noMarginTop={page.lastPage > 1} />
 </Layout>

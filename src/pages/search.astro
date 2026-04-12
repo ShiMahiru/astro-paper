@@ -35,9 +35,9 @@ const backUrl = SITE.showBackButton ? `${Astro.url.pathname}` : "/";
       // Display warning inn dev mode
       if (import.meta.env.DEV) {
         pageFindSearch.innerHTML = `
-            <div class="bg-muted/75 rounded p-4 space-y-4 mb-4">
+            <div class="mb-4 border-l-2 border-accent ps-4 space-y-3">
               <p><strong>开发模式提示：</strong>你需要至少先构建一次项目，才能在开发时看到搜索结果。</p>
-              <code class="block bg-black text-white px-2 py-1 rounded">pnpm run build</code>
+              <code class="block border-b border-border/70 pb-1">pnpm run build</code>
             </div>
           `;
       }
