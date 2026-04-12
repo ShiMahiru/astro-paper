@@ -27,7 +27,7 @@ const isActive = (path: string) => {
   href="#main-content"
   class="absolute start-16 -top-full z-50 bg-background px-3 py-2 text-accent backdrop-blur-lg transition-all focus:top-4"
 >
-  Skip to content
+  跳转到正文
 </a>
 
 <header
@@ -55,9 +55,9 @@ const isActive = (path: string) => {
       <form
         action="/search"
         method="get"
-        class="relative me-2 w-full max-w-44 sm:hidden"
+        class="relative me-2 w-full max-w-24 sm:hidden"
       >
-        <label for="mobile-top-search" class="sr-only">Search</label>
+        <label for="mobile-top-search" class="sr-only">搜索</label>
         <IconSearch
           class="pointer-events-none absolute top-1/2 left-3 size-4 -translate-y-1/2 opacity-70"
         />
@@ -65,7 +65,7 @@ const isActive = (path: string) => {
           id="mobile-top-search"
           name="q"
           type="search"
-          placeholder="Search"
+          placeholder="搜索"
           class="focus-outline bg-card w-full rounded-xl border border-border py-2 pr-3 pl-9 text-sm placeholder:text-muted"
         />
       </form>
@@ -74,7 +74,7 @@ const isActive = (path: string) => {
         method="get"
         class="relative me-2 hidden w-full max-w-48 sm:block"
       >
-        <label for="header-search" class="sr-only">Search</label>
+        <label for="header-search" class="sr-only">搜索</label>
         <IconSearch
           class="pointer-events-none absolute top-1/2 left-3 size-4 -translate-y-1/2 opacity-70"
         />
@@ -82,7 +82,7 @@ const isActive = (path: string) => {
           id="header-search"
           name="q"
           type="search"
-          placeholder="Search"
+          placeholder="搜索"
           class="focus-outline bg-card w-full rounded-xl border border-border py-2 pr-3 pl-9 text-sm placeholder:text-muted"
         />
       </form>
@@ -91,7 +91,7 @@ const isActive = (path: string) => {
           <button
             id="theme-btn"
             class="focus-outline relative size-9 p-2 sm:size-8 sm:border-0 sm:bg-transparent sm:p-1 hover:[&>svg]:stroke-accent"
-            title="Toggle theme"
+            title="切换主题"
             aria-label="auto"
             aria-live="polite"
           >
@@ -103,7 +103,7 @@ const isActive = (path: string) => {
       <button
         id="menu-btn"
         class="focus-outline p-2 sm:hidden"
-        aria-label="Open Menu"
+        aria-label="打开菜单"
         aria-expanded="false"
         aria-controls="menu-items"
       >
@@ -113,20 +113,12 @@ const isActive = (path: string) => {
       <ul
         id="menu-items"
         class:list={[
-          "absolute top-full right-0 z-50 mt-1 flex w-[min(20rem,calc(100vw-1rem))] flex-col items-stretch gap-1 rounded-xl border border-border bg-background/95 p-2 shadow-lg backdrop-blur",
+          "absolute top-full right-0 z-50 mt-2 flex w-[min(16rem,calc(100vw-1.25rem))] flex-col items-stretch gap-1 rounded-xl border border-border bg-card p-2 shadow-md",
           "[&>li>a]:block [&>li>a]:rounded-lg [&>li>a]:px-3 [&>li>a]:py-2 [&>li>a]:text-sm [&>li>a]:font-medium [&>li>a]:whitespace-nowrap [&>li>a]:transition-colors [&>li>a]:hover:text-accent sm:[&>li>a]:border-0 sm:[&>li>a]:bg-transparent sm:[&>li>a]:px-2 sm:[&>li>a]:py-1 sm:[&>li>a]:text-base sm:[&>li>a]:hover:bg-transparent",
           "hidden",
           "sm:static sm:z-auto sm:mt-0 sm:flex sm:w-auto sm:flex-row sm:items-center sm:gap-x-5 sm:gap-y-0 sm:rounded-none sm:border-0 sm:bg-transparent sm:p-0 sm:shadow-none sm:backdrop-blur-none",
         ]}
       >
-        <li class="mb-1 border-b border-border pb-2 sm:hidden">
-          <a href="/" class="flex items-center gap-2 rounded-lg px-3 py-2">
-            <span class="grid size-8 place-items-center rounded-md bg-card text-accent">
-              {SITE.title.slice(0, 1)}
-            </span>
-            <span class="truncate text-base font-semibold">{SITE.title}</span>
-          </a>
-        </li>
         <li>
           <a
             href="/"
@@ -135,10 +127,7 @@ const isActive = (path: string) => {
               { "active-nav": isActive("/") },
             ]}
           >
-            <span class="flex items-center gap-2">
-              <span class="text-base sm:hidden">🏠</span>
-              <span>Home</span>
-            </span>
+            <span>首页</span>
             <IconChevronRight class="size-4 sm:hidden" />
           </a>
         </li>
@@ -150,10 +139,7 @@ const isActive = (path: string) => {
               { "active-nav": isActive("/posts") },
             ]}
           >
-            <span class="flex items-center gap-2">
-              <span class="text-base sm:hidden">🗂️</span>
-              <span>Posts</span>
-            </span>
+            <span>文章</span>
             <IconChevronRight class="size-4 sm:hidden" />
           </a>
         </li>
@@ -165,10 +151,7 @@ const isActive = (path: string) => {
               { "active-nav": isActive("/tags") },
             ]}
           >
-            <span class="flex items-center gap-2">
-              <span class="text-base sm:hidden">🏷️</span>
-              <span>Tags</span>
-            </span>
+            <span>标签</span>
             <IconChevronRight class="size-4 sm:hidden" />
           </a>
         </li>
@@ -180,10 +163,7 @@ const isActive = (path: string) => {
               { "active-nav": isActive("/about") },
             ]}
           >
-            <span class="flex items-center gap-2">
-              <span class="text-base sm:hidden">👤</span>
-              <span>About</span>
-            </span>
+            <span>关于</span>
             <IconChevronRight class="size-4 sm:hidden" />
           </a>
         </li>
@@ -198,13 +178,10 @@ const isActive = (path: string) => {
                     "active-nav": isActive("/archives"),
                   },
                 ]}
-                title="Archives"
-                aria-label="Archives"
+                title="归档"
+                aria-label="归档"
               >
-                <span class="flex items-center gap-2">
-                  <span class="text-base sm:hidden">🗄️</span>
-                  <span>Archives</span>
-                </span>
+                <span>归档</span>
                 <IconChevronRight class="size-4 sm:hidden" />
               </LinkButton>
             </li>
@@ -231,7 +208,7 @@ const isActive = (path: string) => {
 
     if (isDesktopView) {
       menuBtn.setAttribute("aria-expanded", "false");
-      menuBtn.setAttribute("aria-label", "Open Menu");
+      menuBtn.setAttribute("aria-label", "打开菜单");
       menuItems.classList.remove("hidden");
       menuIconOpen.classList.remove("hidden");
       menuIconClose.classList.add("hidden");
@@ -265,7 +242,7 @@ const isActive = (path: string) => {
       const openMenu = menuBtn.getAttribute("aria-expanded") === "true";
 
       menuBtn.setAttribute("aria-expanded", openMenu ? "false" : "true");
-      menuBtn.setAttribute("aria-label", openMenu ? "Open Menu" : "Close Menu");
+      menuBtn.setAttribute("aria-label", openMenu ? "打开菜单" : "关闭菜单");
 
       syncNavByViewport();
     });
@@ -275,7 +252,7 @@ const isActive = (path: string) => {
       const target = event.target as Node;
       if (menuBtn.contains(target) || menuItems.contains(target)) return;
       menuBtn.setAttribute("aria-expanded", "false");
-      menuBtn.setAttribute("aria-label", "Open Menu");
+      menuBtn.setAttribute("aria-label", "打开菜单");
       syncNavByViewport();
     });
 
@@ -283,7 +260,7 @@ const isActive = (path: string) => {
       link.addEventListener("click", () => {
         if (window.innerWidth >= MOBILE_BREAKPOINT) return;
         menuBtn.setAttribute("aria-expanded", "false");
-        menuBtn.setAttribute("aria-label", "Open Menu");
+        menuBtn.setAttribute("aria-label", "打开菜单");
         syncNavByViewport();
       });
     });
