@@ -16,7 +16,7 @@ const sortedPosts = getSortedPosts(posts);
 const allPosts = sortedPosts.slice(0, SITE.postPerIndex);
 const pageCount = Math.ceil(sortedPosts.length / SITE.postPerPage);
 
-const indexPagination = {
+const indexPagination: Page<CollectionEntry<"blog">> = {
   currentPage: 1,
   lastPage: pageCount,
   url: {
@@ -47,8 +47,7 @@ const indexPagination = {
         </section>
       )
     }
-  </main>
-  <Footer />
+  </main>  <Footer />
 </Layout>
 
 <script>
