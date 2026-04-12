@@ -30,6 +30,9 @@ const {
 } = Astro.props;
 
 const socialImageURL = new URL(ogImage, Astro.url);
+const viewportContent = SITE.forceDesktopView
+  ? "width=1280, initial-scale=0.25"
+  : "width=device-width";
 
 const structuredData = {
   "@context": "https://schema.org",
@@ -56,7 +59,7 @@ const structuredData = {
 >
   <head>
     <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width" />
+    <meta name="viewport" content={viewportContent} />
     <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
     <link rel="canonical" href={canonicalURL} />
     <meta name="generator" content={Astro.generator} />
