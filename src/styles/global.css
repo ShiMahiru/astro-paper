@@ -185,6 +185,7 @@ button:not(:disabled),
   @apply grid items-start gap-4 sm:grid-cols-[minmax(0,1fr)_9.5rem];
 }
 
+
 .article-title-link {
   @apply inline-block text-xl leading-tight font-semibold text-foreground;
 }

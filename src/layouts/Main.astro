@@ -12,8 +12,8 @@ type Props = (StringTitle | ArrayTitle) & {
   showListToolbar?: boolean;
 };
 
-const { props } = Astro;
-const { showListToolbar = true } = props;
+const props = Astro.props as Props;
+const { pageDesc, showListToolbar = true } = props;
 
 const backUrl = SITE.showBackButton ? Astro.url.pathname : "/";
 const isHome = Astro.url.pathname === "/";
@@ -22,8 +22,9 @@ const isHome = Astro.url.pathname === "/";
 <Breadcrumb />
 <div class="home-desktop-grid app-layout">
   <HomeSidebar />
-  <main data-backUrl={backUrl} id="main-content" class="home-main-panel">
-    <section class="content-shell"
+  <main data-backurl={backUrl} id="main-content" class="home-main-panel">
+    <section class="content-shell">
+
       {
         "titleTransition" in props ? (
           <h1 class="text-2xl font-semibold sm:text-3xl">
@@ -33,7 +34,10 @@ const isHome = Astro.url.pathname === "/";
         ) : (
           <h1 class="text-2xl font-semibold sm:text-3xl">{props.pageTitle}</h1>
         )
-      }      {props.pageDesc && <p class="mt-1 text-foreground/80">{props.pageDesc}</p>}
+      }
+
+      {pageDesc && <p class="mt-1 text-foreground/80">{pageDesc}</p>}
+
 
       {
         showListToolbar && (
@@ -45,6 +49,7 @@ const isHome = Astro.url.pathname === "/";
           </div>
         )
       }
+
       <slot />
     </section>
   </main>
