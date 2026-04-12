@@ -74,7 +74,7 @@ button:not(:disabled),
 }
 
 .topbar-main {
-  @apply flex items-center justify-between border-b border-white/20 py-2;
+  @apply flex items-center justify-between gap-3 border-b border-white/20 py-2;
 }
 
 .site-brand {
@@ -85,12 +85,8 @@ button:not(:disabled),
   @apply flex items-center gap-1.5;
 }
 
-.topbar-nav-desktop {
-  @apply hidden items-center justify-between gap-4 border-b border-white/12 py-2 sm:flex;
-}
-
 .topbar-nav {
-  @apply flex items-center gap-1;
+  @apply items-center gap-1;
 }
 
 .toolbar-button,
@@ -113,11 +109,11 @@ button:not(:disabled),
 }
 
 .mobile-menu {
-  @apply mt-2 border-t border-white/15 pt-2 sm:hidden;
+  @apply mt-2 rounded-xl border border-white/20 bg-white/70 p-2 backdrop-blur-md sm:hidden dark:bg-[#0f182c]/75;
 }
 
 .mobile-menu-links {
-  @apply grid grid-cols-2 gap-1;
+  @apply flex flex-col gap-1;
 }
 
 .search-input-wrap {
@@ -138,10 +134,6 @@ button:not(:disabled),
 
 .profile-panel {
   @apply border-b border-white/15 pb-4;
-}
-
-.home-profile-avatar {
-  @apply h-40 w-full object-cover;
 }
 
 .home-profile-name {
@@ -254,6 +246,31 @@ button:not(:disabled),
 
 :target {
   scroll-margin-block: 1rem;
+}
+
+
+.home-profile-avatar {
+  @apply aspect-square h-auto w-full object-cover;
+}
+
+#mobile-search-inline {
+  @apply min-w-0 flex-1;
+}
+
+html[data-theme="light"] .mobile-menu {
+  @apply border-black/10 bg-white/85;
+}
+
+html[data-theme="light"] .search-input-wrap {
+  @apply border-black/25;
+}
+
+html[data-theme="light"] .toolbar-button:hover,
+html[data-theme="light"] .toolbar-button.is-selected,
+html[data-theme="light"] .toolbar-icon-btn:hover,
+html[data-theme="light"] .pagination-control:hover,
+html[data-theme="light"] .pagination-control.is-selected {
+  @apply border-black/30 text-foreground;
 }
 
 @media (max-width: 639px) {
