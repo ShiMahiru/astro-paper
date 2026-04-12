@@ -1,13 +1,13 @@
 ---
 author: Sat Naing
 pubDatetime: 2023-09-25T10:25:54.547Z
-title: AstroPaper 3.0
+title: "AstroPaper 3.0"
 slug: astro-paper-v3
 featured: false
 ogImage: https://github.com/satnaing/astro-paper/assets/53733092/1ef0cf03-8137-4d67-ac81-84a032119e3a
 tags:
   - release
-description: "AstroPaper Version 3: Elevating Your Web Experience with Astro v3 and Seamless View Transitions"
+description: "AstroPaper v3：基于 Astro v3 与无缝视图过渡，提升整体浏览体验。"
 ---
 
 We're excited to announce the release of AstroPaper v3, packed with new features, enhancements, and bug fixes to elevate your web development experience. Let's dive into the highlights of this release:

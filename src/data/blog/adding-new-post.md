@@ -2,15 +2,13 @@
 author: Sat Naing
 pubDatetime: 2022-09-23T15:22:00Z
 modDatetime: 2025-06-13T16:52:45.934Z
-title: Adding new posts in AstroPaper theme
+title: "在 AstroPaper 中添加新文章"
 slug: adding-new-posts-in-astropaper-theme
 featured: true
 draft: false
 tags:
   - docs
-description:
-  Some rules & recommendations for creating or adding new posts using AstroPaperr
-  theme.
+description: "创建和发布新文章时的规则、建议与最佳实践。"
 ---
 
 Here are some rules/recommendations, tips & ticks for creating new posts in AstroPaper blog theme.
@@ -102,7 +100,7 @@ Here is the sample frontmatter for a post.
 
 ```yaml file="src/data/blog/sample-post.md"
 ---
-title: The title of the post
+title: "在 AstroPaper 中添加新文章"
 author: your name
 pubDatetime: 2022-09-21T05:17:19Z
 slug: the-title-of-the-post
@@ -114,7 +112,7 @@ tags:
   - tags
 ogImage: ../../assets/images/example.png # src/assets/images/example.png
 # ogImage: "https://example.org/remote-image.png" # remote URL
-description: This is the example description of the example post.
+description: "创建和发布新文章时的规则、建议与最佳实践。"
 canonicalURL: https://example.org/my-article-was-already-posted-here
 ---
 ```
