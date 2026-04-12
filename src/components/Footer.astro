@@ -11,21 +11,19 @@ type Props = {
 const { noMarginTop = false, class: className, ...attrs } = Astro.props;
 ---
 
-<footer class:list={["app-layout mt-6", { "sm:mt-0": noMarginTop }, className]} {...attrs}>
-  <GlassPanel class="footer-panel" level="subtle">
-    <div class="flex flex-col items-center text-center leading-relaxed">
-      <span>
-        版权所有 &#169; {currentYear}
-        <a
-          href="/rss.xml"
-          class="ms-2 underline decoration-dashed underline-offset-4 hover:opacity-80"
-          aria-label="RSS 订阅"
-          title="RSS 订阅"
-        >
-          RSS
-        </a>
-      </span>
-      <span>保留所有权利。</span>
-    </div>
-  </GlassPanel>
+<footer class:list={["app-layout mt-10 border-t border-border/40", { "sm:mt-8": noMarginTop }, className]} {...attrs}>
+  <div class="py-5 text-center text-sm text-foreground/70">
+    <span>
+      版权所有 &#169; {currentYear}
+      <a
+        href="/rss.xml"
+        class="ms-2 underline decoration-dashed underline-offset-4 hover:opacity-80"
+        aria-label="RSS 订阅"
+        title="RSS 订阅"
+      >
+        RSS
+      </a>
+    </span>
+    <span class="ms-2">保留所有权利。</span>
+  </div>
 </footer>

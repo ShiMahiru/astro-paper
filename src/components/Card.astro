@@ -13,9 +13,11 @@ type Props = {
 const { variant: Heading = "h2", id, data, body, filePath } = Astro.props;
 
 const { title, description, ogImage, ...props } = data;
-const coverSrc = typeof ogImage === "string" ? ogImage : ogImage?.src;
-
-const wordCount = (body ?? "")
+const coverSrc =
+  typeof ogImage === "string"
+    ? ogImage
+    : ogImage?.src ?? "/astropaper-og.jpg";
+   const wordCount = (body ?? "")
   .replace(/```[\s\S]*?```/g, "")
   .replace(/`[^`]*`/g, "")
   .trim()
@@ -26,8 +28,6 @@ const readingMinutes = Math.max(1, Math.round(wordCount / 220));
 
 <li class="article-list-item" data-title={title} data-ts={new Date(data.pubDatetime).getTime()}>
   <article class="article-card">
-    <a href={getPath(id, filePath)} class="article-card-link" aria-label={title}></a>
-
     <div class="article-content">
       <a href={getPath(id, filePath)} class="article-title-link">
         <Heading style={{ viewTransitionName: slugifyStr(title.replaceAll(".", "-")) }}>
@@ -42,12 +42,8 @@ const readingMinutes = Math.max(1, Math.round(wordCount / 220));
       </MetaRow>
     </div>
 
-    <div class="article-cover" aria-hidden="true">
-      {coverSrc ? (
-        <img src={coverSrc} alt="" loading="lazy" decoding="async" />
-      ) : (
-        <div class="article-cover-placeholder">{title.slice(0, 8)}</div>
-      )}
-    </div>
+    <a href={getPath(id, filePath)} class="article-cover-link" aria-label={title}>
+      <img src={coverSrc} alt="" loading="lazy" decoding="async" class="article-cover" />
+    </a>
   </article>
 </li>

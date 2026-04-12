@@ -55,51 +55,47 @@ const paginationItems = getPaginationItems(page.currentPage, page.lastPage);
 
 {
   page.lastPage > 1 && (
-    <GlassPanel level="subtle" class="pagination-shell">
-      <nav class="pagination-nav" role="navigation" aria-label="分页导航">
-        {page.url.prev ? (
-          <a href={page.url.prev} aria-label="前往上一页" class="pagination-control">
-            <IconChevronLeft class="h-4 w-4 sm:h-5 sm:w-5" />
-          </a>
-        ) : (
-          <span aria-hidden="true" class="pagination-control is-disabled">
-            <IconChevronLeft class="h-4 w-4 sm:h-5 sm:w-5" />
-          </span>
-        )}
+    <nav class="pagination-shell" role="navigation" aria-label="分页导航">
+      {page.url.prev ? (
+        <a href={page.url.prev} aria-label="前往上一页" class="pagination-control">
+          <IconChevronLeft class="h-4 w-4" />
+        </a>
+      ) : (
+        <span aria-hidden="true" class="pagination-control is-disabled">
+          <IconChevronLeft class="h-4 w-4" />
+        </span>
+      )}
 
-        <div class="pagination-compact sm:hidden">
-          第 {page.currentPage} / {page.lastPage} 页
-        </div>
+      <div class="pagination-compact sm:hidden">第 {page.currentPage} / {page.lastPage} 页</div>
 
-        <ul class="hidden items-center gap-2 sm:flex">
-          {paginationItems.map(item => (
-            <li>
-              {item === "ellipsis" ? (
-                <span class="pagination-ellipsis">…</span>
-              ) : (
-                <a
-                  href={getPageUrl(item)}
-                  aria-label={`前往第 ${item} 页`}
-                  aria-current={item === page.currentPage ? "page" : undefined}
-                  class:list={["pagination-control", { "is-selected": item === page.currentPage }]}
-                >
-                  {item}
-                </a>
-              )}
-            </li>
-          ))}
-        </ul>
+      <ul class="hidden items-center gap-1 sm:flex">
+        {paginationItems.map(item => (
+          <li>
+            {item === "ellipsis" ? (
+              <span class="pagination-ellipsis">…</span>
+            ) : (
+              <a
+                href={getPageUrl(item)}
+                aria-label={`前往第 ${item} 页`}
+                aria-current={item === page.currentPage ? "page" : undefined}
+                class:list={["pagination-control", { "is-selected": item === page.currentPage }]}
+              >
+                {item}
+              </a>
+            )}
+          </li>
+        ))}
+      </ul>
 
-        {page.url.next ? (
-          <a href={page.url.next} aria-label="前往下一页" class="pagination-control">
-            <IconChevronRight class="h-4 w-4 sm:h-5 sm:w-5" />
-          </a>
-        ) : (
-          <span aria-hidden="true" class="pagination-control is-disabled">
-            <IconChevronRight class="h-4 w-4 sm:h-5 sm:w-5" />
-          </span>
-        )}
-      </nav>
-    </GlassPanel>
+      {page.url.next ? (
+        <a href={page.url.next} aria-label="前往下一页" class="pagination-control">
+          <IconChevronRight class="h-4 w-4" />
+        </a>
+      ) : (
+        <span aria-hidden="true" class="pagination-control is-disabled">
+          <IconChevronRight class="h-4 w-4" />
+        </span>
+      )}
+    </nav>
   )
 }
