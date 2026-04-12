@@ -1,10 +1,7 @@
 ---
 import IconMoon from "@/assets/icons/IconMoon.svg";
 import IconSunHigh from "@/assets/icons/IconSunHigh.svg";
-import IconMenuDeep from "@/assets/icons/IconMenuDeep.svg";
 import IconSearch from "@/assets/icons/IconSearch.svg";
-import IconX from "@/assets/icons/IconX.svg";
-import IconChevronRight from "@/assets/icons/IconChevronRight.svg";
 import LinkButton from "./LinkButton.astro";
 import { SITE } from "@/config";
 
@@ -36,7 +33,7 @@ const isActive = (path: string) => {
   <div
     id="top-nav-wrap"
     class:list={[
-      "py-4 sm:py-6",
+      "py-4 sm:py-6 md:py-8",
       "border-b border-border",
       "home-header-inner relative w-full bg-background",
       "flex items-baseline justify-between sm:items-center",
@@ -55,24 +52,7 @@ const isActive = (path: string) => {
       <form
         action="/search"
         method="get"
-        class="relative me-2 w-full max-w-24 sm:hidden"
-      >
-        <label for="mobile-top-search" class="sr-only">搜索</label>
-        <IconSearch
-          class="pointer-events-none absolute top-1/2 left-3 size-4 -translate-y-1/2 opacity-70"
-        />
-        <input
-          id="mobile-top-search"
-          name="q"
-          type="search"
-          placeholder="搜索"
-          class="focus-outline bg-card w-full rounded-xl border border-border py-2 pr-3 pl-9 text-sm placeholder:text-muted"
-        />
-      </form>
-      <form
-        action="/search"
-        method="get"
-        class="relative me-2 hidden w-full max-w-48 sm:block"
+        class="relative me-2 hidden w-full max-w-48 md:block"
       >
         <label for="header-search" class="sr-only">搜索</label>
         <IconSearch
@@ -100,71 +80,29 @@ const isActive = (path: string) => {
           </button>
         )
       }
-      <button
-        id="menu-btn"
-        class="focus-outline p-2 sm:hidden"
-        aria-label="打开菜单"
-        aria-expanded="false"
-        aria-controls="menu-items"
-      >
-        <IconMenuDeep id="menu-icon-open" />
-        <IconX id="menu-icon-close" class="hidden" />
-      </button>
       <ul
         id="menu-items"
         class:list={[
-          "absolute top-full right-0 z-50 mt-2 flex w-[min(16rem,calc(100vw-1.25rem))] flex-col items-stretch gap-1 rounded-xl border border-border bg-card p-2 shadow-md",
-          "[&>li>a]:block [&>li>a]:rounded-lg [&>li>a]:px-3 [&>li>a]:py-2 [&>li>a]:text-sm [&>li>a]:font-medium [&>li>a]:whitespace-nowrap [&>li>a]:transition-colors [&>li>a]:hover:text-accent sm:[&>li>a]:border-0 sm:[&>li>a]:bg-transparent sm:[&>li>a]:px-2 sm:[&>li>a]:py-1 sm:[&>li>a]:text-base sm:[&>li>a]:hover:bg-transparent",
-          "hidden",
-          "sm:static sm:z-auto sm:mt-0 sm:flex sm:w-auto sm:flex-row sm:items-center sm:gap-x-5 sm:gap-y-0 sm:rounded-none sm:border-0 sm:bg-transparent sm:p-0 sm:shadow-none sm:backdrop-blur-none",
+          "hidden md:flex md:w-auto md:flex-row md:items-center md:gap-5",
+          "[&>li>a]:p-1 [&>li>a]:font-medium [&>li>a]:whitespace-nowrap",
         ]}
       >
         <li>
-          <a
-            href="/"
-            class:list={[
-              "flex items-center justify-between gap-3",
-              { "active-nav": isActive("/") },
-            ]}
-          >
-            <span>首页</span>
-            <IconChevronRight class="size-4 sm:hidden" />
+          <a href="/" class:list={[{ "active-nav": isActive("/") }]}>首页</a>
+        </li>
+        <li>
+          <a href="/posts" class:list={[{ "active-nav": isActive("/posts") }]}>
+            文章
           </a>
         </li>
         <li>
-          <a
-            href="/posts"
-            class:list={[
-              "flex items-center justify-between gap-3",
-              { "active-nav": isActive("/posts") },
-            ]}
-          >
-            <span>文章</span>
-            <IconChevronRight class="size-4 sm:hidden" />
+          <a href="/tags" class:list={[{ "active-nav": isActive("/tags") }]}>
+            标签
           </a>
         </li>
         <li>
-          <a
-            href="/tags"
-            class:list={[
-              "flex items-center justify-between gap-3",
-              { "active-nav": isActive("/tags") },
-            ]}
-          >
-            <span>标签</span>
-            <IconChevronRight class="size-4 sm:hidden" />
-          </a>
-        </li>
-        <li>
-          <a
-            href="/about"
-            class:list={[
-              "flex items-center justify-between gap-3",
-              { "active-nav": isActive("/about") },
-            ]}
-          >
-            <span>关于</span>
-            <IconChevronRight class="size-4 sm:hidden" />
+          <a href="/about" class:list={[{ "active-nav": isActive("/about") }]}>
+            关于
           </a>
         </li>
         {
@@ -181,8 +119,7 @@ const isActive = (path: string) => {
                 title="归档"
                 aria-label="归档"
               >
-                <span>归档</span>
-                <IconChevronRight class="size-4 sm:hidden" />
+                归档
               </LinkButton>
             </li>
           )
@@ -191,89 +128,3 @@ const isActive = (path: string) => {
     </nav>
   </div>
 </header>
-
-<script>
-  const MOBILE_BREAKPOINT = 640;
-
-  function syncNavByViewport() {
-    const menuBtn = document.querySelector<HTMLButtonElement>("#menu-btn");
-    const menuItems = document.querySelector<HTMLUListElement>("#menu-items");
-    const menuIconOpen = document.querySelector<SVGElement>("#menu-icon-open");
-    const menuIconClose =
-      document.querySelector<SVGElement>("#menu-icon-close");
-
-    if (!menuBtn || !menuItems || !menuIconOpen || !menuIconClose) return;
-
-    const isDesktopView = window.innerWidth >= MOBILE_BREAKPOINT;
-
-    if (isDesktopView) {
-      menuBtn.setAttribute("aria-expanded", "false");
-      menuBtn.setAttribute("aria-label", "打开菜单");
-      menuItems.classList.remove("hidden");
-      menuIconOpen.classList.remove("hidden");
-      menuIconClose.classList.add("hidden");
-      return;
-    }
-
-    const isOpen = menuBtn.getAttribute("aria-expanded") === "true";
-
-    menuItems.classList.toggle("hidden", !isOpen);
-    menuIconOpen.classList.toggle("hidden", isOpen);
-    menuIconClose.classList.toggle("hidden", !isOpen);
-  }
-
-  function toggleNav() {
-    const menuBtn = document.querySelector<HTMLButtonElement>("#menu-btn");
-    const menuItems = document.querySelector<HTMLUListElement>("#menu-items");
-    const menuIconOpen = document.querySelector<SVGElement>("#menu-icon-open");
-    const menuIconClose =
-      document.querySelector<SVGElement>("#menu-icon-close");
-
-    if (!menuBtn || !menuItems || !menuIconOpen || !menuIconClose) return;
-
-    if (menuBtn.dataset.bound === "true") {
-      syncNavByViewport();
-      return;
-    }
-
-    menuBtn.dataset.bound = "true";
-
-    menuBtn.addEventListener("click", () => {
-      const openMenu = menuBtn.getAttribute("aria-expanded") === "true";
-
-      menuBtn.setAttribute("aria-expanded", openMenu ? "false" : "true");
-      menuBtn.setAttribute("aria-label", openMenu ? "打开菜单" : "关闭菜单");
-
-      syncNavByViewport();
-    });
-
-    document.addEventListener("click", event => {
-      if (window.innerWidth >= MOBILE_BREAKPOINT) return;
-      const target = event.target as Node;
-      if (menuBtn.contains(target) || menuItems.contains(target)) return;
-      menuBtn.setAttribute("aria-expanded", "false");
-      menuBtn.setAttribute("aria-label", "打开菜单");
-      syncNavByViewport();
-    });
-
-    menuItems.querySelectorAll("a").forEach(link => {
-      link.addEventListener("click", () => {
-        if (window.innerWidth >= MOBILE_BREAKPOINT) return;
-        menuBtn.setAttribute("aria-expanded", "false");
-        menuBtn.setAttribute("aria-label", "打开菜单");
-        syncNavByViewport();
-      });
-    });
-
-    syncNavByViewport();
-  }
-
-  toggleNav();
-  window.addEventListener("resize", syncNavByViewport);
-
-  // Runs on view transitions navigation
-  document.addEventListener("astro:after-swap", () => {
-    toggleNav();
-    syncNavByViewport();
-  });
-</script>
