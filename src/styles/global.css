@@ -96,11 +96,11 @@ html[data-theme="dark"] {
 }
 
 @utility max-w-app {
-  @apply max-w-3xl lg:max-w-[var(--desktop-content-max-width)];
+  @apply max-w-none;
 }
 
 @utility app-layout {
-  @apply mx-auto w-full max-w-app px-4;
+  @apply w-full max-w-none px-0;
 }
 
 .home-fuwari-layout {
@@ -117,7 +117,7 @@ html[data-theme="dark"] {
 
 @media (min-width: 1024px) {
   .home-fuwari-layout {
-    @apply mx-auto grid max-w-7xl grid-cols-[20rem_minmax(0,1fr)] gap-10 px-6;
+    @apply grid w-full max-w-none grid-cols-[20rem_minmax(0,1fr)] gap-10 px-0;
   }
 
   .home-fuwari-sidebar :is(header, footer) {
@@ -213,7 +213,7 @@ html[data-theme="dark"] {
   }
 
   .home-desktop-grid {
-    @apply grid grid-cols-[var(--desktop-home-sidebar-width)_minmax(0,1fr)] gap-8 pt-6;
+    @apply grid w-full max-w-none grid-cols-[var(--desktop-home-sidebar-width)_minmax(0,1fr)] gap-8 pt-6;
   }
 
   .home-profile-card {
