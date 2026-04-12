@@ -144,7 +144,8 @@ html[data-theme="dark"] {
 
 @media (min-width: 1024px) {
   .home-shell {
-    background-image: linear-gradient(120deg, #1f2b46 0%, #131a2b 55%, #1a2237 100%);
+    background-image: none;
+    background-color: var(--color-background);
   }
 
   .home-header {
@@ -152,8 +153,13 @@ html[data-theme="dark"] {
   }
 
   .home-header .home-header-inner {
-    @apply rounded-2xl border border-white/10 px-6 backdrop-blur-md;
-    background-color: rgb(15 23 42 / 0.45);
+    @apply rounded-2xl border px-6 backdrop-blur-md;
+    border-color: var(--color-border);
+    background-color: color-mix(
+      in srgb,
+      var(--color-background) 92%,
+      transparent
+    );
   }
 
   .home-desktop-grid {
@@ -161,8 +167,13 @@ html[data-theme="dark"] {
   }
 
   .home-profile-card {
-    @apply sticky top-8 rounded-2xl border border-white/15 p-4 text-center backdrop-blur-md;
-    background-color: rgb(15 23 42 / 0.5);
+    @apply sticky top-8 rounded-2xl border p-4 text-center backdrop-blur-md;
+    border-color: var(--color-border);
+    background-color: color-mix(
+      in srgb,
+      var(--color-background) 94%,
+      transparent
+    );
   }
 
   .home-profile-avatar {
@@ -188,8 +199,13 @@ html[data-theme="dark"] {
   .home-notice-card,
   .home-action-card,
   .home-post-card {
-    @apply rounded-2xl border border-white/10 px-6 py-5 backdrop-blur-md;
-    background-color: rgb(15 23 42 / 0.48);
+    @apply rounded-2xl border px-6 py-5 backdrop-blur-md;
+    border-color: var(--color-border);
+    background-color: color-mix(
+      in srgb,
+      var(--color-background) 94%,
+      transparent
+    );
   }
 
   .home-action-card {
