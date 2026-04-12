@@ -86,11 +86,7 @@ button:not(:disabled),
 }
 
 .topbar-nav-desktop {
-  @apply hidden items-center justify-between gap-4 border-b border-white/12 py-2 sm:flex;
-}
-
-.topbar-nav {
-  @apply flex items-center gap-1;
+  @apply hidden items-center gap-1 sm:flex;
 }
 
 .toolbar-button,
@@ -117,7 +113,7 @@ button:not(:disabled),
 }
 
 .mobile-menu-links {
-  @apply grid grid-cols-2 gap-1;
+  @apply flex flex-col items-start gap-1;
 }
 
 .search-input-wrap {
@@ -126,6 +122,14 @@ button:not(:disabled),
 
 .search-input {
   @apply h-full w-full bg-transparent text-sm placeholder:text-foreground/60 focus:outline-none;
+}
+
+.mobile-inline-search {
+  @apply w-36;
+}
+
+.mobile-inline-search .search-input-wrap {
+  @apply h-8 min-w-0;
 }
 
 .home-desktop-grid {
@@ -141,7 +145,7 @@ button:not(:disabled),
 }
 
 .home-profile-avatar {
-  @apply h-40 w-full object-cover;
+  @apply h-40 w-40 object-cover;
 }
 
 .home-profile-name {
@@ -263,6 +267,10 @@ button:not(:disabled),
 
   .search-input-wrap {
     @apply w-full min-w-0;
+  }
+
+  .mobile-inline-search {
+    @apply w-32;
   }
 
   .content-shell {

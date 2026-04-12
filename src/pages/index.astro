@@ -8,7 +8,6 @@ import Header from "@/components/Header.astro";
 import Footer from "@/components/Footer.astro";
 import Card from "@/components/Card.astro";
 import Pagination from "@/components/Pagination.astro";
-import SearchInput from "@/components/SearchInput.astro";
 import getSortedPosts from "@/utils/getSortedPosts";
 import { SITE } from "@/config";
 
@@ -27,16 +26,16 @@ const indexPagination = {
     prev: undefined,
     next: pageCount > 1 ? "/posts/2/" : undefined,
   },
-} satisfies Pick<Page<CollectionEntry<"blog">>, "currentPage" | "lastPage" | "url">;
+} satisfies Pick<
+  Page<CollectionEntry<"blog">>,
+  "currentPage" | "lastPage" | "url"
+>;
 ---
 
 <Layout>
   <div class="home-shell">
     <Header />
     <Main pageTitle="">
-      <div class="mb-5">
-        <SearchInput id="home-search" />
-      </div>
       {
         allPosts.length > 0 && (
           <section id="recent-posts" class="pb-2">

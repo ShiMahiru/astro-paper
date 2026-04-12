@@ -27,23 +27,45 @@ const isActive = (path: string) => {
 </a>
 
 <header class="home-header">
-  <div class="app-layout relative">
+  <div class="relative app-layout">
     <div class="topbar-main">
       <a href="/" class="site-brand">{SITE.title}</a>
 
+      <nav class="topbar-nav-desktop" aria-label="主导航">
+        <ToolbarButton href="/" selected={currentPath === "/"}
+          >首页</ToolbarButton
+        >
+        {
+          SITE.showArchives && (
+            <ToolbarButton href="/archives" selected={isActive("/archives")}>
+              归档
+            </ToolbarButton>
+          )
+        }
+        <ToolbarButton href="/about" selected={isActive("/about")}
+          >关于</ToolbarButton
+        >
+        <SearchInput id="desktop-search" />
+      </nav>
+
       <div class="topbar-right">
-        {SITE.lightAndDarkMode && (
-          <button
-            id="theme-btn"
-            class="toolbar-icon-btn"
-            title="切换主题"
-            aria-label="auto"
-            aria-live="polite"
-          >
-            <IconMoon class="theme-icon scale-100 rotate-0 dark:scale-0 dark:-rotate-90" />
-            <IconSunHigh class="theme-icon scale-0 rotate-90 dark:scale-100 dark:rotate-0" />
-          </button>
-        )}
+        <div class="mobile-inline-search sm:hidden">
+          <SearchInput id="mobile-top-search" placeholder="搜索..." />
+        </div>
+        {
+          SITE.lightAndDarkMode && (
+            <button
+              id="theme-btn"
+              class="toolbar-icon-btn"
+              title="切换主题"
+              aria-label="auto"
+              aria-live="polite"
+            >
+              <IconMoon class="theme-icon scale-100 rotate-0 dark:scale-0 dark:-rotate-90" />
+              <IconSunHigh class="theme-icon scale-0 rotate-90 dark:scale-100 dark:rotate-0" />
+            </button>
+          )
+        }
         <button
           id="menu-btn"
           class="toolbar-icon-btn sm:hidden"
@@ -57,34 +79,34 @@ const isActive = (path: string) => {
       </div>
     </div>
 
-    <div class="topbar-nav-desktop">
-      <nav class="topbar-nav" aria-label="主导航">
-        <ToolbarButton href="/" selected={currentPath === "/"}>首页</ToolbarButton>
-        {SITE.showArchives && (
-          <ToolbarButton href="/archives" selected={isActive("/archives")}>归档</ToolbarButton>
-        )}
-        <ToolbarButton href="/about" selected={isActive("/about")}>关于</ToolbarButton>
-      </nav>
-      <SearchInput id="desktop-search" />
-    </div>
-
     <div id="menu-items" class="mobile-menu hidden" aria-label="主导航">
       <nav class="mobile-menu-links">
-        <ToolbarButton href="/" selected={currentPath === "/"}>首页</ToolbarButton>
-        {SITE.showArchives && (
-          <ToolbarButton href="/archives" selected={isActive("/archives")}>归档</ToolbarButton>
-        )}
-        <ToolbarButton href="/about" selected={isActive("/about")}>关于</ToolbarButton>
+        <ToolbarButton href="/" selected={currentPath === "/"}
+          >首页</ToolbarButton
+        >
+        {
+          SITE.showArchives && (
+            <ToolbarButton href="/archives" selected={isActive("/archives")}>
+              归档
+            </ToolbarButton>
+          )
+        }
+        <ToolbarButton href="/about" selected={isActive("/about")}
+          >关于</ToolbarButton
+        >
       </nav>
-      <SearchInput id="mobile-search" />
     </div>
   </div>
 </header>
 
 <script>
   function toggleNav() {
-    const menuBtn = document.querySelector("#menu-btn") as HTMLButtonElement | null;
-    const menuItems = document.querySelector("#menu-items") as HTMLElement | null;
+    const menuBtn = document.querySelector(
+      "#menu-btn"
+    ) as HTMLButtonElement | null;
+    const menuItems = document.querySelector(
+      "#menu-items"
+    ) as HTMLElement | null;
     const menuIcon = document.querySelector("#menu-icon");
     const closeIcon = document.querySelector("#close-icon");
 
