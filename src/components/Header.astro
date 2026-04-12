@@ -24,19 +24,19 @@ const isActive = (path: string) => {
 <a
   id="skip-to-content"
   href="#main-content"
-  class="absolute start-16 -top-full z-50 bg-background px-3 py-2 text-accent transition-all focus:top-4"
+  class="absolute start-16 -top-full z-50 px-3 py-2 text-accent transition-all focus:top-4"
 >
   跳转到正文
 </a>
 
 <header
-  class="home-header app-layout flex flex-col items-center justify-between sm:flex-row"
+  class="home-header flex app-layout flex-col items-center justify-between sm:flex-row"
 >
   <div
     id="top-nav-wrap"
     class:list={[
       "border-b border-border/70 py-3 sm:py-4 md:py-5",
-      "home-header-inner relative w-full bg-background",
+      "home-header-inner relative w-full",
       "flex items-baseline justify-between sm:items-center",
     ]}
   >
@@ -109,7 +109,7 @@ const isActive = (path: string) => {
               type="search"
               name="q"
               placeholder="搜索文章..."
-              class="w-44 rounded-md bg-background px-3 py-1.5 text-sm text-foreground focus:outline-none"
+              class="w-44 border-b border-border/70 px-0 py-1.5 text-sm text-foreground focus:outline-none"
             />
           </form>
         </li>

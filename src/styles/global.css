@@ -12,9 +12,6 @@ html[data-theme="light"] {
   --border: #ece9e9;
   --desktop-content-max-width: 72rem;
   --desktop-home-sidebar-width: 18rem;
-  --shell-bg: color-mix(in srgb, #ffffff 38%, transparent);
-  --panel-bg: color-mix(in srgb, #ffffff 52%, transparent);
-  --panel-border: color-mix(in srgb, var(--border) 65%, transparent);
 }
 
 html[data-theme="dark"] {
@@ -23,9 +20,6 @@ html[data-theme="dark"] {
   --accent: #ff6b01;
   --muted: #343f60;
   --border: #ab4b08;
-  --shell-bg: color-mix(in srgb, #111827 34%, transparent);
-  --panel-bg: color-mix(in srgb, #111827 45%, transparent);
-  --panel-border: color-mix(in srgb, var(--border) 55%, transparent);
 }
 
 @theme inline {
@@ -50,8 +44,8 @@ body {
   background-image:
     linear-gradient(
       to bottom,
-      color-mix(in srgb, var(--background) 40%, transparent),
-      color-mix(in srgb, var(--background) 55%, transparent)
+      color-mix(in srgb, var(--background) 30%, transparent),
+      color-mix(in srgb, var(--background) 42%, transparent)
     ),
     var(--site-bg-image);
   background-position: center;
@@ -68,35 +62,6 @@ button:not(:disabled),
   cursor: pointer;
 }
 
-.app-glass-shell {
-  @apply mx-auto min-h-svh w-full;
-  background-color: transparent;
-  backdrop-filter: blur(2px);
-}
-
-.app-glass-shell :is(header, main, footer, article, section, aside, nav) {
-  background-color: var(--panel-bg);
-  border: 1px solid var(--panel-border);
-  backdrop-filter: blur(16px) saturate(120%);
-  box-shadow: none;
-}
-
-/* Keep container surfaces background-only (no borders / shadows). */
-.app-glass-shell
-  :is(
-    [class*="container"],
-    [class*="shell"],
-    [class*="panel"],
-    [class*="card"]
-  ) {
-  border: 0 !important;
-  box-shadow: none !important;
-}
-
-.app-glass-shell .bg-background {
-  background-color: var(--panel-bg) !important;
-}
-
 @utility max-w-app {
   @apply max-w-none;
 }
@@ -105,76 +70,8 @@ button:not(:disabled),
   @apply w-full max-w-none px-4 sm:px-6 lg:px-10;
 }
 
-.home-fuwari-layout {
-  @apply flex min-h-svh flex-col;
-}
-
-.home-fuwari-sidebar {
-  @apply lg:sticky lg:top-0 lg:h-svh lg:overflow-y-auto;
-}
-
-.home-fuwari-main {
-  @apply grow;
-}
-
-@media (min-width: 1024px) {
-  .home-fuwari-layout {
-    @apply grid w-full max-w-none grid-cols-[20rem_minmax(0,1fr)] gap-10 px-4 sm:px-6 lg:px-10;
-  }
-
-  .home-fuwari-sidebar :is(header, footer) {
-    @apply mx-0 max-w-none px-2;
-  }
-
-  .home-fuwari-main {
-    @apply max-w-none px-2 pt-0;
-  }
-}
-
 .active-nav {
   @apply text-accent sm:underline sm:decoration-wavy sm:decoration-2 sm:underline-offset-8;
-}
-
-@media (min-width: 1024px) {
-  .desktop-side-footer {
-    position: fixed;
-    bottom: 1.5rem;
-    left: max(
-      1.5rem,
-      calc(
-        (100vw - var(--desktop-content-max-width)) / 2 -
-          var(--desktop-home-sidebar-width) - 1.5rem
-      )
-    );
-    width: calc(var(--desktop-home-sidebar-width) - 1rem);
-    margin: 0;
-    padding: 0;
-    z-index: 20;
-  }
-
-  .desktop-side-footer .desktop-side-footer-inner {
-    border-top: 0;
-    border: 0;
-    border-radius: 0.75rem;
-    padding: 0.9rem;
-    background-color: var(--panel-bg);
-    box-shadow: none;
-    display: flex;
-    flex-direction: column;
-    align-items: flex-start;
-    gap: 0.75rem;
-  }
-
-  .desktop-side-footer .desktop-footer-avatar {
-    order: 0;
-    margin-bottom: 0;
-  }
-
-  .desktop-side-footer .desktop-footer-copy {
-    margin: 0;
-    align-items: flex-start;
-    text-align: left;
-  }
 }
 
 /* Source: https://piccalil.li/blog/a-more-modern-css-reset/ */
@@ -185,16 +82,11 @@ button:not(:disabled),
 
 .home-shell {
   @apply min-h-svh;
-  background-color: transparent;
-}
-
-.home-unified-surface {
-  background-color: var(--panel-bg);
 }
 
 .home-post-card {
-  @apply my-0 py-4;
-  border-bottom: 1px solid var(--panel-border);
+  @apply my-0 py-3;
+  border-bottom: 1px solid color-mix(in srgb, var(--border) 75%, transparent);
 }
 
 .home-post-card:last-child {
@@ -207,24 +99,20 @@ button:not(:disabled),
   }
 
   .home-header .home-header-inner {
-    @apply px-2;
-    background-color: var(--panel-bg);
-    box-shadow: none;
-    border-bottom: 1px solid var(--panel-border);
+    @apply px-0;
+    border-bottom: 1px solid color-mix(in srgb, var(--border) 75%, transparent);
   }
 
   .home-desktop-grid {
-    @apply grid w-full max-w-none grid-cols-[var(--desktop-home-sidebar-width)_minmax(0,1fr)] gap-4 pt-0;
+    @apply grid w-full max-w-none grid-cols-[var(--desktop-home-sidebar-width)_minmax(0,1fr)] gap-8 pt-0;
   }
 
   .home-profile-card {
-    @apply sticky top-5 p-2 text-left;
-    box-shadow: none;
-    border-bottom: 1px solid var(--panel-border);
+    @apply sticky top-5 self-start py-1 text-left;
   }
 
   .home-profile-avatar {
-    @apply h-52 w-full rounded-md object-cover;
+    @apply h-44 w-full object-cover;
   }
 
   .home-profile-name {
@@ -240,8 +128,8 @@ button:not(:disabled),
   }
 
   .home-main-panel {
-    @apply max-w-none px-3 py-3;
-    border-bottom: 1px solid var(--panel-border);
+    @apply max-w-none py-2 ps-6;
+    border-left: 1px solid color-mix(in srgb, var(--border) 70%, transparent);
   }
 
   .home-notice-card,
@@ -249,8 +137,7 @@ button:not(:disabled),
   .home-post-card {
     @apply rounded-none px-0 py-0;
     background-color: transparent;
-    box-shadow: none;
-    border-bottom: 1px solid var(--panel-border);
+    border-bottom: 1px solid color-mix(in srgb, var(--border) 75%, transparent);
   }
 
   .home-action-card {
@@ -280,5 +167,15 @@ button:not(:disabled),
 
   .home-post-card p {
     @apply mt-2 text-foreground/80;
+  }
+}
+
+@media (max-width: 1023px) {
+  .home-header .home-header-inner {
+    border-bottom: 1px solid color-mix(in srgb, var(--border) 75%, transparent);
+  }
+
+  .home-main-panel {
+    @apply px-0 py-2;
   }
 }
