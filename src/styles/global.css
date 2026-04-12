@@ -89,6 +89,41 @@ html[data-theme="dark"] {
   @apply underline decoration-wavy decoration-2 underline-offset-8;
 }
 
+@media (min-width: 1024px) {
+  .desktop-side-footer {
+    position: fixed;
+    bottom: 1.5rem;
+    left: max(1.5rem, calc((100vw - 48rem) / 2 - 16rem - 2rem));
+    width: 15rem;
+    margin: 0;
+    padding: 0;
+    z-index: 20;
+  }
+
+  .desktop-side-footer .desktop-side-footer-inner {
+    border-top: 0;
+    border: 1px solid var(--color-border);
+    border-radius: 0.75rem;
+    padding: 0.9rem;
+    background-color: var(--color-background);
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 0.75rem;
+  }
+
+  .desktop-side-footer .desktop-footer-avatar {
+    order: 0;
+    margin-bottom: 0;
+  }
+
+  .desktop-side-footer .desktop-footer-copy {
+    margin: 0;
+    align-items: flex-start;
+    text-align: left;
+  }
+}
+
 /* Source: https://piccalil.li/blog/a-more-modern-css-reset/ */
 /* Anything that has been anchored to should have extra scroll margin */
 :target {
