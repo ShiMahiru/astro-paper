@@ -1,7 +1,7 @@
 export const SITE = {
   website: "https://242531778.xyz/", // replace this with your deployed domain
   author: "ShiMahiru",
-  profile: "https://satnaing.dev/",
+  profile: "https://github.com/ShiMahiru",
   desc: "一个简约、响应式且对 SEO 友好的 Astro 博客主题。",
   title: "AstroPaper",
   ogImage: "astropaper-og.jpg",

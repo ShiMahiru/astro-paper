@@ -43,11 +43,13 @@ import IconArrowNarrowUp from "@/assets/icons/IconArrowNarrowUp.svg";
     if (!rootElement || !btnContainer || !backToTopBtn || !progressIndicator)
       return;
 
-    // Attach click event handler for back-to-top button
-    backToTopBtn.addEventListener("click", () => {
-      document.body.scrollTop = 0; // For Safari
-      document.documentElement.scrollTop = 0; // For Chrome, Firefox, IE and Opera
-    });
+    if (backToTopBtn instanceof HTMLButtonElement && backToTopBtn.dataset.bound !== "true") {
+      backToTopBtn.dataset.bound = "true";
+      backToTopBtn.addEventListener("click", () => {
+        document.body.scrollTop = 0; // For Safari
+        document.documentElement.scrollTop = 0; // For Chrome, Firefox, IE and Opera
+      });
+    }
 
     // Handle button visibility according to scroll position
     let lastVisible = null;
@@ -73,15 +75,19 @@ import IconArrowNarrowUp from "@/assets/icons/IconArrowNarrowUp.svg";
     }
 
     let ticking = false;
-    document.addEventListener("scroll", () => {
-      if (!ticking) {
-        window.requestAnimationFrame(() => {
-          handleScroll();
-          ticking = false;
-        });
-        ticking = true;
-      }
-    });
+    if (document.body.dataset.bttScrollBound !== "true") {
+      document.addEventListener("scroll", () => {
+        if (!ticking) {
+          window.requestAnimationFrame(() => {
+            handleScroll();
+            ticking = false;
+          });
+          ticking = true;
+        }
+      });
+      document.body.dataset.bttScrollBound = "true";
+    }
+    handleScroll();
   }
   backToTop();
 </script>

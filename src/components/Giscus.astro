@@ -107,8 +107,11 @@ const giscusTheme =
 
   initGiscus();
   setupThemeSync();
-  document.addEventListener("astro:after-swap", () => {
-    initGiscus();
-    setupThemeSync();
-  });
+  if (!document.body.dataset.giscusSwapBound) {
+    document.addEventListener("astro:after-swap", () => {
+      initGiscus();
+      setupThemeSync();
+    });
+    document.body.dataset.giscusSwapBound = "true";
+  }
 </script>

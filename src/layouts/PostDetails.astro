@@ -67,6 +67,7 @@ const layoutProps = {
   canonicalURL,
   ogImage,
   scrollSmooth: true,
+  isBlogPost: true,
 };
 
 /* ========== Prev/Next Posts ========== */
@@ -182,122 +183,120 @@ const nextPost =
 </Layout>
 
 <script is:inline data-astro-rerun>
-  /** Create a progress indicator
-   *  at the top */
-  function createProgressBar() {
-    // Create the main container div
-    const progressContainer = document.createElement("div");
-    progressContainer.className =
-      "progress-container fixed top-0 z-10 h-1 w-full bg-background";
+  const ARTICLE_ENHANCED_ATTR = "data-article-enhanced";
 
-    // Create the progress bar div
-    const progressBar = document.createElement("div");
-    progressBar.className = "progress-bar h-1 w-0 bg-accent";
-    progressBar.id = "myBar";
-
-    // Append the progress bar to the progress container
-    progressContainer.appendChild(progressBar);
-
-    // Append the progress container to the document body or any other desired parent element
-    document.body.appendChild(progressContainer);
+  function ensureProgressBar() {
+    let progressContainer = document.querySelector(".progress-container");
+    if (!progressContainer) {
+      progressContainer = document.createElement("div");
+      progressContainer.className =
+        "progress-container fixed top-0 z-10 h-1 w-full bg-background";
+      progressContainer.innerHTML =
+        '<div class="progress-bar h-1 w-0 bg-accent" id="myBar"></div>';
+      document.body.appendChild(progressContainer);
+    }
+    return document.getElementById("myBar");
   }
-  createProgressBar();
 
-  /** Update the progress bar
-   *  when user scrolls */
-  function updateScrollProgress() {
-    document.addEventListener("scroll", () => {
-      const winScroll =
-        document.body.scrollTop || document.documentElement.scrollTop;
-      const height =
-        document.documentElement.scrollHeight -
-        document.documentElement.clientHeight;
-      const scrolled = (winScroll / height) * 100;
-      if (document) {
-        const myBar = document.getElementById("myBar");
-        if (myBar) {
-          myBar.style.width = scrolled + "%";
-        }
-      }
-    });
+  function updateProgress() {
+    const myBar = ensureProgressBar();
+    if (!myBar) return;
+    const winScroll = document.documentElement.scrollTop || document.body.scrollTop;
+    const height =
+      document.documentElement.scrollHeight - document.documentElement.clientHeight;
+    const scrolled = height > 0 ? (winScroll / height) * 100 : 0;
+    myBar.style.width = `${scrolled}%`;
   }
-  updateScrollProgress();
 
-  /** Attaches links to headings in the document,
-   *  allowing sharing of sections easily */
   function addHeadingLinks() {
-    const headings = Array.from(
-      document.querySelectorAll("h2, h3, h4, h5, h6")
-    );
+    const headings = Array.from(document.querySelectorAll("article h2, article h3, article h4, article h5, article h6"));
     for (const heading of headings) {
+      if (!heading.id || heading.querySelector(".heading-link")) continue;
       heading.classList.add("group");
       const link = document.createElement("a");
       link.className =
         "heading-link ms-2 no-underline opacity-75 md:opacity-0 md:group-hover:opacity-100 md:focus:opacity-100";
-      link.href = "#" + heading.id;
-
-      const span = document.createElement("span");
-      span.ariaHidden = "true";
-      span.innerText = "#";
-      link.appendChild(span);
+      link.href = `#${heading.id}`;
+      link.innerHTML = '<span aria-hidden="true">#</span>';
       heading.appendChild(link);
     }
   }
-  addHeadingLinks();
 
-  /** Attaches copy buttons to code blocks in the document,
-   * allowing users to copy code easily. */
   function attachCopyButtons() {
     const copyButtonLabel = "复制";
-    const codeBlocks = Array.from(document.querySelectorAll("pre"));
+    const codeBlocks = Array.from(document.querySelectorAll("article pre"));
 
     for (const codeBlock of codeBlocks) {
-      const wrapper = document.createElement("div");
-      wrapper.style.position = "relative";
+      if (codeBlock.querySelector(".copy-code")) continue;
+      codeBlock.setAttribute("tabindex", "0");
 
-      // Check if --file-name-offset custom property exists
+      if (!(codeBlock.parentElement instanceof HTMLDivElement && codeBlock.parentElement.dataset.codeWrapper === "true")) {
+        const wrapper = document.createElement("div");
+        wrapper.style.position = "relative";
+        wrapper.dataset.codeWrapper = "true";
+        codeBlock.parentNode?.insertBefore(wrapper, codeBlock);
+        wrapper.appendChild(codeBlock);
+      }
+
       const computedStyle = getComputedStyle(codeBlock);
       const hasFileNameOffset =
         computedStyle.getPropertyValue("--file-name-offset").trim() !== "";
-
-      // Determine the top positioning class
-      const topClass = hasFileNameOffset
-        ? "top-(--file-name-offset)"
-        : "-top-3";
+      const topClass = hasFileNameOffset ? "top-(--file-name-offset)" : "-top-3";
 
       const copyButton = document.createElement("button");
+      copyButton.type = "button";
       copyButton.className = `copy-code absolute end-3 ${topClass} rounded bg-muted border border-muted px-2 py-1 text-xs leading-4 text-foreground font-medium`;
-      copyButton.innerHTML = copyButtonLabel;
-      codeBlock.setAttribute("tabindex", "0");
+      copyButton.textContent = copyButtonLabel;
       codeBlock.appendChild(copyButton);
-
-      // wrap codebock with relative parent element
-      codeBlock?.parentNode?.insertBefore(wrapper, codeBlock);
-      wrapper.appendChild(codeBlock);
-
-      copyButton.addEventListener("click", async () => {
-        await copyCode(codeBlock, copyButton);
-      });
     }
 
-    async function copyCode(block, button) {
-      const code = block.querySelector("code");
-      const text = code?.innerText;
-
-      await navigator.clipboard.writeText(text ?? "");
-
-      // visual feedback that task is completed
-      button.innerText = "已复制";
-
-      setTimeout(() => {
-        button.innerText = copyButtonLabel;
-      }, 700);
+    if (!document.body.dataset.copyCodeBound) {
+      document.addEventListener("click", async event => {
+        const target = event.target;
+        if (!(target instanceof HTMLElement)) return;
+        const button = target.closest(".copy-code");
+        if (!(button instanceof HTMLButtonElement)) return;
+        const block = button.closest("pre");
+        const code = block?.querySelector("code");
+        await navigator.clipboard.writeText(code?.textContent ?? "");
+        button.innerText = "已复制";
+        setTimeout(() => {
+          button.innerText = copyButtonLabel;
+        }, 700);
+      });
+      document.body.dataset.copyCodeBound = "true";
     }
   }
-  attachCopyButtons();
 
-  /* Go to page start after page swap */
-  document.addEventListener("astro:after-swap", () =>
-    window.scrollTo({ left: 0, top: 0, behavior: "instant" })
-  );
+  function enhanceArticlePage() {
+    const article = document.querySelector("#article");
+    if (!article || article.getAttribute(ARTICLE_ENHANCED_ATTR) === "true") return;
+    article.setAttribute(ARTICLE_ENHANCED_ATTR, "true");
+    ensureProgressBar();
+    addHeadingLinks();
+    attachCopyButtons();
+    updateProgress();
+  }
+
+  if (!document.body.dataset.postScrollBound) {
+    let ticking = false;
+    document.addEventListener("scroll", () => {
+      if (ticking) return;
+      window.requestAnimationFrame(() => {
+        updateProgress();
+        ticking = false;
+      });
+      ticking = true;
+    });
+    document.body.dataset.postScrollBound = "true";
+  }
+
+  if (!document.body.dataset.postSwapBound) {
+    document.addEventListener("astro:after-swap", () =>
+      window.scrollTo({ left: 0, top: 0, behavior: "instant" })
+    );
+    document.body.dataset.postSwapBound = "true";
+  }
+
+  enhanceArticlePage();
 </script>
