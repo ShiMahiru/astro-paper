@@ -1,0 +1,28 @@
+---
+import type { HTMLAttributes } from "astro/types";
+import GlassPanel from "@/components/GlassPanel.astro";
+
+type Props = {
+  title?: string;
+  description?: string;
+} & HTMLAttributes<"section">;
+
+const {
+  title,
+  description,
+  class: className,
+  ...attrs
+} = Astro.props;
+---
+
+<GlassPanel level="elevated" class:list={["section-container", className]} {...attrs}>
+  {
+    (title || description) && (
+      <header class="section-header">
+        {title && <h2 class="section-title">{title}</h2>}
+        {description && <p class="section-desc">{description}</p>}
+      </header>
+    )
+  }
+  <slot />
+</GlassPanel>

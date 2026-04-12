@@ -5,21 +5,24 @@
 
 :root,
 html[data-theme="light"] {
-  --background: #fdfdfd;
-  --foreground: #282728;
-  --accent: #006cac;
-  --muted: #e6e6e6;
-  --border: #ece9e9;
-  --desktop-content-max-width: 72rem;
-  --desktop-home-sidebar-width: 18rem;
+  --background: #f6f8fc;
+  --foreground: #202738;
+  --accent: #2f7de1;
+  --muted: #e8edf8;
+  --border: #d5deee;
+  --glass-bg: rgb(255 255 255 / 0.7);
+  --glass-border: rgb(255 255 255 / 0.5);
+  --desktop-home-sidebar-width: 16.5rem;
 }
 
 html[data-theme="dark"] {
-  --background: #212737;
-  --foreground: #eaedf3;
-  --accent: #ff6b01;
-  --muted: #343f60;
-  --border: #ab4b08;
+  --background: #0c1220;
+  --foreground: #e9effd;
+  --accent: #6baeff;
+  --muted: #1a2338;
+  --border: #2b395b;
+  --glass-bg: rgb(10 16 28 / 0.42);
+  --glass-border: rgb(255 255 255 / 0.14);
 }
 
 @theme inline {
@@ -32,149 +35,239 @@ html[data-theme="dark"] {
 }
 
 * {
-  @apply border-border outline-accent/75;
+  @apply border-border outline-accent/80;
   scrollbar-width: auto;
   scrollbar-color: var(--color-muted) transparent;
 }
+
 html {
   @apply overflow-y-scroll scroll-smooth;
 }
+
 body {
-  @apply flex min-h-svh flex-col bg-background font-app text-foreground selection:bg-accent/75 selection:text-background;
+  @apply flex min-h-svh flex-col bg-background font-app text-foreground selection:bg-accent/70 selection:text-background;
   background-image:
-    linear-gradient(
-      to bottom,
-      color-mix(in srgb, var(--background) 30%, transparent),
-      color-mix(in srgb, var(--background) 42%, transparent)
-    ),
+    linear-gradient(to bottom, rgb(8 12 22 / 0.6), rgb(8 12 22 / 0.78)),
     var(--site-bg-image);
   background-position: center;
   background-repeat: no-repeat;
   background-size: cover;
   background-attachment: fixed;
 }
+
 a,
 button {
-  @apply outline-offset-1 outline-accent focus-visible:no-underline focus-visible:outline-2 focus-visible:outline-dashed;
+  @apply outline-offset-2 outline-accent focus-visible:no-underline focus-visible:outline-2 focus-visible:outline-dashed;
 }
+
 button:not(:disabled),
 [role="button"]:not(:disabled) {
   cursor: pointer;
 }
 
-@utility max-w-app {
-  @apply max-w-none;
+@utility app-layout {
+  @apply mx-auto w-full max-w-[72rem] px-4 sm:px-6;
 }
 
-@utility app-layout {
-  @apply w-full max-w-none px-4 sm:px-6 lg:px-10;
+.home-shell {
+  @apply min-h-svh py-3 sm:py-4;
+}
+
+.glass-panel {
+  background: var(--glass-bg);
+  border: 1px solid var(--glass-border);
+  border-radius: 0.9rem;
+  backdrop-filter: blur(8px);
+  -webkit-backdrop-filter: blur(8px);
+}
+
+.home-header {
+  @apply pb-3;
+}
+
+.topbar-shell {
+  @apply rounded-xl border border-white/15 bg-black/25 px-3 py-2 backdrop-blur-md;
+}
+
+.topbar-main {
+  @apply flex items-center justify-between gap-2;
+}
+
+.site-brand {
+  @apply text-xl font-semibold tracking-wide;
+}
+
+.topbar-right {
+  @apply flex items-center gap-2;
+}
+
+.topbar-nav {
+  @apply mt-2 flex flex-wrap items-center gap-2 border-t border-white/12 pt-2;
+}
+
+.toolbar-button,
+.toolbar-icon-btn {
+  @apply inline-flex h-8 items-center justify-center rounded-md border border-transparent px-2.5 text-sm text-foreground/85 transition;
+}
+
+.toolbar-button:hover,
+.toolbar-button.is-selected,
+.toolbar-icon-btn:hover {
+  @apply border-white/20 bg-white/10 text-foreground;
+}
+
+.toolbar-icon-btn {
+  @apply relative w-8 p-0;
+}
+
+.theme-icon {
+  @apply absolute top-1/2 left-1/2 size-4 -translate-x-1/2 -translate-y-1/2 transition-all;
+}
+
+.search-input-wrap {
+  @apply flex h-8 min-w-[11rem] items-center rounded-md border border-white/15 bg-black/20 px-2;
+}
+
+.search-input {
+  @apply h-full w-full bg-transparent text-sm placeholder:text-foreground/60 focus:outline-none;
+}
+
+.home-desktop-grid {
+  @apply grid gap-6 lg:grid-cols-[var(--desktop-home-sidebar-width)_minmax(0,1fr)];
+}
+
+.home-profile-card {
+  @apply sticky top-4 self-start;
+}
+
+.home-profile-avatar {
+  @apply h-32 w-full rounded-lg object-cover;
+}
+
+.home-profile-name {
+  @apply mt-3 text-2xl font-semibold;
+}
+
+.home-profile-desc {
+  @apply mt-1.5 text-sm text-foreground/75;
+}
+
+.home-profile-socials {
+  @apply mt-3;
+}
+
+.home-main-panel {
+  @apply min-w-0;
+}
+
+.content-shell {
+  @apply rounded-xl border border-white/12 bg-black/16 p-4 backdrop-blur-sm;
+}
+
+.content-toolbar {
+  @apply mt-3 mb-2 flex flex-wrap items-center gap-1.5;
+}
+
+.article-list {
+  @apply mt-2;
+}
+
+.article-list-item {
+  @apply list-none border-b border-white/10 py-4;
+}
+
+.article-list-item:last-child {
+  @apply border-b-0;
+}
+
+.article-card {
+  @apply grid items-start gap-4 sm:grid-cols-[minmax(0,1fr)_9.5rem];
+}
+
+.article-title-link {
+  @apply inline-block text-xl leading-tight font-semibold text-foreground;
+}
+
+.article-title-link:hover {
+  @apply text-accent;
+}
+
+.article-desc {
+  @apply mt-2 line-clamp-2 text-sm text-foreground/80;
+}
+
+.meta-row {
+  @apply mt-2.5 flex flex-wrap gap-1.5;
+}
+
+.meta-chip {
+  @apply inline-flex items-center gap-1 rounded-md bg-white/8 px-2 py-0.5 text-xs text-foreground/75;
+}
+
+.article-cover-link {
+  @apply block overflow-hidden rounded-lg;
+}
+
+.article-cover {
+  @apply aspect-[16/10] h-auto w-full object-cover;
+}
+
+.pagination-shell {
+  @apply mt-5 flex items-center justify-center gap-1 border-t border-white/10 pt-4;
+}
+
+.pagination-control {
+  @apply inline-flex h-8 min-w-8 items-center justify-center rounded-md px-2 text-sm text-foreground/80 transition;
+}
+
+.pagination-control:hover,
+.pagination-control.is-selected {
+  @apply bg-white/12 text-foreground;
+}
+
+.pagination-control.is-disabled {
+  @apply pointer-events-none opacity-45;
+}
+
+.pagination-compact,
+.pagination-ellipsis {
+  @apply px-2 text-sm text-foreground/70;
 }
 
 .active-nav {
-  @apply text-accent sm:underline sm:decoration-wavy sm:decoration-2 sm:underline-offset-8;
+  @apply text-accent;
 }
 
-/* Source: https://piccalil.li/blog/a-more-modern-css-reset/ */
-/* Anything that has been anchored to should have extra scroll margin */
 :target {
   scroll-margin-block: 1rem;
 }
 
-.home-shell {
-  @apply min-h-svh;
-}
-
-.home-post-card {
-  @apply my-0 py-3;
-  border-bottom: 1px solid color-mix(in srgb, var(--border) 75%, transparent);
-}
-
-.home-post-card:last-child {
-  border-bottom: 0;
-}
-
-@media (min-width: 1024px) {
-  .home-header {
-    @apply pt-0;
+@media (max-width: 639px) {
+  .site-brand {
+    @apply text-lg;
   }
 
-  .home-header .home-header-inner {
-    @apply px-0;
-    border-bottom: 1px solid color-mix(in srgb, var(--border) 75%, transparent);
+  .search-input-wrap {
+    @apply w-full;
   }
 
-  .home-desktop-grid {
-    @apply grid w-full max-w-none grid-cols-[var(--desktop-home-sidebar-width)_minmax(0,1fr)] gap-8 pt-0;
+  .topbar-nav {
+    @apply grid grid-cols-2;
   }
 
-  .home-profile-card {
-    @apply sticky top-5 self-start pe-4 text-left;
-    border-right: 1px solid color-mix(in srgb, var(--border) 75%, transparent);
+  .topbar-nav > :last-child {
+    @apply col-span-2;
   }
 
-  .home-profile-avatar {
-    @apply h-40 w-full object-cover;
+  .content-shell {
+    @apply p-3;
   }
 
-  .home-profile-name {
-    @apply mt-4 text-3xl font-semibold;
+  .article-card {
+    @apply grid-cols-1;
   }
 
-  .home-profile-desc {
-    @apply mt-2 text-sm leading-6 text-foreground/80;
-  }
-
-  .home-profile-socials {
-    @apply mt-3 flex justify-start;
-  }
-
-  .home-main-panel {
-    @apply max-w-none py-2 pe-3 ps-1;
-    border-left: 1px solid color-mix(in srgb, var(--border) 70%, transparent);
-  }
-
-  .home-notice-card,
-  .home-action-card,
-  .home-post-card {
-    @apply px-1 py-3;
-    border-bottom: 1px solid color-mix(in srgb, var(--border) 75%, transparent);
-  }
-
-  .home-action-card {
-    @apply items-center justify-between gap-6;
-  }
-
-  .home-action-card h2 {
-    @apply text-2xl font-semibold;
-  }
-
-  .home-action-card p {
-    @apply mt-2 text-foreground/75;
-  }
-
-  .home-action-btn {
-    @apply rounded-full bg-pink-500 px-6 py-3 font-semibold text-white transition hover:bg-pink-400;
-  }
-
-  #recent-posts > ul {
-    @apply space-y-0;
-  }
-
-  .home-post-card {
-    @apply my-0 px-1 py-3;
-  }
-
-  .home-post-card p {
-    @apply mt-2 text-foreground/80;
-  }
-}
-
-@media (max-width: 1023px) {
-  .home-header .home-header-inner {
-    border-bottom: 1px solid color-mix(in srgb, var(--border) 75%, transparent);
-  }
-
-  .home-main-panel {
-    @apply px-0 py-2;
+  .article-cover {
+    @apply aspect-[16/9];
   }
 }
