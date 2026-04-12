@@ -1,5 +1,4 @@
 ---
-import IconX from "@/assets/icons/IconX.svg";
 import IconMoon from "@/assets/icons/IconMoon.svg";
 import IconSunHigh from "@/assets/icons/IconSunHigh.svg";
 import IconMenuDeep from "@/assets/icons/IconMenuDeep.svg";
@@ -57,14 +56,13 @@ const isActive = (path: string) => {
         aria-expanded="false"
         aria-controls="menu-items"
       >
-        <IconX id="close-icon" class="hidden" />
         <IconMenuDeep id="menu-icon" />
       </button>
       <ul
         id="menu-items"
         class:list={[
-          "absolute top-full right-0 z-50 mt-2 flex w-44 flex-col gap-1 rounded-xl border border-border bg-background/95 p-2 shadow-lg backdrop-blur",
-          "[&>li>a]:hover:bg-card [&>li>a]:block [&>li>a]:rounded-lg [&>li>a]:px-4 [&>li>a]:py-2.5 [&>li>a]:text-center [&>li>a]:font-medium [&>li>a]:hover:text-accent sm:[&>li>a]:px-2 sm:[&>li>a]:py-1 sm:[&>li>a]:hover:bg-transparent",
+          "absolute top-full right-0 z-50 mt-2 flex w-fit flex-col gap-1 rounded-xl border border-border bg-background/95 p-2 shadow-lg backdrop-blur",
+          "[&>li>a]:hover:bg-card [&>li>a]:block [&>li>a]:rounded-lg [&>li>a]:px-4 [&>li>a]:py-2.5 [&>li>a]:text-center [&>li>a]:font-medium [&>li>a]:whitespace-nowrap [&>li>a]:hover:text-accent sm:[&>li>a]:px-2 sm:[&>li>a]:py-1 sm:[&>li>a]:hover:bg-transparent",
           "hidden",
           "sm:static sm:z-auto sm:mt-0 sm:flex sm:w-auto sm:flex-row sm:items-center sm:gap-x-5 sm:gap-y-0 sm:rounded-none sm:border-0 sm:bg-transparent sm:p-0 sm:shadow-none sm:backdrop-blur-none",
         ]}
@@ -124,9 +122,8 @@ const isActive = (path: string) => {
     const menuBtn = document.querySelector<HTMLButtonElement>("#menu-btn");
     const menuItems = document.querySelector<HTMLUListElement>("#menu-items");
     const menuIcon = document.querySelector<SVGElement>("#menu-icon");
-    const closeIcon = document.querySelector<SVGElement>("#close-icon");
 
-    if (!menuBtn || !menuItems || !menuIcon || !closeIcon) return;
+    if (!menuBtn || !menuItems || !menuIcon) return;
 
     const isDesktopView = window.innerWidth >= MOBILE_BREAKPOINT;
 
@@ -135,24 +132,21 @@ const isActive = (path: string) => {
       menuBtn.setAttribute("aria-label", "打开菜单栏");
       menuItems.classList.remove("hidden");
       menuIcon.classList.remove("hidden");
-      closeIcon.classList.add("hidden");
       return;
     }
 
     const isOpen = menuBtn.getAttribute("aria-expanded") === "true";
 
     menuItems.classList.toggle("hidden", !isOpen);
-    menuIcon.classList.toggle("hidden", isOpen);
-    closeIcon.classList.toggle("hidden", !isOpen);
+    menuIcon.classList.remove("hidden");
   }
 
   function toggleNav() {
     const menuBtn = document.querySelector<HTMLButtonElement>("#menu-btn");
     const menuItems = document.querySelector<HTMLUListElement>("#menu-items");
     const menuIcon = document.querySelector<SVGElement>("#menu-icon");
-    const closeIcon = document.querySelector<SVGElement>("#close-icon");
 
-    if (!menuBtn || !menuItems || !menuIcon || !closeIcon) return;
+    if (!menuBtn || !menuItems || !menuIcon) return;
 
     if (menuBtn.dataset.bound === "true") {
       syncNavByViewport();
