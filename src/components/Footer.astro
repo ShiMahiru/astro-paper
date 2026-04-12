@@ -12,7 +12,7 @@ const { noMarginTop = false, class: className, ...attrs } = Astro.props;
 
 <footer
   class:list={[
-    "app-layout glass-panel mt-4 rounded-3xl border-t border-border/70",
+    "app-layout mt-6 border-t border-border/70",
     { "sm:mt-0": noMarginTop },
     className,
   ]}
@@ -21,10 +21,10 @@ const { noMarginTop = false, class: className, ...attrs } = Astro.props;
   <div
     class:list={[
       "py-4 sm:py-3",
-      "flex justify-center",
+      "flex justify-start",
     ]}
   >
-    <div class="flex flex-col items-center text-center leading-relaxed">
+    <div class="flex flex-col leading-relaxed">
       <span>
         版权所有 &#169; {currentYear}
         <a
