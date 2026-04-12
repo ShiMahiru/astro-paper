@@ -1,5 +1,7 @@
 ---
 import { getCollection } from "astro:content";
+import type { Page } from "astro";
+import type { CollectionEntry } from "astro:content";
 import Layout from "@/layouts/Layout.astro";
 import Header from "@/components/Header.astro";
 import Footer from "@/components/Footer.astro";
@@ -20,10 +22,14 @@ const indexPagination = {
   url: {
     current: "/posts/",
     first: "/posts/",
+    last: pageCount > 1 ? `/posts/${pageCount}/` : "/posts/",
     prev: undefined,
     next: pageCount > 1 ? "/posts/2/" : undefined,
   },
-};
+} satisfies Pick<
+  Page<CollectionEntry<"blog">>,
+  "currentPage" | "lastPage" | "url"
+>;
 ---
 
 <Layout>
@@ -33,9 +39,11 @@ const indexPagination = {
       allPosts.length > 0 && (
         <section id="recent-posts" class="pb-6">
           <ul>
-            {allPosts.map(data => <Card variant="h3" {...data} />)}
+            {allPosts.map(data => (
+              <Card variant="h3" {...data} />
+            ))}
           </ul>
-          <Pagination page={indexPagination as any} />
+          <Pagination page={indexPagination} />
         </section>
       )
     }
