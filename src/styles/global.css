@@ -66,7 +66,7 @@ button:not(:disabled),
 }
 
 .home-shell {
-  @apply min-h-svh py-2 sm:py-3;
+  @apply min-h-svh py-1 sm:py-2;
 }
 
 .home-header {
@@ -74,7 +74,7 @@ button:not(:disabled),
 }
 
 .topbar-main {
-  @apply flex items-center justify-between border-b border-white/12 py-2;
+  @apply flex items-center justify-between border-b border-white/20 py-2;
 }
 
 .site-brand {
@@ -86,7 +86,7 @@ button:not(:disabled),
 }
 
 .topbar-nav-desktop {
-  @apply hidden items-center justify-between gap-4 py-2 sm:flex;
+  @apply hidden items-center justify-between gap-4 border-b border-white/12 py-2 sm:flex;
 }
 
 .topbar-nav {
@@ -95,13 +95,13 @@ button:not(:disabled),
 
 .toolbar-button,
 .toolbar-icon-btn {
-  @apply inline-flex h-8 items-center justify-center rounded-md border border-transparent px-2.5 text-sm text-foreground/85 transition;
+  @apply inline-flex h-8 items-center justify-center border-b border-transparent px-2 text-sm text-foreground/78 transition;
 }
 
 .toolbar-button:hover,
 .toolbar-button.is-selected,
 .toolbar-icon-btn:hover {
-  @apply border-white/20 bg-white/10 text-foreground;
+  @apply border-white/40 text-foreground;
 }
 
 .toolbar-icon-btn {
@@ -113,7 +113,7 @@ button:not(:disabled),
 }
 
 .mobile-menu {
-  @apply absolute inset-x-4 top-14 z-40 rounded-lg border border-white/15 bg-black/80 p-3 shadow-lg backdrop-blur-sm sm:hidden;
+  @apply mt-2 border-t border-white/15 pt-2 sm:hidden;
 }
 
 .mobile-menu-links {
@@ -121,7 +121,7 @@ button:not(:disabled),
 }
 
 .search-input-wrap {
-  @apply flex h-8 min-w-[12rem] items-center rounded-md border border-white/15 bg-black/18 px-2;
+  @apply flex h-8 min-w-[12rem] items-center border-b border-white/25 px-1;
 }
 
 .search-input {
@@ -129,7 +129,7 @@ button:not(:disabled),
 }
 
 .home-desktop-grid {
-  @apply grid gap-8 lg:grid-cols-[var(--desktop-home-sidebar-width)_minmax(0,1fr)];
+  @apply grid gap-6 lg:grid-cols-[var(--desktop-home-sidebar-width)_minmax(0,1fr)];
 }
 
 .home-profile-card {
@@ -137,11 +137,11 @@ button:not(:disabled),
 }
 
 .profile-panel {
-  @apply rounded-xl border border-white/12 bg-black/25 p-4;
+  @apply border-b border-white/15 pb-4;
 }
 
 .home-profile-avatar {
-  @apply h-40 w-full rounded-lg object-cover;
+  @apply h-40 w-full object-cover;
 }
 
 .home-profile-name {
@@ -157,23 +157,23 @@ button:not(:disabled),
 }
 
 .home-main-panel {
-  @apply min-w-0;
+  @apply min-w-0 border-l-0 lg:border-l lg:border-white/12 lg:pl-6;
 }
 
 .content-shell {
-  @apply rounded-xl border border-white/12 bg-black/18 p-4 sm:p-5;
+  @apply space-y-4;
 }
 
 .content-toolbar {
-  @apply mt-3 mb-2 flex flex-wrap items-center gap-1.5;
+  @apply mt-2 mb-1 flex flex-wrap items-center gap-1.5 border-b border-white/12 pb-2;
 }
 
 .article-list {
-  @apply mt-1;
+  @apply mt-0;
 }
 
 .article-list-item {
-  @apply list-none border-b border-white/10 py-4;
+  @apply list-none border-b border-white/14 py-3;
 }
 
 .article-list-item:last-child {
@@ -205,11 +205,11 @@ button:not(:disabled),
 }
 
 .meta-chip {
-  @apply inline-flex items-center gap-1 rounded-md bg-white/8 px-2 py-0.5 text-xs text-foreground/75;
+  @apply inline-flex items-center gap-1 border-l border-white/20 pl-1.5 text-xs text-foreground/70;
 }
 
 .article-cover-link {
-  @apply relative block w-full overflow-hidden rounded-lg border border-white/10 bg-white/5;
+  @apply relative block w-full overflow-hidden border border-white/12;
   aspect-ratio: 16 / 10;
 }
 
@@ -223,20 +223,20 @@ button:not(:disabled),
 }
 
 .article-cover-placeholder {
-  @apply flex items-center justify-center bg-white/6 text-xs font-medium tracking-wide text-foreground/55;
+  @apply flex items-center justify-center text-xs font-medium tracking-wide text-foreground/55;
 }
 
 .pagination-shell {
-  @apply mt-5 flex items-center justify-center gap-1 border-t border-white/10 pt-4;
+  @apply mt-4 flex items-center justify-center gap-1 border-t border-white/14 pt-3;
 }
 
 .pagination-control {
-  @apply inline-flex h-8 min-w-8 items-center justify-center rounded-md px-2 text-sm text-foreground/80 transition;
+  @apply inline-flex h-8 min-w-8 items-center justify-center border-b border-transparent px-2 text-sm text-foreground/80 transition;
 }
 
 .pagination-control:hover,
 .pagination-control.is-selected {
-  @apply bg-white/12 text-foreground;
+  @apply border-white/40 text-foreground;
 }
 
 .pagination-control.is-disabled {
@@ -266,7 +266,7 @@ button:not(:disabled),
   }
 
   .content-shell {
-    @apply p-3;
+    @apply space-y-3;
   }
 
   .article-card {
