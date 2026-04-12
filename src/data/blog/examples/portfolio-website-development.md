@@ -1,5 +1,5 @@
 ---
-title: How Do I Develop My Portfolio Website & Blog
+title: "我如何开发作品集网站与博客"
 author: Sat Naing
 pubDatetime: 2022-03-25T16:55:12.000+00:00
 slug: how-do-i-develop-my-portfolio-and-blog
@@ -10,9 +10,7 @@ tags:
   - TailwindCSS
   - HeadlessCMS
   - Blog
-description:
-  "EXAMPLE POST: My experience about developing my first portfolio website and a blog
-  using NextJS and a headless CMS."
+description: "示例文章：分享个人作品集与博客站点的完整开发过程。"
 timezone: "Asia/Yangon"
 ---
 

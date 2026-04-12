@@ -1,5 +1,5 @@
 ---
-title: How Do I Develop My Terminal Portfolio Website with React
+title: "我如何用 React 开发终端风格作品集网站"
 author: Sat Naing
 pubDatetime: 2022-06-09T03:42:51Z
 slug: how-do-i-develop-my-terminal-portfolio-website-with-react
@@ -11,9 +11,7 @@ tags:
   - ContextAPI
   - Styled-Components
   - TypeScript
-description:
-  "EXAMPLE POST: Developing a terminal-like website using ReactJS, TypeScript and Styled-Components.
-  Includes features like autocomplete, multiple themes, command hints etc."
+description: "示例文章：分享终端风格作品集网站的开发思路与过程。"
 timezone: "Asia/Yangon"
 ---
 
