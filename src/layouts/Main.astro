@@ -43,9 +43,7 @@ const isHome = Astro.url.pathname === "/";
         showListToolbar && (
           <div class="content-toolbar" data-toolbar>
             <ToolbarButton href="/" selected={isHome}>最新</ToolbarButton>
-            <ToolbarButton href="/posts" selected={Astro.url.pathname.startsWith("/posts")}>文章</ToolbarButton>
             <ToolbarButton href="/archives" selected={Astro.url.pathname.startsWith("/archives")}>归档</ToolbarButton>
-            <ToolbarButton href="/tags" selected={Astro.url.pathname.startsWith("/tags")}>标签</ToolbarButton>
           </div>
         )
       }

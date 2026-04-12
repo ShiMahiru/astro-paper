@@ -60,8 +60,6 @@ const isActive = (path: string) => {
     <div class="topbar-nav-desktop">
       <nav class="topbar-nav" aria-label="主导航">
         <ToolbarButton href="/" selected={currentPath === "/"}>首页</ToolbarButton>
-        <ToolbarButton href="/posts" selected={isActive("/posts")}>文章</ToolbarButton>
-        <ToolbarButton href="/tags" selected={isActive("/tags")}>标签</ToolbarButton>
         {SITE.showArchives && (
           <ToolbarButton href="/archives" selected={isActive("/archives")}>归档</ToolbarButton>
         )}
@@ -73,8 +71,6 @@ const isActive = (path: string) => {
     <div id="menu-items" class="mobile-menu hidden" aria-label="主导航">
       <nav class="mobile-menu-links">
         <ToolbarButton href="/" selected={currentPath === "/"}>首页</ToolbarButton>
-        <ToolbarButton href="/posts" selected={isActive("/posts")}>文章</ToolbarButton>
-        <ToolbarButton href="/tags" selected={isActive("/tags")}>标签</ToolbarButton>
         {SITE.showArchives && (
           <ToolbarButton href="/archives" selected={isActive("/archives")}>归档</ToolbarButton>
         )}
