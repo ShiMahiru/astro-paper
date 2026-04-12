@@ -22,10 +22,11 @@ const indexPagination: Page<CollectionEntry<"blog">> = {
   url: {
     current: "/posts/",
     first: "/posts/",
+    last: pageCount > 1 ? `/posts/${pageCount}/` : "/posts/",
     prev: undefined,
     next: pageCount > 1 ? "/posts/2/" : undefined,
   },
-};
+} as Page<CollectionEntry<"blog">>;
 ---
 
 <Layout>
