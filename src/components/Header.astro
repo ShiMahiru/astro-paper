@@ -1,7 +1,10 @@
 ---
+import IconX from "@/assets/icons/IconX.svg";
 import IconMoon from "@/assets/icons/IconMoon.svg";
-import IconSunHigh from "@/assets/icons/IconSunHigh.svg";
 import IconSearch from "@/assets/icons/IconSearch.svg";
+import IconArchive from "@/assets/icons/IconArchive.svg";
+import IconSunHigh from "@/assets/icons/IconSunHigh.svg";
+import IconMenuDeep from "@/assets/icons/IconMenuDeep.svg";
 import LinkButton from "./LinkButton.astro";
 import { SITE } from "@/config";
 
@@ -45,82 +48,95 @@ const isActive = (path: string) => {
     >
       {SITE.title}
     </a>
+
     <nav
       id="nav-menu"
-      class="flex w-full items-center justify-end gap-1 sm:ms-2 sm:space-x-3 sm:py-0"
+      class="flex w-full flex-col items-center sm:ms-2 sm:flex-row sm:justify-end sm:space-x-4 sm:py-0"
     >
-      <form
-        action="/search"
-        method="get"
-        class="relative me-2 hidden w-full max-w-48 md:block"
+      <button
+        id="menu-btn"
+        class="focus-outline self-end p-2 sm:hidden"
+        aria-label="打开菜单"
+        aria-expanded="false"
+        aria-controls="menu-items"
       >
-        <label for="header-search" class="sr-only">搜索</label>
-        <IconSearch
-          class="pointer-events-none absolute top-1/2 left-3 size-4 -translate-y-1/2 opacity-70"
-        />
-        <input
-          id="header-search"
-          name="q"
-          type="search"
-          placeholder="搜索"
-          class="focus-outline bg-card w-full rounded-xl border border-border py-2 pr-3 pl-9 text-sm placeholder:text-muted"
-        />
-      </form>
-      {
-        SITE.lightAndDarkMode && (
-          <button
-            id="theme-btn"
-            class="focus-outline relative size-9 p-2 sm:size-8 sm:border-0 sm:bg-transparent sm:p-1 hover:[&>svg]:stroke-accent"
-            title="切换主题"
-            aria-label="auto"
-            aria-live="polite"
-          >
-            <IconMoon class="absolute top-[50%] left-[50%] -translate-[50%] scale-100 rotate-0 transition-all dark:scale-0 dark:-rotate-90" />
-            <IconSunHigh class="absolute top-[50%] left-[50%] -translate-[50%] scale-0 rotate-90 transition-all dark:scale-100 dark:rotate-0" />
-          </button>
-        )
-      }
+        <IconX id="close-icon" class="hidden" />
+        <IconMenuDeep id="menu-icon" />
+      </button>
+
       <ul
         id="menu-items"
         class:list={[
-          "hidden md:flex md:w-auto md:flex-row md:items-center md:gap-5",
-          "[&>li>a]:p-1 [&>li>a]:font-medium [&>li>a]:whitespace-nowrap",
+          "mt-4 grid w-44 grid-cols-2 place-content-center gap-2",
+          "[&>li>a]:block [&>li>a]:px-4 [&>li>a]:py-3 [&>li>a]:text-center [&>li>a]:font-medium [&>li>a]:hover:text-accent sm:[&>li>a]:px-2 sm:[&>li>a]:py-1",
+          "hidden",
+          "sm:mt-0 sm:flex sm:w-auto sm:gap-x-5 sm:gap-y-0",
         ]}
       >
-        <li>
-          <a href="/" class:list={[{ "active-nav": isActive("/") }]}>首页</a>
-        </li>
-        <li>
-          <a href="/posts" class:list={[{ "active-nav": isActive("/posts") }]}>
+        <li class="col-span-2">
+          <a href="/posts" class:list={{ "active-nav": isActive("/posts") }}>
             文章
           </a>
         </li>
-        <li>
-          <a href="/tags" class:list={[{ "active-nav": isActive("/tags") }]}>
+        <li class="col-span-2">
+          <a href="/tags" class:list={{ "active-nav": isActive("/tags") }}>
             标签
           </a>
         </li>
-        <li>
-          <a href="/about" class:list={[{ "active-nav": isActive("/about") }]}>
+        <li class="col-span-2">
+          <a href="/about" class:list={{ "active-nav": isActive("/about") }}>
             关于
           </a>
         </li>
         {
           SITE.showArchives && (
-            <li>
+            <li class="col-span-2">
               <LinkButton
                 href="/archives"
                 class:list={[
-                  "focus-outline flex items-center justify-between gap-3 px-3 py-2 sm:p-1",
+                  "focus-outline flex justify-center p-3 sm:p-1",
                   {
-                    "active-nav": isActive("/archives"),
+                    "active-nav [&>svg]:stroke-accent": isActive("/archives"),
                   },
                 ]}
                 title="归档"
                 aria-label="归档"
               >
-                归档
+                <IconArchive class="hidden sm:inline-block" />
+                <span class="sm:sr-only">归档</span>
               </LinkButton>
+            </li>
+          )
+        }
+
+        <li class="col-span-1 flex items-center justify-center">
+          <LinkButton
+            href="/search"
+            class:list={[
+              "focus-outline flex p-3 sm:p-1",
+              { "[&>svg]:stroke-accent": isActive("/search") },
+            ]}
+            title="搜索"
+            aria-label="搜索"
+          >
+            <IconSearch />
+            <span class="sr-only">搜索</span>
+          </LinkButton>
+        </li>
+
+        {
+          SITE.lightAndDarkMode && (
+            <li class="col-span-1 flex items-center justify-center">
+              <button
+                id="theme-btn"
+                class="focus-outline relative size-12 p-4 sm:size-8 hover:[&>svg]:stroke-accent"
+                title="切换主题"
+                aria-label="auto"
+                aria-live="polite"
+              >
+                <IconMoon class="absolute top-[50%] left-[50%] -translate-[50%] scale-100 rotate-0 transition-all dark:scale-0 dark:-rotate-90" />
+                <IconSunHigh class="absolute top-[50%] left-[50%] -translate-[50%] scale-0 rotate-90 transition-all dark:scale-100 dark:rotate-0" />
+              </button>
             </li>
           )
         }
@@ -128,3 +144,29 @@ const isActive = (path: string) => {
     </nav>
   </div>
 </header>
+
+<script>
+  function toggleNav() {
+    const menuBtn = document.querySelector("#menu-btn");
+    const menuItems = document.querySelector("#menu-items");
+    const menuIcon = document.querySelector("#menu-icon");
+    const closeIcon = document.querySelector("#close-icon");
+
+    if (!menuBtn || !menuItems || !menuIcon || !closeIcon) return;
+
+    menuBtn.addEventListener("click", () => {
+      const openMenu = menuBtn.getAttribute("aria-expanded") === "true";
+      menuBtn.setAttribute("aria-expanded", openMenu ? "false" : "true");
+      menuBtn.setAttribute("aria-label", openMenu ? "打开菜单" : "关闭菜单");
+
+      menuItems.classList.toggle("hidden");
+      menuIcon.classList.toggle("hidden");
+      closeIcon.classList.toggle("hidden");
+    });
+  }
+
+  toggleNav();
+
+  // Runs on view transitions navigation
+  document.addEventListener("astro:after-swap", toggleNav);
+</script>
