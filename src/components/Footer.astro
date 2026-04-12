@@ -13,7 +13,7 @@ const { noMarginTop = false, class: className, ...attrs } = Astro.props;
 
 <footer
   class:list={[
-    "app-layout desktop-side-footer",
+    "app-layout",
     { "sm:mt-auto": !noMarginTop },
     className,
   ]}
@@ -21,7 +21,6 @@ const { noMarginTop = false, class: className, ...attrs } = Astro.props;
 >
   <div
     class:list={[
-      "desktop-side-footer-inner",
       "py-5 sm:py-4",
       "border-t border-border",
       "flex flex-col items-center justify-between gap-2 sm:flex-row-reverse sm:gap-0",
@@ -31,7 +30,7 @@ const { noMarginTop = false, class: className, ...attrs } = Astro.props;
       href="https://q2.qlogo.cn/headimg_dl?dst_uin=242531778&spec=0"
       target="_blank"
       rel="noopener noreferrer"
-      class="desktop-footer-avatar mb-2 inline-flex sm:order-3 sm:mb-0"
+      class="mb-2 inline-flex sm:order-3 sm:mb-0"
       aria-label="Mingalaba 头像"
       title="查看头像"
     >
@@ -46,7 +45,7 @@ const { noMarginTop = false, class: className, ...attrs } = Astro.props;
 
     <Socials />
     <div
-      class="desktop-footer-copy my-1.5 flex flex-col items-center text-center leading-relaxed"
+      class="my-1.5 flex flex-col items-center text-center leading-relaxed"
     >
       <span>
         版权所有 &#169; {currentYear}
