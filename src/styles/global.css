@@ -10,9 +10,6 @@ html[data-theme="light"] {
   --accent: #006cac;
   --muted: #e6e6e6;
   --border: #ece9e9;
-  --glass-bg: color-mix(in srgb, #ffffff 72%, transparent);
-  --glass-border: color-mix(in srgb, #ffffff 40%, var(--border));
-  --glass-shadow: 0 12px 40px rgba(20, 26, 38, 0.08);
   --desktop-content-max-width: 72rem;
   --desktop-home-sidebar-width: 18rem;
 }
@@ -23,9 +20,6 @@ html[data-theme="dark"] {
   --accent: #ff6b01;
   --muted: #343f60;
   --border: #ab4b08;
-  --glass-bg: color-mix(in srgb, #212737 66%, transparent);
-  --glass-border: color-mix(in srgb, #ffffff 16%, var(--border));
-  --glass-shadow: 0 18px 48px rgba(0, 0, 0, 0.36);
 }
 
 @theme inline {
@@ -80,21 +74,6 @@ button:not(:disabled),
   @apply text-accent sm:underline sm:decoration-wavy sm:decoration-2 sm:underline-offset-8;
 }
 
-.glass-panel {
-  background-color: var(--glass-bg);
-  border: 1px solid var(--glass-border);
-  box-shadow: var(--glass-shadow);
-  backdrop-filter: blur(18px) saturate(160%);
-  -webkit-backdrop-filter: blur(18px) saturate(160%);
-}
-
-.glass-soft {
-  background-color: color-mix(in srgb, var(--glass-bg) 85%, transparent);
-  border: 1px solid color-mix(in srgb, var(--glass-border) 85%, transparent);
-  backdrop-filter: blur(14px) saturate(135%);
-  -webkit-backdrop-filter: blur(14px) saturate(135%);
-}
-
 /* Source: https://piccalil.li/blog/a-more-modern-css-reset/ */
 /* Anything that has been anchored to should have extra scroll margin */
 :target {
@@ -129,11 +108,12 @@ button:not(:disabled),
   }
 
   .home-profile-card {
-    @apply sticky top-5 self-start rounded-3xl p-4 text-left;
+    @apply sticky top-5 self-start pe-4 text-left;
+    border-right: 1px solid color-mix(in srgb, var(--border) 75%, transparent);
   }
 
   .home-profile-avatar {
-    @apply h-44 w-full rounded-2xl object-cover;
+    @apply h-40 w-full object-cover;
   }
 
   .home-profile-name {
@@ -149,14 +129,14 @@ button:not(:disabled),
   }
 
   .home-main-panel {
-    @apply max-w-none rounded-3xl py-4 pe-5 ps-6;
+    @apply max-w-none py-2 pe-3 ps-1;
     border-left: 1px solid color-mix(in srgb, var(--border) 70%, transparent);
   }
 
   .home-notice-card,
   .home-action-card,
   .home-post-card {
-    @apply rounded-2xl px-4 py-4;
+    @apply px-1 py-3;
     border-bottom: 1px solid color-mix(in srgb, var(--border) 75%, transparent);
   }
 
@@ -181,7 +161,7 @@ button:not(:disabled),
   }
 
   .home-post-card {
-    @apply my-2 rounded-2xl px-4 py-4;
+    @apply my-0 px-1 py-3;
   }
 
   .home-post-card p {
@@ -195,6 +175,6 @@ button:not(:disabled),
   }
 
   .home-main-panel {
-    @apply rounded-3xl px-4 py-3;
+    @apply px-0 py-2;
   }
 }
