@@ -10,18 +10,37 @@ type Props = {
 
 const { page } = Astro.props;
 
+const ensureTrailingSlash = (url: string) => (url.endsWith("/") ? url : `${url}/`);
+
+const resolveFirstPageUrl = () => {
+  const candidates = [
+    page.url.first,
+    page.currentPage === 1 ? page.url.current : undefined,
+    page.currentPage === 2 ? page.url.prev : undefined,
+    page.url.current?.replace(/\/\d+\/?$/, "/"),
+    page.url.prev?.replace(/\/\d+\/?$/, "/"),
+    page.url.next?.replace(/\/2\/?$/, "/"),
+  ];
+
+  const firstPageUrl = candidates.find((url): url is string => Boolean(url));
+
+  return ensureTrailingSlash(firstPageUrl ?? "/");
+};
+
 const getPageUrl = (targetPage: number) => {
-  const firstPageUrl = page.url.first as string;
+  const firstPageUrl = resolveFirstPageUrl();
+
 
   if (targetPage <= 1) {
     return firstPageUrl;
   }
 
-  const normalizedFirstPageUrl = firstPageUrl.endsWith("/")
-    ? firstPageUrl
-    : `${firstPageUrl}/`;
+  if (firstPageUrl === "/") {
+    return `/${targetPage}/`;
+  }
 
-  return `${normalizedFirstPageUrl}${targetPage}/`;
+  return `${firstPageUrl}${targetPage}/`;
+
 };
 
 const getPaginationItems = (currentPage: number, lastPage: number) => {
