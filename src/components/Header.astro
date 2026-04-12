@@ -95,8 +95,8 @@ const isActive = (path: string) => {
       <ul
         id="menu-items"
         class:list={[
-          "absolute top-full right-0 z-50 mt-1 flex min-w-32 flex-col gap-1 rounded-xl border border-border bg-background/95 p-2 shadow-lg backdrop-blur",
-          "[&>li>a]:bg-card/80 [&>li>a]:hover:bg-card [&>li>a]:block [&>li>a]:rounded-lg [&>li>a]:border [&>li>a]:border-border [&>li>a]:px-3 [&>li>a]:py-1.5 [&>li>a]:text-center [&>li>a]:text-sm [&>li>a]:font-medium [&>li>a]:whitespace-nowrap [&>li>a]:transition-colors [&>li>a]:hover:text-accent sm:[&>li>a]:rounded-lg sm:[&>li>a]:border-0 sm:[&>li>a]:bg-transparent sm:[&>li>a]:px-2 sm:[&>li>a]:py-1 sm:[&>li>a]:text-base sm:[&>li>a]:hover:bg-transparent",
+          "absolute top-full right-0 z-50 mt-1 flex w-fit flex-col items-end gap-1 rounded-xl border border-border bg-background/95 p-2 shadow-lg backdrop-blur",
+          "[&>li>a]:block [&>li>a]:px-1.5 [&>li>a]:py-1 [&>li>a]:text-right [&>li>a]:text-sm [&>li>a]:font-medium [&>li>a]:whitespace-nowrap [&>li>a]:transition-colors [&>li>a]:hover:text-accent sm:[&>li>a]:rounded-lg sm:[&>li>a]:border-0 sm:[&>li>a]:bg-transparent sm:[&>li>a]:px-2 sm:[&>li>a]:py-1 sm:[&>li>a]:text-base sm:[&>li>a]:hover:bg-transparent",
           "hidden",
           "sm:static sm:z-auto sm:mt-0 sm:flex sm:w-auto sm:flex-row sm:items-center sm:gap-x-5 sm:gap-y-0 sm:rounded-none sm:border-0 sm:bg-transparent sm:p-0 sm:shadow-none sm:backdrop-blur-none",
         ]}
@@ -115,7 +115,7 @@ const isActive = (path: string) => {
               <LinkButton
                 href="/archives"
                 class:list={[
-                  "focus-outline flex justify-center p-3 sm:p-1",
+                  "focus-outline flex justify-center px-1.5 py-1 sm:p-1",
                   {
                     "active-nav": isActive("/archives"),
                   },
