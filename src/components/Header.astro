@@ -1,7 +1,6 @@
 ---
 import IconX from "@/assets/icons/IconX.svg";
 import IconMoon from "@/assets/icons/IconMoon.svg";
-import IconArchive from "@/assets/icons/IconArchive.svg";
 import IconSunHigh from "@/assets/icons/IconSunHigh.svg";
 import IconMenuDeep from "@/assets/icons/IconMenuDeep.svg";
 import LinkButton from "./LinkButton.astro";
@@ -51,24 +50,10 @@ const isActive = (path: string) => {
       id="nav-menu"
       class="flex w-full items-center justify-end sm:ms-2 sm:space-x-3 sm:py-0"
     >
-      <form
-        action="/search"
-        method="get"
-        class="ms-auto me-2 flex items-center justify-end sm:me-0"
-      >
-        <label class="sr-only" for="header-search-input">搜索</label>
-        <input
-          id="header-search-input"
-          type="search"
-          name="q"
-          placeholder="搜索"
-          class="focus-outline bg-card h-9 w-32 rounded-md border border-border px-3 text-sm sm:w-36"
-        />
-      </form>
       <button
         id="menu-btn"
         class="focus-outline p-2 sm:hidden"
-        aria-label="打开更多"
+        aria-label="打开菜单栏"
         aria-expanded="false"
         aria-controls="menu-items"
       >
@@ -100,14 +85,13 @@ const isActive = (path: string) => {
                 class:list={[
                   "focus-outline flex justify-center p-3 sm:p-1",
                   {
-                    "active-nav [&>svg]:stroke-accent": isActive("/archives"),
+                    "active-nav": isActive("/archives"),
                   },
                 ]}
                 title="归档"
                 aria-label="归档"
               >
-                <IconArchive class="hidden sm:inline-block" />
-                <span class="sm:sr-only">归档</span>
+                <span>归档</span>
               </LinkButton>
             </li>
           )
@@ -148,7 +132,7 @@ const isActive = (path: string) => {
 
     if (isDesktopView) {
       menuBtn.setAttribute("aria-expanded", "false");
-      menuBtn.setAttribute("aria-label", "打开更多");
+      menuBtn.setAttribute("aria-label", "打开菜单栏");
       menuItems.classList.remove("hidden");
       menuIcon.classList.remove("hidden");
       closeIcon.classList.add("hidden");
@@ -181,7 +165,10 @@ const isActive = (path: string) => {
       const openMenu = menuBtn.getAttribute("aria-expanded") === "true";
 
       menuBtn.setAttribute("aria-expanded", openMenu ? "false" : "true");
-      menuBtn.setAttribute("aria-label", openMenu ? "打开更多" : "关闭更多");
+      menuBtn.setAttribute(
+        "aria-label",
+        openMenu ? "打开菜单栏" : "关闭菜单栏"
+      );
 
       syncNavByViewport();
     });
