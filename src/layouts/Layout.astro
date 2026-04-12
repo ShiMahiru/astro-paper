@@ -200,8 +200,10 @@ const structuredData = {
       })();
     </script>
   </head>
-  <body>
-    <slot />
+  <body style={`--site-bg-image: url("${SITE.backgroundImageURL}")`}>
+    <div class="app-glass-shell">
+      <slot />
+    </div>
 
     <!-- Load full theme logic -->
     <script src="../scripts/theme.ts"></script>

@@ -42,11 +42,12 @@ html[data-theme="dark"] {
   }
   body {
     @apply flex min-h-svh flex-col bg-background font-app text-foreground selection:bg-accent/75 selection:text-background;
-    background-image: linear-gradient(
+    background-image:
+      linear-gradient(
         color-mix(in srgb, var(--color-background) 32%, transparent),
         color-mix(in srgb, var(--color-background) 44%, transparent)
       ),
-      url("https://api.yppp.net/api.php");
+      var(--site-bg-image, none);
     background-position: center;
     background-repeat: no-repeat;
     background-size: cover;
@@ -60,6 +61,28 @@ html[data-theme="dark"] {
   [role="button"]:not(:disabled) {
     cursor: pointer;
   }
+}
+
+.app-glass-shell {
+  @apply mx-auto min-h-svh w-full;
+  background-color: color-mix(
+    in srgb,
+    var(--color-background) 68%,
+    transparent
+  );
+  backdrop-filter: blur(22px) saturate(135%);
+  -webkit-backdrop-filter: blur(22px) saturate(135%);
+}
+
+.app-glass-shell :is(header, main, footer, article, section, aside, nav) {
+  background-color: color-mix(
+    in srgb,
+    var(--color-background) 84%,
+    transparent
+  );
+  backdrop-filter: blur(14px) saturate(125%);
+  -webkit-backdrop-filter: blur(14px) saturate(125%);
+  border-color: color-mix(in srgb, var(--color-border) 72%, transparent);
 }
 
 @utility max-w-app {
@@ -153,7 +176,11 @@ html[data-theme="dark"] {
 
 @media (min-width: 1024px) {
   .home-shell {
-    background-color: color-mix(in srgb, var(--color-background) 78%, transparent);
+    background-color: color-mix(
+      in srgb,
+      var(--color-background) 78%,
+      transparent
+    );
     backdrop-filter: blur(16px) saturate(130%);
     -webkit-backdrop-filter: blur(16px) saturate(130%);
   }

@@ -5,6 +5,7 @@ export const SITE = {
   desc: "一个简约、响应式且对 SEO 友好的 Astro 博客主题。",
   title: "AstroPaper",
   ogImage: "astropaper-og.jpg",
+  backgroundImageURL: "https://api.yppp.net/api.php",
   lightAndDarkMode: true,
   postPerIndex: 8,
   postPerPage: 8,
