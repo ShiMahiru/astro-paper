@@ -13,14 +13,16 @@ const { page } = Astro.props;
 const ensureTrailingSlash = (url: string) =>
   url.endsWith("/") ? url : `${url}/`;
 
+const stripPageNumber = (url: string) => url.replace(/\/(?:\d+)\/?$/, "/");
+
 const resolveFirstPageUrl = () => {
   const candidates = [
     page.url.first,
     page.currentPage === 1 ? page.url.current : undefined,
     page.currentPage === 2 ? page.url.prev : undefined,
-    page.url.current?.replace(/\/\d+\/?$/, "/"),
-    page.url.prev?.replace(/\/\d+\/?$/, "/"),
-    page.url.next?.replace(/\/2\/?$/, "/"),
+    page.url.current ? stripPageNumber(page.url.current) : undefined,
+    page.url.prev ? stripPageNumber(page.url.prev) : undefined,
+    page.url.next ? stripPageNumber(page.url.next) : undefined,
   ];
 
   const firstPageUrl = candidates.find((url): url is string => Boolean(url));
@@ -54,6 +56,7 @@ const getPaginationItems = (currentPage: number, lastPage: number) => {
     currentPage - 1,
     currentPage + 1,
   ]);
+
   const pages = Array.from(pageSet)
     .filter(pageNum => pageNum >= 1 && pageNum <= lastPage)
     .sort((a, b) => a - b);
@@ -74,62 +77,85 @@ const getPaginationItems = (currentPage: number, lastPage: number) => {
 };
 
 const paginationItems = getPaginationItems(page.currentPage, page.lastPage);
+
+const controlBaseClass =
+  "flex h-9 w-9 items-center justify-center rounded-md border border-border bg-background text-foreground transition hover:border-accent hover:text-accent sm:h-10 sm:w-10";
+
+const disabledClass = "pointer-events-none opacity-40";
 ---
 
 {
   page.lastPage > 1 && (
     <nav
-      class="my-8 flex items-center justify-center gap-2.5 sm:my-10 sm:gap-3"
+      class="my-8 flex flex-col items-center gap-2 sm:my-10 sm:gap-3"
       role="navigation"
       aria-label="分页导航"
     >
-      <a
-        href={page.url.prev as string}
-        aria-label="前往上一页"
-        class:list={[
-          "flex h-11 w-11 items-center justify-center rounded-sm border border-white/10 bg-slate-900/90 text-slate-300 transition hover:bg-slate-800 hover:text-white sm:h-14 sm:w-14",
-          { "pointer-events-none opacity-35": !page.url.prev },
-        ]}
-      >
-        <IconChevronLeft class="h-6 w-6 sm:h-7 sm:w-7" />
-      </a>
+      <div class="flex items-center justify-center gap-2">
+        {page.url.prev ? (
+          <a
+            href={page.url.prev}
+            aria-label="前往上一页"
+            class={controlBaseClass}
+          >
+            <IconChevronLeft class="h-4 w-4 sm:h-5 sm:w-5" />
+          </a>
+        ) : (
+          <span
+            aria-hidden="true"
+            class:list={[controlBaseClass, disabledClass]}
+          >
+            <IconChevronLeft class="h-4 w-4 sm:h-5 sm:w-5" />
+          </span>
+        )}
 
-      <ul class="flex items-center gap-1.5 rounded-sm border border-white/10 bg-slate-900/90 px-1.5 py-1.5 sm:gap-2 sm:px-2 sm:py-2">
-        {paginationItems.map(item => (
-          <li>
-            {item === "ellipsis" ? (
-              <span class="flex h-11 min-w-11 items-center justify-center px-2 text-xl font-semibold text-slate-300 sm:h-14 sm:min-w-14 sm:px-3 sm:text-2xl">
-                …
-              </span>
-            ) : (
-              <a
-                href={getPageUrl(item)}
-                aria-label={`前往第 ${item} 页`}
-                aria-current={item === page.currentPage ? "page" : undefined}
-                class:list={[
-                  "flex h-11 min-w-11 items-center justify-center px-2 text-xl font-semibold transition sm:h-14 sm:min-w-14 sm:px-3 sm:text-2xl",
-                  item === page.currentPage
-                    ? "rounded-sm bg-blue-500 text-white"
-                    : "text-slate-300 hover:text-white",
-                ]}
-              >
-                {item}
-              </a>
-            )}
-          </li>
-        ))}
-      </ul>
+        <div class="rounded-md border border-border bg-background px-3 py-2 text-sm text-foreground/80 sm:hidden">
+          第 {page.currentPage} / {page.lastPage} 页
+        </div>
 
-      <a
-        href={page.url.next as string}
-        aria-label="前往下一页"
-        class:list={[
-          "flex h-11 w-11 items-center justify-center rounded-sm border border-white/10 bg-slate-900/90 text-slate-300 transition hover:bg-slate-800 hover:text-white sm:h-14 sm:w-14",
-          { "pointer-events-none opacity-35": !page.url.next },
-        ]}
-      >
-        <IconChevronRight class="h-6 w-6 sm:h-7 sm:w-7" />
-      </a>
+        <ul class="hidden items-center gap-1 rounded-md border border-border bg-background p-1 sm:flex">
+          {paginationItems.map(item => (
+            <li>
+              {item === "ellipsis" ? (
+                <span class="flex h-10 min-w-8 items-center justify-center px-1 text-sm text-foreground/70">
+                  …
+                </span>
+              ) : (
+                <a
+                  href={getPageUrl(item)}
+                  aria-label={`前往第 ${item} 页`}
+                  aria-current={item === page.currentPage ? "page" : undefined}
+                  class:list={[
+                    "flex h-10 min-w-10 items-center justify-center rounded-md px-2 text-sm font-medium transition",
+                    item === page.currentPage
+                      ? "bg-accent text-background"
+                      : "text-foreground/80 hover:text-accent",
+                  ]}
+                >
+                  {item}
+                </a>
+              )}
+            </li>
+          ))}
+        </ul>
+
+        {page.url.next ? (
+          <a
+            href={page.url.next}
+            aria-label="前往下一页"
+            class={controlBaseClass}
+          >
+            <IconChevronRight class="h-4 w-4 sm:h-5 sm:w-5" />
+          </a>
+        ) : (
+          <span
+            aria-hidden="true"
+            class:list={[controlBaseClass, disabledClass]}
+          >
+            <IconChevronRight class="h-4 w-4 sm:h-5 sm:w-5" />
+          </span>
+        )}
+      </div>
     </nav>
   )
 }
