@@ -137,13 +137,48 @@ const isActive = (path: string) => {
 </header>
 
 <script>
-  function toggleNav() {
-    const menuBtn = document.querySelector("#menu-btn");
-    const menuItems = document.querySelector("#menu-items");
-    const menuIcon = document.querySelector("#menu-icon");
-    const closeIcon = document.querySelector("#close-icon");
+  const MOBILE_BREAKPOINT = 640;
+
+  function syncNavByViewport() {
+    const menuBtn = document.querySelector<HTMLButtonElement>("#menu-btn");
+    const menuItems = document.querySelector<HTMLUListElement>("#menu-items");
+    const menuIcon = document.querySelector<SVGElement>("#menu-icon");
+    const closeIcon = document.querySelector<SVGElement>("#close-icon");
 
     if (!menuBtn || !menuItems || !menuIcon || !closeIcon) return;
+
+    const isDesktopView = window.innerWidth >= MOBILE_BREAKPOINT;
+
+    if (isDesktopView) {
+      menuBtn.setAttribute("aria-expanded", "false");
+      menuBtn.setAttribute("aria-label", "打开菜单");
+      menuItems.classList.remove("hidden");
+      menuIcon.classList.remove("hidden");
+      closeIcon.classList.add("hidden");
+      return;
+    }
+
+    const isOpen = menuBtn.getAttribute("aria-expanded") === "true";
+
+    menuItems.classList.toggle("hidden", !isOpen);
+    menuIcon.classList.toggle("hidden", isOpen);
+    closeIcon.classList.toggle("hidden", !isOpen);
+  }
+
+  function toggleNav() {
+    const menuBtn = document.querySelector<HTMLButtonElement>("#menu-btn");
+    const menuItems = document.querySelector<HTMLUListElement>("#menu-items");
+    const menuIcon = document.querySelector<SVGElement>("#menu-icon");
+    const closeIcon = document.querySelector<SVGElement>("#close-icon");
+
+    if (!menuBtn || !menuItems || !menuIcon || !closeIcon) return;
+
+    if (menuBtn.dataset.bound === "true") {
+      syncNavByViewport();
+      return;
+    }
+
+    menuBtn.dataset.bound = "true";
 
     menuBtn.addEventListener("click", () => {
       const openMenu = menuBtn.getAttribute("aria-expanded") === "true";
@@ -151,14 +186,18 @@ const isActive = (path: string) => {
       menuBtn.setAttribute("aria-expanded", openMenu ? "false" : "true");
       menuBtn.setAttribute("aria-label", openMenu ? "打开菜单" : "关闭菜单");
 
-      menuItems.classList.toggle("hidden");
-      menuIcon.classList.toggle("hidden");
-      closeIcon.classList.toggle("hidden");
+      syncNavByViewport();
     });
+
+    syncNavByViewport();
   }
 
   toggleNav();
+  window.addEventListener("resize", syncNavByViewport);
 
   // Runs on view transitions navigation
-  document.addEventListener("astro:after-swap", toggleNav);
+  document.addEventListener("astro:after-swap", () => {
+    toggleNav();
+    syncNavByViewport();
+  });
 </script>
