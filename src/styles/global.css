@@ -59,6 +59,32 @@ html[data-theme="dark"] {
   @apply mx-auto w-full max-w-app px-4;
 }
 
+.home-fuwari-layout {
+  @apply flex min-h-svh flex-col;
+}
+
+.home-fuwari-sidebar {
+  @apply lg:sticky lg:top-0 lg:h-svh lg:overflow-y-auto;
+}
+
+.home-fuwari-main {
+  @apply grow;
+}
+
+@media (min-width: 1024px) {
+  .home-fuwari-layout {
+    @apply mx-auto grid max-w-7xl grid-cols-[20rem_minmax(0,1fr)] gap-10 px-6;
+  }
+
+  .home-fuwari-sidebar :is(header, footer) {
+    @apply mx-0 max-w-none px-0;
+  }
+
+  .home-fuwari-main {
+    @apply max-w-none px-0 pt-8;
+  }
+}
+
 .active-nav {
   @apply underline decoration-wavy decoration-2 underline-offset-8;
 }
