@@ -55,6 +55,7 @@ body {
   background-attachment: fixed;
 }
 
+
 a,
 button {
   @apply outline-offset-2 outline-accent focus-visible:no-underline focus-visible:outline-2 focus-visible:outline-dashed;

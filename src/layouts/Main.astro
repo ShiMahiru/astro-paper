@@ -23,7 +23,7 @@ const isHome = Astro.url.pathname === "/";
 <div class="home-desktop-grid app-layout">
   <HomeSidebar />
   <main data-backUrl={backUrl} id="main-content" class="home-main-panel">
-    <section class="content-shell">
+    <section class="content-shell"
       {
         "titleTransition" in props ? (
           <h1 class="text-2xl font-semibold sm:text-3xl">
@@ -33,8 +33,7 @@ const isHome = Astro.url.pathname === "/";
         ) : (
           <h1 class="text-2xl font-semibold sm:text-3xl">{props.pageTitle}</h1>
         )
-      }
-      {props.pageDesc && <p class="mt-1 text-foreground/80">{props.pageDesc}</p>}
+      }      {props.pageDesc && <p class="mt-1 text-foreground/80">{props.pageDesc}</p>}
 
       {
         showListToolbar && (
@@ -58,5 +57,34 @@ const isHome = Astro.url.pathname === "/";
     if (savedBackUrl) {
       sessionStorage.setItem("backUrl", savedBackUrl);
     }
+
+    const toolbar = document.querySelector("[data-toolbar]");
+    if (!toolbar) return;
+
+    const buttons = toolbar.querySelectorAll("[data-sort]");
+    const list = document.querySelector("[data-article-list]");
+    if (!list) return;
+
+    buttons.forEach(button => {
+      button.addEventListener("click", () => {
+        const sortType = button.getAttribute("data-sort");
+        const items = Array.from(list.children);
+        items.sort((a, b) => {
+          const aEl = a;
+          const bEl = b;
+          if (sortType === "title") {
+            return (aEl.getAttribute("data-title") || "").localeCompare(
+              bEl.getAttribute("data-title") || "",
+              "zh-Hans-CN"
+            );
+          }
+          return Number(bEl.getAttribute("data-ts")) - Number(aEl.getAttribute("data-ts"));
+        });
+
+        items.forEach(item => list.appendChild(item));
+        buttons.forEach(btn => btn.classList.remove("is-selected"));
+        button.classList.add("is-selected");
+      });
+    });
   });
 </script>
