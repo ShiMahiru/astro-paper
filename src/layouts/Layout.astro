@@ -15,6 +15,7 @@ type Props = {
   pubDatetime?: Date;
   modDatetime?: Date | null;
   scrollSmooth?: boolean;
+  isBlogPost?: boolean;
 };
 
 const {
@@ -27,19 +28,13 @@ const {
   pubDatetime,
   modDatetime,
   scrollSmooth = false,
+  isBlogPost = false,
 } = Astro.props;
 
 const socialImageURL = new URL(ogImage, Astro.url);
-const userAgent = Astro.request.headers.get("user-agent") ?? "";
-const isMobileDevice =
-  /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(
-    userAgent
-  );
 const viewportContent = SITE.forceDesktopView
   ? "width=1280, initial-scale=1"
-  : isMobileDevice
-    ? "width=device-width, initial-scale=1"
-    : "width=1280, initial-scale=1";
+  : "width=device-width, initial-scale=1";
 
 const structuredData = {
   "@context": "https://schema.org",
@@ -116,11 +111,15 @@ const structuredData = {
     <meta property="twitter:image" content={socialImageURL} />
 
     <!-- Google JSON-LD Structured data -->
-    <script
-      type="application/ld+json"
-      is:inline
-      set:html={JSON.stringify(structuredData)}
-    />
+    {
+      isBlogPost && pubDatetime && (
+        <script
+          type="application/ld+json"
+          is:inline
+          set:html={JSON.stringify(structuredData)}
+        />
+      )
+    }
 
     <!-- Enable RSS feed auto-discovery  -->
     <!-- https://docs.astro.build/en/recipes/rss/#enabling-rss-feed-auto-discovery -->
@@ -174,29 +173,6 @@ const structuredData = {
             window.theme.themeValue = val;
           },
         };
-      })();
-    </script>
-
-    <script is:inline>
-      (function () {
-        const MOBILE_UA_RE =
-          /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i;
-
-        function syncViewportByDevice() {
-          const viewport = document.querySelector('meta[name="viewport"]');
-          if (!viewport) return;
-
-          const isMobileUA = MOBILE_UA_RE.test(navigator.userAgent);
-          viewport.setAttribute(
-            "content",
-            isMobileUA
-              ? "width=device-width, initial-scale=1"
-              : "width=1280, initial-scale=1"
-          );
-        }
-
-        syncViewportByDevice();
-        document.addEventListener("astro:after-swap", syncViewportByDevice);
       })();
     </script>
   </head>

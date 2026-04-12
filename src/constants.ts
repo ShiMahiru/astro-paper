@@ -25,23 +25,23 @@ export const SOCIALS: Social[] = [
   },
   {
     name: "X",
-    href: "https://x.com/username",
+    href: "",
     linkTitle: `${SITE.title} 的 X`,
     icon: IconBrandX,
   },
   {
     name: "LinkedIn",
-    href: "https://www.linkedin.com/in/username/",
+    href: "",
     linkTitle: `${SITE.title} 的 LinkedIn`,
     icon: IconLinkedin,
   },
   {
     name: "Mail",
-    href: "mailto:yourmail@gmail.com",
+    href: "",
     linkTitle: `发送邮件给 ${SITE.title}`,
     icon: IconMail,
   },
-] as const;
+].filter(({ href }) => Boolean(href)) as Social[];
 
 export const SHARE_LINKS: Social[] = [
   {

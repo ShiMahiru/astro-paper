@@ -33,6 +33,10 @@ function setPreference(): void {
   reflectPreference();
 }
 
+function hasUserPreference(): boolean {
+  return localStorage.getItem(THEME) !== null;
+}
+
 function reflectPreference(): void {
   document.firstElementChild?.setAttribute("data-theme", themeValue);
 
@@ -82,11 +86,15 @@ function setThemeFeature(): void {
   reflectPreference();
 
   // now this script can find and listen for clicks on the control
-  document.querySelector("#theme-btn")?.addEventListener("click", () => {
+  const themeBtn = document.querySelector("#theme-btn") as HTMLElement | null;
+  if (!themeBtn || themeBtn.dataset.themeBound === "true") return;
+
+  themeBtn.addEventListener("click", () => {
     themeValue = themeValue === LIGHT ? DARK : LIGHT;
     window.theme?.setTheme(themeValue);
     setPreference();
   });
+  themeBtn.dataset.themeBound = "true";
 }
 
 // Set up theme features after page load
@@ -111,10 +119,9 @@ document.addEventListener("astro:before-swap", event => {
 });
 
 // sync with system changes
-window
-  .matchMedia("(prefers-color-scheme: dark)")
-  .addEventListener("change", ({ matches: isDark }) => {
+window.matchMedia("(prefers-color-scheme: dark)").addEventListener("change", ({ matches: isDark }) => {
+    if (hasUserPreference()) return;
     themeValue = isDark ? DARK : LIGHT;
     window.theme?.setTheme(themeValue);
-    setPreference();
+    reflectPreference();
   });
