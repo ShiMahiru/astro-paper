@@ -49,25 +49,13 @@ const isActive = (path: string) => {
     </a>
     <nav
       id="nav-menu"
-      class="flex w-full flex-col items-center sm:ms-2 sm:flex-row sm:justify-end sm:space-x-3 sm:py-0"
+      class="flex w-full items-center justify-end sm:ms-2 sm:space-x-3 sm:py-0"
     >
       <form
         action="/search"
         method="get"
-        class="mt-3 flex w-full items-center justify-end gap-2 sm:mt-0 sm:w-auto"
+        class="ms-auto me-2 flex items-center justify-end sm:me-0"
       >
-        <a
-          href="/search?q=中转英"
-          class="focus-outline rounded-md px-2 py-1 text-sm font-medium hover:text-accent"
-        >
-          中转英
-        </a>
-        <a
-          href="/search?q=英转中"
-          class="focus-outline rounded-md px-2 py-1 text-sm font-medium hover:text-accent"
-        >
-          英转中
-        </a>
         <label class="sr-only" for="header-search-input">搜索</label>
         <input
           id="header-search-input"
@@ -79,7 +67,7 @@ const isActive = (path: string) => {
       </form>
       <button
         id="menu-btn"
-        class="focus-outline self-end p-2 sm:hidden"
+        class="focus-outline p-2 sm:hidden"
         aria-label="打开更多"
         aria-expanded="false"
         aria-controls="menu-items"
