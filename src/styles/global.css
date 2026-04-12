@@ -69,9 +69,7 @@ button:not(:disabled),
 
 .app-glass-shell {
   @apply mx-auto min-h-svh w-full;
-  background-color: var(--shell-bg);
-  backdrop-filter: blur(20px) saturate(130%);
-  -webkit-backdrop-filter: blur(20px) saturate(130%);
+  background-color: transparent;
 }
 
 .app-glass-shell :is(header, main, footer, article, section, aside, nav) {
@@ -191,6 +189,12 @@ button:not(:disabled),
   background-color: transparent;
 }
 
+.home-unified-surface {
+  background-color: var(--panel-bg);
+  backdrop-filter: blur(16px) saturate(130%);
+  -webkit-backdrop-filter: blur(16px) saturate(130%);
+}
+
 @media (min-width: 1024px) {
   .home-header {
     @apply pt-0;
@@ -208,7 +212,6 @@ button:not(:disabled),
 
   .home-profile-card {
     @apply sticky top-8 rounded-2xl p-4 text-center backdrop-blur-md;
-    background-color: var(--panel-bg);
     box-shadow: none;
   }
 
@@ -229,7 +232,7 @@ button:not(:disabled),
   }
 
   .home-main-panel {
-    @apply max-w-none;
+    @apply max-w-none rounded-2xl px-6 py-5;
   }
 
   .home-notice-card,
@@ -261,7 +264,8 @@ button:not(:disabled),
   }
 
   .home-post-card {
-    @apply my-0;
+    @apply my-0 rounded-none px-0 py-0 backdrop-blur-none;
+    background-color: transparent;
   }
 
   .home-post-card p {
