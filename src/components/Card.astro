@@ -17,7 +17,6 @@ const coverSrc =
   typeof ogImage === "string"
     ? ogImage
     : ogImage?.src ?? "/astropaper-og.jpg";
-
 const wordCount = (body ?? "")
   .replace(/```[\s\S]*?```/g, "")
   .replace(/`[^`]*`/g, "")

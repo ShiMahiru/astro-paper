@@ -55,6 +55,7 @@ body {
   background-attachment: fixed;
 }
 
+
 a,
 button {
   @apply outline-offset-2 outline-accent focus-visible:no-underline focus-visible:outline-2 focus-visible:outline-dashed;
@@ -183,6 +184,7 @@ button:not(:disabled),
 .article-card {
   @apply grid items-start gap-4 sm:grid-cols-[minmax(0,1fr)_9.5rem];
 }
+
 
 .article-title-link {
   @apply inline-block text-xl leading-tight font-semibold text-foreground;
