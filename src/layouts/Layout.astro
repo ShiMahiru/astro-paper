@@ -30,9 +30,15 @@ const {
 } = Astro.props;
 
 const socialImageURL = new URL(ogImage, Astro.url);
+const userAgent = Astro.request.headers.get("user-agent") ?? "";
+const isMobileDevice = /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(
+  userAgent
+);
 const viewportContent = SITE.forceDesktopView
-  ? "width=1280, initial-scale=0.25"
-  : "width=device-width";
+  ? "width=1280, initial-scale=1"
+  : isMobileDevice
+    ? "width=device-width, initial-scale=1"
+    : "width=1280, initial-scale=1";
 
 const structuredData = {
   "@context": "https://schema.org",
@@ -59,7 +65,7 @@ const structuredData = {
 >
   <head>
     <meta charset="UTF-8" />
-    <meta name="viewport" content={viewportContent} />
+    <meta id="app-viewport" name="viewport" content={viewportContent} />
     <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
     <link rel="canonical" href={canonicalURL} />
     <meta name="generator" content={Astro.generator} />
@@ -167,6 +173,29 @@ const structuredData = {
             window.theme.themeValue = val;
           },
         };
+      })();
+    </script>
+
+    <script is:inline>
+      (function () {
+        const MOBILE_UA_RE =
+          /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i;
+
+        function syncViewportByDevice() {
+          const viewport = document.querySelector('meta[name="viewport"]');
+          if (!viewport) return;
+
+          const isMobileUA = MOBILE_UA_RE.test(navigator.userAgent);
+          viewport.setAttribute(
+            "content",
+            isMobileUA
+              ? "width=device-width, initial-scale=1"
+              : "width=1280, initial-scale=1"
+          );
+        }
+
+        syncViewportByDevice();
+        document.addEventListener("astro:after-swap", syncViewportByDevice);
       })();
     </script>
   </head>
