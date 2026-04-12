@@ -42,6 +42,15 @@ html[data-theme="dark"] {
   }
   body {
     @apply flex min-h-svh flex-col bg-background font-app text-foreground selection:bg-accent/75 selection:text-background;
+    background-image: linear-gradient(
+        color-mix(in srgb, var(--color-background) 32%, transparent),
+        color-mix(in srgb, var(--color-background) 44%, transparent)
+      ),
+      url("https://api.yppp.net/api.php");
+    background-position: center;
+    background-repeat: no-repeat;
+    background-size: cover;
+    background-attachment: fixed;
   }
   a,
   button {
@@ -144,8 +153,9 @@ html[data-theme="dark"] {
 
 @media (min-width: 1024px) {
   .home-shell {
-    background-image: none;
-    background-color: var(--color-background);
+    background-color: color-mix(in srgb, var(--color-background) 78%, transparent);
+    backdrop-filter: blur(16px) saturate(130%);
+    -webkit-backdrop-filter: blur(16px) saturate(130%);
   }
 
   .home-header {
