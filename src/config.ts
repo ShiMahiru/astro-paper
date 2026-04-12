@@ -22,3 +22,18 @@ export const SITE = {
   lang: "zh-CN", // html lang code. Set this empty and default will be "en"
   timezone: "Asia/Shanghai", // Default global timezone (IANA format) https://en.wikipedia.org/wiki/List_of_tz_database_time_zones
 } as const;
+
+export const GISCUS = {
+  enabled: true,
+  repo: "ShiMahiru/bolg-Giscus",
+  repoId: "R_kgDOR_rqPw",
+  category: "Announcements",
+  categoryId: "DIC_kwDOR_rqP84C6l8B",
+  mapping: "pathname", // "pathname" | "url" | "title" | "og:title" | "specific" | "number"
+  strict: "1",
+  reactionsEnabled: "1",
+  emitMetadata: "0",
+  inputPosition: "top", // "top" | "bottom"
+  lang: "zh-CN",
+  loading: "lazy", // "lazy" | "eager"
+} as const;
