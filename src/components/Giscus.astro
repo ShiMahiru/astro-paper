@@ -11,31 +11,30 @@ const giscusTheme =
   GISCUS.enabled && (
     <section class="mt-10" aria-label="评论区">
       <h2 class="mb-4 text-lg font-semibold">评论</h2>
-      <div id="giscus-container">
-        <script
-          is:inline
-          src="https://giscus.app/client.js"
-          data-repo={GISCUS.repo}
-          data-repo-id={GISCUS.repoId}
-          data-category={GISCUS.category}
-          data-category-id={GISCUS.categoryId}
-          data-mapping={GISCUS.mapping}
-          data-strict={GISCUS.strict}
-          data-reactions-enabled={GISCUS.reactionsEnabled}
-          data-emit-metadata={GISCUS.emitMetadata}
-          data-input-position={GISCUS.inputPosition}
-          data-theme={giscusTheme}
-          data-lang={GISCUS.lang}
-          data-loading={GISCUS.loading}
-          crossorigin="anonymous"
-          async
-        ></script>
-      </div>
+      <div id="giscus-container"></div>
     </section>
   )
 }
 
-<script is:inline>
+<script
+  is:inline
+  define:vars={{
+    giscusConfig: {
+      repo: GISCUS.repo,
+      repoId: GISCUS.repoId,
+      category: GISCUS.category,
+      categoryId: GISCUS.categoryId,
+      mapping: GISCUS.mapping,
+      strict: GISCUS.strict,
+      reactionsEnabled: GISCUS.reactionsEnabled,
+      emitMetadata: GISCUS.emitMetadata,
+      inputPosition: GISCUS.inputPosition,
+      theme: giscusTheme,
+      lang: GISCUS.lang,
+      loading: GISCUS.loading,
+    },
+  }}
+>
   const setGiscusTheme = () => {
     const theme =
       document.documentElement.getAttribute("data-theme") === "dark"
@@ -58,14 +57,58 @@ const giscusTheme =
     );
   };
 
-  const initGiscusThemeSync = () => {
-    setGiscusTheme();
-    const themeBtn = document.querySelector("#theme-btn");
-    themeBtn?.addEventListener("click", () => {
-      window.setTimeout(setGiscusTheme, 0);
-    });
+  const loadGiscus = () => {
+    const container = document.querySelector("#giscus-container");
+    if (!container) return;
+
+    const hasFrame = container.querySelector("iframe.giscus-frame");
+    const hasPendingScript = container.querySelector("script[data-giscus]");
+
+    if (hasFrame || hasPendingScript) return;
+
+    const script = document.createElement("script");
+    script.src = "https://giscus.app/client.js";
+    script.async = true;
+    script.crossOrigin = "anonymous";
+    script.setAttribute("data-giscus", "true");
+    script.setAttribute("data-repo", giscusConfig.repo);
+    script.setAttribute("data-repo-id", giscusConfig.repoId);
+    script.setAttribute("data-category", giscusConfig.category);
+    script.setAttribute("data-category-id", giscusConfig.categoryId);
+    script.setAttribute("data-mapping", giscusConfig.mapping);
+    script.setAttribute("data-strict", giscusConfig.strict);
+    script.setAttribute(
+      "data-reactions-enabled",
+      String(giscusConfig.reactionsEnabled)
+    );
+    script.setAttribute("data-emit-metadata", String(giscusConfig.emitMetadata));
+    script.setAttribute("data-input-position", giscusConfig.inputPosition);
+    script.setAttribute("data-theme", giscusConfig.theme);
+    script.setAttribute("data-lang", giscusConfig.lang);
+    script.setAttribute("data-loading", giscusConfig.loading);
+
+    container.appendChild(script);
   };
 
-  initGiscusThemeSync();
-  document.addEventListener("astro:after-swap", initGiscusThemeSync);
+  const initGiscus = () => {
+    loadGiscus();
+    setGiscusTheme();
+  };
+
+  const setupThemeSync = () => {
+    const themeBtn = document.querySelector("#theme-btn");
+    if (!themeBtn || themeBtn.dataset.giscusThemeBound === "true") return;
+
+    themeBtn.addEventListener("click", () => {
+      window.setTimeout(setGiscusTheme, 0);
+    });
+    themeBtn.dataset.giscusThemeBound = "true";
+  };
+
+  initGiscus();
+  setupThemeSync();
+  document.addEventListener("astro:after-swap", () => {
+    initGiscus();
+    setupThemeSync();
+  });
 </script>
