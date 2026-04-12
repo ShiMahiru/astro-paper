@@ -1,5 +1,7 @@
 ---
 import { getCollection } from "astro:content";
+import type { Page } from "astro";
+import type { CollectionEntry } from "astro:content";
 import Layout from "@/layouts/Layout.astro";
 import Header from "@/components/Header.astro";
 import Footer from "@/components/Footer.astro";
@@ -20,27 +22,38 @@ const indexPagination = {
   url: {
     current: "/posts/",
     first: "/posts/",
+    last: pageCount > 1 ? `/posts/${pageCount}/` : "/posts/",
     prev: undefined,
     next: pageCount > 1 ? "/posts/2/" : undefined,
   },
-};
+} as Page<CollectionEntry<"blog">>;
 ---
 
 <Layout>
-  <Header />
-  <main id="main-content" data-layout="index" class="app-layout">
-    {
-      allPosts.length > 0 && (
-        <section id="recent-posts" class="pb-6">
-          <ul>
-            {allPosts.map(data => <Card variant="h3" {...data} />)}
-          </ul>
-          <Pagination page={indexPagination as any} />
-        </section>
-      )
-    }
-  </main>
-  <Footer />
+  <div class="home-fuwari-layout">
+    <aside class="home-fuwari-sidebar">
+      <Header />
+      <Footer noMarginTop />
+    </aside>
+    <main
+      id="main-content"
+      data-layout="index"
+      class="home-fuwari-main app-layout"
+    >
+      {
+        allPosts.length > 0 && (
+          <section id="recent-posts" class="pb-6">
+            <ul>
+              {allPosts.map(data => (
+                <Card variant="h3" {...data} />
+              ))}
+            </ul>
+            <Pagination page={indexPagination} />
+          </section>
+        )
+      }
+    </main>
+  </div>
 </Layout>
 
 <script>
