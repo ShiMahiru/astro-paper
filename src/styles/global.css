@@ -12,6 +12,9 @@ html[data-theme="light"] {
   --border: #ece9e9;
   --desktop-content-max-width: 72rem;
   --desktop-home-sidebar-width: 18rem;
+  --shell-bg: color-mix(in srgb, var(--background) 78%, transparent);
+  --panel-bg: color-mix(in srgb, var(--background) 90%, transparent);
+  --panel-border: color-mix(in srgb, var(--border) 86%, transparent);
 }
 
 html[data-theme="dark"] {
@@ -20,6 +23,9 @@ html[data-theme="dark"] {
   --accent: #ff6b01;
   --muted: #343f60;
   --border: #ab4b08;
+  --shell-bg: color-mix(in srgb, var(--background) 74%, transparent);
+  --panel-bg: color-mix(in srgb, var(--background) 88%, transparent);
+  --panel-border: color-mix(in srgb, var(--border) 72%, transparent);
 }
 
 @theme inline {
@@ -65,32 +71,20 @@ html[data-theme="dark"] {
 
 .app-glass-shell {
   @apply mx-auto min-h-svh w-full;
-  background-color: color-mix(
-    in srgb,
-    var(--color-background) 36%,
-    transparent
-  );
-  backdrop-filter: blur(18px) saturate(130%);
-  -webkit-backdrop-filter: blur(18px) saturate(130%);
+  background-color: var(--shell-bg);
+  backdrop-filter: blur(20px) saturate(130%);
+  -webkit-backdrop-filter: blur(20px) saturate(130%);
 }
 
 .app-glass-shell :is(header, main, footer, article, section, aside, nav) {
-  background-color: color-mix(
-    in srgb,
-    var(--color-background) 60%,
-    transparent
-  );
+  background-color: var(--panel-bg);
   backdrop-filter: blur(16px) saturate(130%);
   -webkit-backdrop-filter: blur(16px) saturate(130%);
-  border-color: color-mix(in srgb, var(--color-border) 72%, transparent);
+  border-color: var(--panel-border);
 }
 
 .app-glass-shell .bg-background {
-  background-color: color-mix(
-    in srgb,
-    var(--color-background) 58%,
-    transparent
-  ) !important;
+  background-color: var(--panel-bg) !important;
   backdrop-filter: blur(14px) saturate(130%);
   -webkit-backdrop-filter: blur(14px) saturate(130%);
 }
@@ -152,10 +146,10 @@ html[data-theme="dark"] {
 
   .desktop-side-footer .desktop-side-footer-inner {
     border-top: 0;
-    border: 1px solid var(--color-border);
+    border: 1px solid var(--panel-border);
     border-radius: 0.75rem;
     padding: 0.9rem;
-    background-color: var(--color-background);
+    background-color: var(--panel-bg);
     display: flex;
     flex-direction: column;
     align-items: flex-start;
@@ -182,34 +176,18 @@ html[data-theme="dark"] {
 
 .home-shell {
   @apply min-h-svh;
-  background-color: color-mix(in srgb, var(--color-background) 28%, transparent);
-  backdrop-filter: blur(10px) saturate(120%);
-  -webkit-backdrop-filter: blur(10px) saturate(120%);
+  background-color: transparent;
 }
 
 @media (min-width: 1024px) {
-  .home-shell {
-    background-color: color-mix(
-      in srgb,
-      var(--color-background) 78%,
-      transparent
-    );
-    backdrop-filter: blur(16px) saturate(130%);
-    -webkit-backdrop-filter: blur(16px) saturate(130%);
-  }
-
   .home-header {
     @apply pt-0;
   }
 
   .home-header .home-header-inner {
     @apply rounded-2xl border px-6 backdrop-blur-md;
-    border-color: var(--color-border);
-    background-color: color-mix(
-      in srgb,
-      var(--color-background) 92%,
-      transparent
-    );
+    border-color: var(--panel-border);
+    background-color: var(--panel-bg);
   }
 
   .home-desktop-grid {
@@ -218,12 +196,8 @@ html[data-theme="dark"] {
 
   .home-profile-card {
     @apply sticky top-8 rounded-2xl border p-4 text-center backdrop-blur-md;
-    border-color: var(--color-border);
-    background-color: color-mix(
-      in srgb,
-      var(--color-background) 94%,
-      transparent
-    );
+    border-color: var(--panel-border);
+    background-color: var(--panel-bg);
   }
 
   .home-profile-avatar {
@@ -250,12 +224,8 @@ html[data-theme="dark"] {
   .home-action-card,
   .home-post-card {
     @apply rounded-2xl border px-6 py-5 backdrop-blur-md;
-    border-color: var(--color-border);
-    background-color: color-mix(
-      in srgb,
-      var(--color-background) 94%,
-      transparent
-    );
+    border-color: var(--panel-border);
+    background-color: var(--panel-bg);
   }
 
   .home-action-card {
