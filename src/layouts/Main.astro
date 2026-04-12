@@ -16,7 +16,7 @@ const backUrl = SITE.showBackButton ? Astro.url.pathname : "/";
 <Breadcrumb />
 <div class="home-desktop-grid app-layout">
   <HomeSidebar />
-  <main data-backUrl={backUrl} id="main-content" class="home-main-panel pb-4">
+  <main data-backUrl={backUrl} id="main-content" class="home-main-panel pb-2">
   {
     "titleTransition" in props ? (
       <h1 class="text-2xl font-semibold sm:text-3xl">
@@ -29,7 +29,7 @@ const backUrl = SITE.showBackButton ? Astro.url.pathname : "/";
       <h1 class="text-2xl font-semibold sm:text-3xl">{props.pageTitle}</h1>
     )
   }
-  <p class="mt-2 mb-6 italic">{props.pageDesc}</p>
+  <p class="mt-1 mb-4 italic">{props.pageDesc}</p>
   <slot />
   </main>
 </div>

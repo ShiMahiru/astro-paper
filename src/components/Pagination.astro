@@ -79,7 +79,7 @@ const getPaginationItems = (currentPage: number, lastPage: number) => {
 const paginationItems = getPaginationItems(page.currentPage, page.lastPage);
 
 const controlBaseClass =
-  "flex h-9 w-9 items-center justify-center rounded-md bg-background text-foreground transition hover:text-accent sm:h-10 sm:w-10";
+  "flex h-9 w-9 items-center justify-center text-foreground transition hover:text-accent sm:h-10 sm:w-10";
 
 const disabledClass = "pointer-events-none opacity-40";
 ---
@@ -87,7 +87,7 @@ const disabledClass = "pointer-events-none opacity-40";
 {
   page.lastPage > 1 && (
     <nav
-      class="my-8 flex flex-col items-center gap-2 sm:my-10 sm:gap-3"
+      class="my-5 flex flex-col items-center gap-2 border-t border-border/70 pt-4 sm:my-6 sm:gap-2 sm:pt-5"
       role="navigation"
       aria-label="分页导航"
     >
@@ -109,11 +109,11 @@ const disabledClass = "pointer-events-none opacity-40";
           </span>
         )}
 
-        <div class="rounded-md bg-background px-3 py-2 text-sm text-foreground/80 sm:hidden">
+        <div class="px-2 py-1 text-sm text-foreground/80 sm:hidden">
           第 {page.currentPage} / {page.lastPage} 页
         </div>
 
-        <ul class="hidden items-center gap-1 rounded-md bg-background p-1 sm:flex">
+        <ul class="hidden items-center gap-1 sm:flex">
           {paginationItems.map(item => (
             <li>
               {item === "ellipsis" ? (
@@ -126,9 +126,9 @@ const disabledClass = "pointer-events-none opacity-40";
                   aria-label={`前往第 ${item} 页`}
                   aria-current={item === page.currentPage ? "page" : undefined}
                   class:list={[
-                    "flex h-10 min-w-10 items-center justify-center rounded-md px-2 text-sm font-medium transition",
+                    "flex h-10 min-w-10 items-center justify-center px-2 text-sm font-medium transition",
                     item === page.currentPage
-                      ? "bg-accent text-background"
+                      ? "border-b-2 border-accent text-accent"
                       : "text-foreground/80 hover:text-accent",
                   ]}
                 >

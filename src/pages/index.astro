@@ -43,11 +43,11 @@ const indexPagination = {
       <main
         id="main-content"
         data-layout="index"
-        class="home-main-panel home-unified-surface pb-8"
+        class="home-main-panel pb-4"
       >
         {
           allPosts.length > 0 && (
-            <section id="recent-posts" class="pb-6">
+            <section id="recent-posts" class="pb-2">
               <ul>
                 {allPosts.map(data => (
                   <Card variant="h3" {...data} />
