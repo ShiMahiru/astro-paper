@@ -17,7 +17,7 @@ export const SITE = {
     url: "https://github.com/ShiMahiru/astro-paper/edit/main/",
   },
   dynamicOgImage: true,
-  forceDesktopView: true, // force desktop layout on mobile devices
+  forceDesktopView: false, // keep responsive viewport for mobile devices
   dir: "ltr", // "rtl" | "auto"
   lang: "zh-CN", // html lang code. Set this empty and default will be "en"
   timezone: "Asia/Shanghai", // Default global timezone (IANA format) https://en.wikipedia.org/wiki/List_of_tz_database_time_zones
