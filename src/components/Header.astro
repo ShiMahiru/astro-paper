@@ -49,7 +49,7 @@ const isActive = (path: string) => {
     </a>
     <nav
       id="nav-menu"
-      class="flex w-full items-center justify-end sm:ms-2 sm:space-x-3 sm:py-0"
+      class="flex w-full items-center justify-end gap-1 sm:ms-2 sm:space-x-3 sm:py-0"
     >
       <form
         action="/search"
@@ -57,18 +57,34 @@ const isActive = (path: string) => {
         class="relative me-2 hidden w-full max-w-48 sm:block"
       >
         <label for="header-search" class="sr-only">搜索</label>
-        <IconSearch class="pointer-events-none absolute top-1/2 left-3 size-4 -translate-y-1/2 opacity-70" />
+        <IconSearch
+          class="pointer-events-none absolute top-1/2 left-3 size-4 -translate-y-1/2 opacity-70"
+        />
         <input
           id="header-search"
           name="q"
           type="search"
           placeholder="搜索"
-          class="focus-outline w-full rounded-xl border border-border bg-card py-2 pr-3 pl-9 text-sm placeholder:text-muted"
+          class="focus-outline bg-card w-full rounded-xl border border-border py-2 pr-3 pl-9 text-sm placeholder:text-muted"
         />
       </form>
+      {
+        SITE.lightAndDarkMode && (
+          <button
+            id="theme-btn"
+            class="focus-outline relative size-9 p-2 sm:size-8 sm:border-0 sm:bg-transparent sm:p-1 hover:[&>svg]:stroke-accent"
+            title="切换浅色/深色模式"
+            aria-label="auto"
+            aria-live="polite"
+          >
+            <IconMoon class="absolute top-[50%] left-[50%] -translate-[50%] scale-100 rotate-0 transition-all dark:scale-0 dark:-rotate-90" />
+            <IconSunHigh class="absolute top-[50%] left-[50%] -translate-[50%] scale-0 rotate-90 transition-all dark:scale-100 dark:rotate-0" />
+          </button>
+        )
+      }
       <button
         id="menu-btn"
-        class="focus-outline rounded-xl border border-border bg-card p-2 sm:hidden"
+        class="focus-outline p-2 sm:hidden"
         aria-label="打开菜单栏"
         aria-expanded="false"
         aria-controls="menu-items"
@@ -79,8 +95,8 @@ const isActive = (path: string) => {
       <ul
         id="menu-items"
         class:list={[
-          "absolute top-full right-0 z-50 mt-2 flex min-w-48 flex-col gap-2 rounded-2xl border border-border bg-background/95 p-3 shadow-lg backdrop-blur",
-          "[&>li>a]:block [&>li>a]:rounded-xl [&>li>a]:border [&>li>a]:border-border [&>li>a]:bg-card/80 [&>li>a]:px-4 [&>li>a]:py-2.5 [&>li>a]:text-center [&>li>a]:font-medium [&>li>a]:whitespace-nowrap [&>li>a]:transition-colors [&>li>a]:hover:text-accent [&>li>a]:hover:bg-card sm:[&>li>a]:rounded-lg sm:[&>li>a]:border-0 sm:[&>li>a]:bg-transparent sm:[&>li>a]:px-2 sm:[&>li>a]:py-1 sm:[&>li>a]:hover:bg-transparent",
+          "absolute top-full right-0 z-50 mt-1 flex min-w-32 flex-col gap-1 rounded-xl border border-border bg-background/95 p-2 shadow-lg backdrop-blur",
+          "[&>li>a]:bg-card/80 [&>li>a]:hover:bg-card [&>li>a]:block [&>li>a]:rounded-lg [&>li>a]:border [&>li>a]:border-border [&>li>a]:px-3 [&>li>a]:py-1.5 [&>li>a]:text-center [&>li>a]:text-sm [&>li>a]:font-medium [&>li>a]:whitespace-nowrap [&>li>a]:transition-colors [&>li>a]:hover:text-accent sm:[&>li>a]:rounded-lg sm:[&>li>a]:border-0 sm:[&>li>a]:bg-transparent sm:[&>li>a]:px-2 sm:[&>li>a]:py-1 sm:[&>li>a]:text-base sm:[&>li>a]:hover:bg-transparent",
           "hidden",
           "sm:static sm:z-auto sm:mt-0 sm:flex sm:w-auto sm:flex-row sm:items-center sm:gap-x-5 sm:gap-y-0 sm:rounded-none sm:border-0 sm:bg-transparent sm:p-0 sm:shadow-none sm:backdrop-blur-none",
         ]}
@@ -112,22 +128,6 @@ const isActive = (path: string) => {
             </li>
           )
         }
-        {
-          SITE.lightAndDarkMode && (
-            <li class="flex items-center justify-center">
-              <button
-                id="theme-btn"
-                class="focus-outline relative size-12 rounded-xl border border-border bg-card/80 p-4 hover:[&>svg]:stroke-accent sm:size-8 sm:border-0 sm:bg-transparent sm:p-1"
-                title="切换浅色/深色模式"
-                aria-label="auto"
-                aria-live="polite"
-              >
-                <IconMoon class="absolute top-[50%] left-[50%] -translate-[50%] scale-100 rotate-0 transition-all dark:scale-0 dark:-rotate-90" />
-                <IconSunHigh class="absolute top-[50%] left-[50%] -translate-[50%] scale-0 rotate-90 transition-all dark:scale-100 dark:rotate-0" />
-              </button>
-            </li>
-          )
-        }
       </ul>
     </nav>
   </div>
@@ -140,7 +140,8 @@ const isActive = (path: string) => {
     const menuBtn = document.querySelector<HTMLButtonElement>("#menu-btn");
     const menuItems = document.querySelector<HTMLUListElement>("#menu-items");
     const menuIconOpen = document.querySelector<SVGElement>("#menu-icon-open");
-    const menuIconClose = document.querySelector<SVGElement>("#menu-icon-close");
+    const menuIconClose =
+      document.querySelector<SVGElement>("#menu-icon-close");
 
     if (!menuBtn || !menuItems || !menuIconOpen || !menuIconClose) return;
 
@@ -166,7 +167,8 @@ const isActive = (path: string) => {
     const menuBtn = document.querySelector<HTMLButtonElement>("#menu-btn");
     const menuItems = document.querySelector<HTMLUListElement>("#menu-items");
     const menuIconOpen = document.querySelector<SVGElement>("#menu-icon-open");
-    const menuIconClose = document.querySelector<SVGElement>("#menu-icon-close");
+    const menuIconClose =
+      document.querySelector<SVGElement>("#menu-icon-close");
 
     if (!menuBtn || !menuItems || !menuIconOpen || !menuIconClose) return;
 
