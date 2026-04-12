@@ -10,6 +10,8 @@ html[data-theme="light"] {
   --accent: #006cac;
   --muted: #e6e6e6;
   --border: #ece9e9;
+  --desktop-content-max-width: 72rem;
+  --desktop-home-sidebar-width: 18rem;
 }
 
 html[data-theme="dark"] {
@@ -52,7 +54,7 @@ html[data-theme="dark"] {
 }
 
 @utility max-w-app {
-  @apply max-w-3xl;
+  @apply max-w-3xl lg:max-w-[var(--desktop-content-max-width)];
 }
 
 @utility app-layout {
@@ -93,8 +95,14 @@ html[data-theme="dark"] {
   .desktop-side-footer {
     position: fixed;
     bottom: 1.5rem;
-    left: max(1.5rem, calc((100vw - 48rem) / 2 - 16rem - 2rem));
-    width: 15rem;
+    left: max(
+      1.5rem,
+      calc(
+        (100vw - var(--desktop-content-max-width)) / 2 -
+          var(--desktop-home-sidebar-width) - 1.5rem
+      )
+    );
+    width: calc(var(--desktop-home-sidebar-width) - 1rem);
     margin: 0;
     padding: 0;
     z-index: 20;
@@ -149,7 +157,7 @@ html[data-theme="dark"] {
   }
 
   .home-desktop-grid {
-    @apply grid grid-cols-[17rem_minmax(0,1fr)] gap-6 pt-6;
+    @apply grid grid-cols-[var(--desktop-home-sidebar-width)_minmax(0,1fr)] gap-8 pt-6;
   }
 
   .home-profile-card {
