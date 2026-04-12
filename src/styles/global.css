@@ -12,9 +12,9 @@ html[data-theme="light"] {
   --border: #ece9e9;
   --desktop-content-max-width: 72rem;
   --desktop-home-sidebar-width: 18rem;
-  --shell-bg: color-mix(in srgb, var(--background) 78%, transparent);
-  --panel-bg: color-mix(in srgb, var(--background) 90%, transparent);
-  --panel-border: color-mix(in srgb, var(--border) 86%, transparent);
+  --shell-bg: var(--background);
+  --panel-bg: var(--background);
+  --panel-border: color-mix(in srgb, var(--border) 65%, transparent);
 }
 
 html[data-theme="dark"] {
@@ -23,9 +23,9 @@ html[data-theme="dark"] {
   --accent: #ff6b01;
   --muted: #343f60;
   --border: #ab4b08;
-  --shell-bg: color-mix(in srgb, var(--background) 74%, transparent);
-  --panel-bg: color-mix(in srgb, var(--background) 88%, transparent);
-  --panel-border: color-mix(in srgb, var(--border) 72%, transparent);
+  --shell-bg: var(--background);
+  --panel-bg: var(--background);
+  --panel-border: color-mix(in srgb, var(--border) 55%, transparent);
 }
 
 @theme inline {
@@ -47,16 +47,7 @@ html {
 }
 body {
   @apply flex min-h-svh flex-col bg-background font-app text-foreground selection:bg-accent/75 selection:text-background;
-  background-image:
-    linear-gradient(
-      color-mix(in srgb, var(--color-background) 14%, transparent),
-      color-mix(in srgb, var(--color-background) 24%, transparent)
-    ),
-    var(--site-bg-image, none);
-  background-position: center;
-  background-repeat: no-repeat;
-  background-size: cover;
-  background-attachment: fixed;
+  background-image: none;
 }
 a,
 button {
@@ -74,8 +65,6 @@ button:not(:disabled),
 
 .app-glass-shell :is(header, main, footer, article, section, aside, nav) {
   background-color: var(--panel-bg);
-  backdrop-filter: blur(16px) saturate(130%);
-  -webkit-backdrop-filter: blur(16px) saturate(130%);
   border: 0;
   box-shadow: none;
 }
@@ -94,8 +83,6 @@ button:not(:disabled),
 
 .app-glass-shell .bg-background {
   background-color: var(--panel-bg) !important;
-  backdrop-filter: blur(14px) saturate(130%);
-  -webkit-backdrop-filter: blur(14px) saturate(130%);
 }
 
 @utility max-w-app {
@@ -191,8 +178,15 @@ button:not(:disabled),
 
 .home-unified-surface {
   background-color: var(--panel-bg);
-  backdrop-filter: blur(16px) saturate(130%);
-  -webkit-backdrop-filter: blur(16px) saturate(130%);
+}
+
+.home-post-card {
+  @apply my-0 py-4;
+  border-bottom: 1px solid var(--panel-border);
+}
+
+.home-post-card:last-child {
+  border-bottom: 0;
 }
 
 @media (min-width: 1024px) {
@@ -201,22 +195,23 @@ button:not(:disabled),
   }
 
   .home-header .home-header-inner {
-    @apply rounded-2xl px-6 backdrop-blur-md;
+    @apply px-2;
     background-color: var(--panel-bg);
     box-shadow: none;
   }
 
   .home-desktop-grid {
-    @apply grid w-full max-w-none grid-cols-[var(--desktop-home-sidebar-width)_minmax(0,1fr)] gap-8 pt-0;
+    @apply grid w-full max-w-none grid-cols-[var(--desktop-home-sidebar-width)_minmax(0,1fr)] gap-4 pt-0;
   }
 
   .home-profile-card {
-    @apply sticky top-8 rounded-2xl p-4 text-center backdrop-blur-md;
+    @apply sticky top-5 p-2 text-left;
     box-shadow: none;
+    border-bottom: 1px solid var(--panel-border);
   }
 
   .home-profile-avatar {
-    @apply h-64 w-full rounded-xl object-cover;
+    @apply h-52 w-full rounded-md object-cover;
   }
 
   .home-profile-name {
@@ -224,23 +219,25 @@ button:not(:disabled),
   }
 
   .home-profile-desc {
-    @apply mt-3 text-sm leading-7 text-foreground/80;
+    @apply mt-2 text-sm leading-6 text-foreground/80;
   }
 
   .home-profile-socials {
-    @apply mt-4 flex justify-center;
+    @apply mt-3 flex justify-start;
   }
 
   .home-main-panel {
-    @apply max-w-none rounded-2xl px-6 py-5;
+    @apply max-w-none px-2 py-2;
+    border-bottom: 1px solid var(--panel-border);
   }
 
   .home-notice-card,
   .home-action-card,
   .home-post-card {
-    @apply rounded-2xl px-6 py-5 backdrop-blur-md;
-    background-color: var(--panel-bg);
+    @apply rounded-none px-0 py-0;
+    background-color: transparent;
     box-shadow: none;
+    border-bottom: 1px solid var(--panel-border);
   }
 
   .home-action-card {
@@ -260,15 +257,15 @@ button:not(:disabled),
   }
 
   #recent-posts > ul {
-    @apply space-y-4;
+    @apply space-y-0;
   }
 
   .home-post-card {
-    @apply my-0 rounded-none px-0 py-0 backdrop-blur-none;
+    @apply my-0 rounded-none px-0 py-3;
     background-color: transparent;
   }
 
   .home-post-card p {
-    @apply mt-3 text-foreground/80;
+    @apply mt-2 text-foreground/80;
   }
 }
