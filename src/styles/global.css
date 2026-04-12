@@ -44,8 +44,8 @@ html[data-theme="dark"] {
     @apply flex min-h-svh flex-col bg-background font-app text-foreground selection:bg-accent/75 selection:text-background;
     background-image:
       linear-gradient(
-        color-mix(in srgb, var(--color-background) 32%, transparent),
-        color-mix(in srgb, var(--color-background) 44%, transparent)
+        color-mix(in srgb, var(--color-background) 14%, transparent),
+        color-mix(in srgb, var(--color-background) 24%, transparent)
       ),
       var(--site-bg-image, none);
     background-position: center;
@@ -67,22 +67,32 @@ html[data-theme="dark"] {
   @apply mx-auto min-h-svh w-full;
   background-color: color-mix(
     in srgb,
-    var(--color-background) 68%,
+    var(--color-background) 36%,
     transparent
   );
-  backdrop-filter: blur(22px) saturate(135%);
-  -webkit-backdrop-filter: blur(22px) saturate(135%);
+  backdrop-filter: blur(18px) saturate(130%);
+  -webkit-backdrop-filter: blur(18px) saturate(130%);
 }
 
 .app-glass-shell :is(header, main, footer, article, section, aside, nav) {
   background-color: color-mix(
     in srgb,
-    var(--color-background) 84%,
+    var(--color-background) 60%,
     transparent
   );
-  backdrop-filter: blur(14px) saturate(125%);
-  -webkit-backdrop-filter: blur(14px) saturate(125%);
+  backdrop-filter: blur(16px) saturate(130%);
+  -webkit-backdrop-filter: blur(16px) saturate(130%);
   border-color: color-mix(in srgb, var(--color-border) 72%, transparent);
+}
+
+.app-glass-shell .bg-background {
+  background-color: color-mix(
+    in srgb,
+    var(--color-background) 58%,
+    transparent
+  ) !important;
+  backdrop-filter: blur(14px) saturate(130%);
+  -webkit-backdrop-filter: blur(14px) saturate(130%);
 }
 
 @utility max-w-app {
@@ -171,7 +181,10 @@ html[data-theme="dark"] {
 }
 
 .home-shell {
-  @apply min-h-svh bg-background;
+  @apply min-h-svh;
+  background-color: color-mix(in srgb, var(--color-background) 28%, transparent);
+  backdrop-filter: blur(10px) saturate(120%);
+  -webkit-backdrop-filter: blur(10px) saturate(120%);
 }
 
 @media (min-width: 1024px) {
