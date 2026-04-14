@@ -59,22 +59,23 @@ const isActive = (path: string) => {
 
     <div class="topbar-nav-desktop">
       <nav class="topbar-nav" aria-label="主导航">
-        <ToolbarButton href="/" selected={currentPath === "/"}>首页</ToolbarButton>
+        <ToolbarButton href="/" selected={currentPath === "/"}>最新</ToolbarButton>
         {SITE.showArchives && (
           <ToolbarButton href="/archives" selected={isActive("/archives")}>归档</ToolbarButton>
         )}
         <ToolbarButton href="/about" selected={isActive("/about")}>关于</ToolbarButton>
       </nav>
-      <SearchInput id="desktop-search" />
+      <ToolbarButton href="/search" selected={isActive("/search")}>搜索</ToolbarButton>
     </div>
 
     <div id="menu-items" class="mobile-menu hidden" aria-label="主导航">
       <nav class="mobile-menu-links">
-        <ToolbarButton href="/" selected={currentPath === "/"}>首页</ToolbarButton>
+        <ToolbarButton href="/" selected={currentPath === "/"}>最新</ToolbarButton>
         {SITE.showArchives && (
           <ToolbarButton href="/archives" selected={isActive("/archives")}>归档</ToolbarButton>
         )}
         <ToolbarButton href="/about" selected={isActive("/about")}>关于</ToolbarButton>
+        <ToolbarButton href="/search" selected={isActive("/search")}>搜索</ToolbarButton>
       </nav>
       <SearchInput id="mobile-search" />
     </div>
