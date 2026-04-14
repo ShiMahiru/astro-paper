@@ -6,4 +6,8 @@ interface Window {
     getTheme: () => string;
     setTheme: (val: string) => void;
   };
+  articleListScene?: {
+    getScene: () => string;
+    setScene: (scene: string) => void;
+  };
 }

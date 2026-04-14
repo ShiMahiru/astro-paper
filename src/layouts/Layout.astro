@@ -162,7 +162,6 @@ const structuredData = {
 
         // Set theme immediately to prevent flash
         document.firstElementChild?.setAttribute("data-theme", themeValue);
-        document.firstElementChild?.setAttribute("data-display-style", themeValue);
 
         // Export minimal API for external script
         window.theme = {
@@ -180,5 +179,6 @@ const structuredData = {
 
     <!-- Load full theme logic -->
     <script src="../scripts/theme.ts"></script>
+    <script src="../scripts/articleListScene.ts"></script>
   </body>
 </html>
