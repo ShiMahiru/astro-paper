@@ -66,19 +66,32 @@ const structuredData = {
     <meta id="app-viewport" name="viewport" content={viewportContent} />
     {
       SITE.forceDesktopViewOnDesktop && !SITE.forceDesktopView && (
-        <script is:inline>
-          {`(() => {
-            const viewportMeta = document.querySelector('meta#app-viewport');
-            if (!viewportMeta) return;
+        <script
+          is:inline
+          set:html={`(() => {
+            const desktopMediaQuery = '(min-width: 1024px) and (pointer: fine)';
+            const applyViewport = () => {
+              const viewportMeta = document.querySelector('meta#app-viewport');
+              if (!viewportMeta) return;
 
-            const isDesktop = window.matchMedia('(min-width: 1024px) and (pointer: fine)').matches;
-            if (isDesktop) {
-              viewportMeta.setAttribute('content', '${desktopViewportContent}');
-            } else {
-              viewportMeta.setAttribute('content', '${responsiveViewportContent}');
-            }
+              const isDesktop = window.matchMedia(desktopMediaQuery).matches;
+              viewportMeta.setAttribute(
+                'content',
+                isDesktop ? '${desktopViewportContent}' : '${responsiveViewportContent}'
+              );
+            };
+
+            applyViewport();
+
+            if (window.__desktopViewportSyncBound) return;
+            window.__desktopViewportSyncBound = true;
+
+            const media = window.matchMedia(desktopMediaQuery);
+            media.addEventListener('change', applyViewport);
+            document.addEventListener('astro:after-swap', applyViewport);
+            document.addEventListener('astro:page-load', applyViewport);
           })();`}
-        </script>
+        />
       )
     }
     <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
