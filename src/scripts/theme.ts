@@ -1,11 +1,11 @@
 // Constants
 const THEME = "theme";
-const LIGHT = "light";
 const DARK = "dark";
+const FROST = "frost";
 
 // Initial color scheme
-// Can be "light", "dark", or empty string for system's prefers-color-scheme
-const initialColorScheme = "";
+// Can be "dark" or "frost"
+const initialColorScheme = FROST;
 
 function getPreferTheme(): string {
   // get theme data from local storage (user's explicit choice)
@@ -15,17 +15,15 @@ function getPreferTheme(): string {
   // return initial color scheme if it is set (site default)
   if (initialColorScheme) return initialColorScheme;
 
-  // return user device's prefer color scheme (system fallback)
-  return window.matchMedia("(prefers-color-scheme: dark)").matches
-    ? DARK
-    : LIGHT;
+  // return site default when user has no explicit preference
+  return FROST;
 }
 
 // Use existing theme value from inline script if available, otherwise detect
 let themeValue = window.theme?.themeValue ?? getPreferTheme();
 const themeLabelMap: Record<string, string> = {
-  [LIGHT]: "浅色模式",
-  [DARK]: "深色模式",
+  [DARK]: "当前深色白字效果",
+  [FROST]: "白色毛玻璃黑字效果",
 };
 
 function setPreference(): void {
@@ -39,6 +37,7 @@ function hasUserPreference(): boolean {
 
 function reflectPreference(): void {
   document.firstElementChild?.setAttribute("data-theme", themeValue);
+  document.firstElementChild?.setAttribute("data-display-style", themeValue);
 
   document
     .querySelector("#theme-btn")
@@ -90,7 +89,7 @@ function setThemeFeature(): void {
   if (!themeBtn || themeBtn.dataset.themeBound === "true") return;
 
   themeBtn.addEventListener("click", () => {
-    themeValue = themeValue === LIGHT ? DARK : LIGHT;
+    themeValue = themeValue === DARK ? FROST : DARK;
     window.theme?.setTheme(themeValue);
     setPreference();
   });
@@ -119,9 +118,9 @@ document.addEventListener("astro:before-swap", event => {
 });
 
 // sync with system changes
-window.matchMedia("(prefers-color-scheme: dark)").addEventListener("change", ({ matches: isDark }) => {
-    if (hasUserPreference()) return;
-    themeValue = isDark ? DARK : LIGHT;
-    window.theme?.setTheme(themeValue);
-    reflectPreference();
-  });
+window.matchMedia("(prefers-color-scheme: dark)").addEventListener("change", () => {
+  if (hasUserPreference()) return;
+  themeValue = FROST;
+  window.theme?.setTheme(themeValue);
+  reflectPreference();
+});
