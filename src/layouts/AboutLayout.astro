@@ -18,8 +18,11 @@ const { frontmatter } = Astro.props;
   <div class="home-desktop-grid app-layout">
     <HomeSidebar />
     <main id="main-content" class="home-main-panel max-w-none">
-      <section id="about" class="app-prose mb-28 max-w-none prose-img:border-0">
-      <h1 class="text-2xl tracking-wider sm:text-3xl">{frontmatter.title}</h1>
+      <section
+        id="about"
+        class="content-shell app-prose mb-28 max-w-none prose-img:border-0"
+      >
+        <h1 class="text-2xl tracking-wider sm:text-3xl">{frontmatter.title}</h1>
         <slot />
       </section>
     </main>
