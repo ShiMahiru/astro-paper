@@ -5,7 +5,7 @@ const FROST = "frost";
 
 // Initial color scheme
 // Can be "dark" or "frost"
-const initialColorScheme = DARK;
+const initialColorScheme = FROST;
 
 function getPreferTheme(): string {
   // get theme data from local storage (user's explicit choice)
@@ -16,7 +16,7 @@ function getPreferTheme(): string {
   if (initialColorScheme) return initialColorScheme;
 
   // return site default when user has no explicit preference
-  return DARK;
+  return FROST;
 }
 
 // Use existing theme value from inline script if available, otherwise detect
@@ -120,7 +120,7 @@ document.addEventListener("astro:before-swap", event => {
 // sync with system changes
 window.matchMedia("(prefers-color-scheme: dark)").addEventListener("change", () => {
   if (hasUserPreference()) return;
-  themeValue = DARK;
+  themeValue = FROST;
   window.theme?.setTheme(themeValue);
   reflectPreference();
 });

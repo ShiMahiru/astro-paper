@@ -149,13 +149,13 @@ const structuredData = {
     <!-- Minimal inline script to prevent FOUC - sets theme immediately -->
     <script is:inline>
       (function () {
-        const initialColorScheme = "dark"; // "dark" | "frost"
+        const initialColorScheme = "frost"; // "dark" | "frost"
         const currentTheme = localStorage.getItem("theme");
 
         function getPreferTheme() {
           if (currentTheme) return currentTheme;
           if (initialColorScheme) return initialColorScheme;
-          return "dark";
+          return "frost";
         }
 
         const themeValue = getPreferTheme();
