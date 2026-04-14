@@ -26,8 +26,8 @@ const isHome = Astro.url.pathname === "/";
 <Breadcrumb />
 <div class="home-desktop-grid app-layout">
   <HomeSidebar />
-  <main data-backurl={backUrl} id="main-content" class="home-main-panel">
-    <section class="content-shell">
+  <main data-backurl={backUrl} id="main-content" class="home-main-panel max-w-none">
+    <section class="content-shell max-w-none">
 
       {hasPageTitle &&
         ("titleTransition" in props ? (
