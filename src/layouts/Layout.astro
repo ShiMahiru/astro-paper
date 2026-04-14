@@ -32,9 +32,11 @@ const {
 } = Astro.props;
 
 const socialImageURL = new URL(ogImage, Astro.url);
+const desktopViewportContent = `width=${SITE.desktopViewportWidth}, initial-scale=1`;
+const responsiveViewportContent = "width=device-width, initial-scale=1";
 const viewportContent = SITE.forceDesktopView
-  ? "width=1280, initial-scale=1"
-  : "width=device-width, initial-scale=1";
+  ? desktopViewportContent
+  : responsiveViewportContent;
 
 const structuredData = {
   "@context": "https://schema.org",
@@ -62,6 +64,23 @@ const structuredData = {
   <head>
     <meta charset="UTF-8" />
     <meta id="app-viewport" name="viewport" content={viewportContent} />
+    {
+      SITE.forceDesktopViewOnDesktop && !SITE.forceDesktopView && (
+        <script is:inline>
+          {`(() => {
+            const viewportMeta = document.querySelector('meta#app-viewport');
+            if (!viewportMeta) return;
+
+            const isDesktop = window.matchMedia('(min-width: 1024px) and (pointer: fine)').matches;
+            if (isDesktop) {
+              viewportMeta.setAttribute('content', '${desktopViewportContent}');
+            } else {
+              viewportMeta.setAttribute('content', '${responsiveViewportContent}');
+            }
+          })();`}
+        </script>
+      )
+    }
     <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
     <link rel="canonical" href={canonicalURL} />
     <meta name="generator" content={Astro.generator} />
