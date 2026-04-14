@@ -37,7 +37,6 @@ function hasUserPreference(): boolean {
 
 function reflectPreference(): void {
   document.firstElementChild?.setAttribute("data-theme", themeValue);
-  document.firstElementChild?.setAttribute("data-display-style", themeValue);
 
   document
     .querySelector("#theme-btn")
