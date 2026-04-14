@@ -19,11 +19,8 @@ html[data-theme="dark"] {
   --accent: #6baeff;
   --muted: #1a2338;
   --border: #2b395b;
-  --glass-bg: transparent;
-  --glass-bg-strong: transparent;
-  --glass-border: rgb(255 255 255 / 0.16);
-  --glass-text-muted: rgb(233 239 253 / 0.78);
-  --glass-shadow: none;
+  --line-soft: rgb(255 255 255 / 0.16);
+  --text-muted: rgb(233 239 253 / 0.78);
 }
 
 html[data-theme="frost"] {
@@ -32,11 +29,8 @@ html[data-theme="frost"] {
   --accent: #1d4ed8;
   --muted: #dce4ef;
   --border: #b7c5da;
-  --glass-bg: rgb(255 255 255 / 0.56);
-  --glass-bg-strong: rgb(255 255 255 / 0.76);
-  --glass-border: rgb(100 116 139 / 0.32);
-  --glass-text-muted: rgb(31 41 55 / 0.78);
-  --glass-shadow: 0 10px 30px rgb(15 23 42 / 0.12);
+  --line-soft: rgb(100 116 139 / 0.3);
+  --text-muted: rgb(31 41 55 / 0.78);
 }
 
 @theme inline {
@@ -99,7 +93,7 @@ button:not(:disabled),
 
 .topbar-main {
   @apply flex items-center justify-between border-b py-2;
-  border-color: var(--glass-border);
+  border-color: var(--line-soft);
 }
 
 .site-brand {
@@ -112,7 +106,7 @@ button:not(:disabled),
 
 .topbar-nav-desktop {
   @apply hidden items-center justify-between gap-4 border-b py-2 sm:flex;
-  border-color: var(--glass-border);
+  border-color: var(--line-soft);
 }
 
 .topbar-nav {
@@ -141,7 +135,7 @@ button:not(:disabled),
 
 .mobile-menu {
   @apply mt-2 border-t pt-2 sm:hidden;
-  border-color: var(--glass-border);
+  border-color: var(--line-soft);
 }
 
 .mobile-menu-links {
@@ -150,7 +144,7 @@ button:not(:disabled),
 
 .search-input-wrap {
   @apply flex h-8 min-w-[12rem] items-center border-b px-1;
-  border-color: var(--glass-border);
+  border-color: var(--line-soft);
 }
 
 .search-input {
@@ -167,7 +161,7 @@ button:not(:disabled),
 
 .profile-panel {
   @apply border-b pb-4;
-  border-color: var(--glass-border);
+  border-color: var(--line-soft);
 }
 
 .home-profile-avatar {
@@ -188,7 +182,7 @@ button:not(:disabled),
 
 .home-main-panel {
   @apply min-w-0 border-l-0 lg:border-l lg:pl-6;
-  border-color: var(--glass-border);
+  border-color: var(--line-soft);
 }
 
 .content-shell {
@@ -197,7 +191,7 @@ button:not(:disabled),
 
 .content-toolbar {
   @apply mt-2 mb-1 flex flex-wrap items-center gap-1.5 border-b pb-2;
-  border-color: var(--glass-border);
+  border-color: var(--line-soft);
 }
 
 .article-list {
@@ -206,7 +200,7 @@ button:not(:disabled),
 
 .article-list-item {
   @apply list-none border-b py-3;
-  border-color: var(--glass-border);
+  border-color: var(--line-soft);
 }
 
 .article-list-item:last-child {
@@ -231,7 +225,7 @@ button:not(:disabled),
 
 .article-desc {
   @apply mt-1 line-clamp-2 text-sm leading-6;
-  color: var(--glass-text-muted);
+  color: var(--text-muted);
 }
 
 .meta-row {
@@ -240,13 +234,13 @@ button:not(:disabled),
 
 .meta-chip {
   @apply inline-flex items-center gap-1 border-l pl-1.5 text-xs;
-  border-color: var(--glass-border);
+  border-color: var(--line-soft);
   color: color-mix(in srgb, var(--foreground) 70%, transparent);
 }
 
 .article-cover-link {
   @apply relative block w-full overflow-hidden border;
-  border-color: var(--glass-border);
+  border-color: var(--line-soft);
   aspect-ratio: 16 / 10;
 }
 
@@ -265,7 +259,7 @@ button:not(:disabled),
 
 .pagination-shell {
   @apply mt-4 flex items-center justify-center gap-1 border-t pt-3;
-  border-color: var(--glass-border);
+  border-color: var(--line-soft);
 }
 
 .pagination-control {
@@ -288,43 +282,8 @@ button:not(:disabled),
   color: color-mix(in srgb, var(--foreground) 70%, transparent);
 }
 
-html[data-theme="frost"] .topbar-main,
-html[data-theme="frost"] .topbar-nav-desktop,
-html[data-theme="frost"] .mobile-menu,
-html[data-theme="frost"] .search-input-wrap,
-html[data-theme="frost"] .profile-panel,
-html[data-theme="frost"] .content-toolbar,
-html[data-theme="frost"] .article-list-item,
-html[data-theme="frost"] .pagination-shell,
-html[data-theme="frost"] .app-prose {
-  background: var(--glass-bg);
-  backdrop-filter: blur(14px) saturate(150%);
-  box-shadow: var(--glass-shadow);
-}
-
-html[data-theme="frost"] .topbar-main,
-html[data-theme="frost"] .topbar-nav-desktop,
-html[data-theme="frost"] .mobile-menu,
-html[data-theme="frost"] .profile-panel,
-html[data-theme="frost"] .content-toolbar,
-html[data-theme="frost"] .pagination-shell,
-html[data-theme="frost"] .app-prose {
-  border-radius: 0.75rem;
-}
-
 html[data-theme="frost"] .search-input::placeholder {
   color: color-mix(in srgb, var(--foreground) 62%, transparent);
-}
-
-html[data-theme="frost"] .article-list-item {
-  border-radius: 0.9rem;
-  margin-bottom: 0.45rem;
-  padding-inline: 0.75rem;
-}
-
-html[data-theme="frost"] .app-prose {
-  border: 1px solid var(--glass-border);
-  padding: 1.1rem;
 }
 
 .active-nav {
