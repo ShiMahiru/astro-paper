@@ -42,13 +42,6 @@ const date = datetime.locale("zh-cn").format("YYYY年M月D日");
       { "scale-90": size === "sm" },
     ]}
   />
-  {
-    isModified && (
-      <span class:list={["text-sm", { "sm:text-base": size === "lg" }]}>
-        已更新：
-      </span>
-    )
-  }
   <time
     class:list={["text-sm", { "sm:text-base": size === "lg" }]}
     datetime={datetime.toISOString()}>{date}</time

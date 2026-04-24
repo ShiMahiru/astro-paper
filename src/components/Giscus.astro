@@ -11,7 +11,7 @@ const giscusTheme =
   GISCUS.enabled && (
     <section class="mt-10" aria-label="评论区">
       <h2 class="mb-4 text-lg font-semibold">评论</h2>
-      <div id="giscus-container"></div>
+      <div id="giscus-container" />
     </section>
   )
 }
@@ -35,25 +35,32 @@ const giscusTheme =
     },
   }}
 >
-  const setGiscusTheme = () => {
-    const theme =
-      document.documentElement.getAttribute("data-theme") === "dark"
-        ? "dark"
-        : "light";
+  const GISCUS_ORIGIN = "https://giscus.app";
 
+  const getTheme = () =>
+    document.documentElement.getAttribute("data-theme") === "dark"
+      ? "dark"
+      : "light";
+
+  const setGiscusTheme = (retryCount = 0) => {
     const giscusFrame = document.querySelector("iframe.giscus-frame");
 
-    if (!giscusFrame?.contentWindow) return;
+    if (!giscusFrame?.contentWindow) {
+      if (retryCount < 12) {
+        window.setTimeout(() => setGiscusTheme(retryCount + 1), 120);
+      }
+      return;
+    }
 
     giscusFrame.contentWindow.postMessage(
       {
         giscus: {
           setConfig: {
-            theme,
+            theme: getTheme(),
           },
         },
       },
-      "https://giscus.app"
+      GISCUS_ORIGIN
     );
   };
 
@@ -67,7 +74,7 @@ const giscusTheme =
     if (hasFrame || hasPendingScript) return;
 
     const script = document.createElement("script");
-    script.src = "https://giscus.app/client.js";
+    script.src = `${GISCUS_ORIGIN}/client.js`;
     script.async = true;
     script.crossOrigin = "anonymous";
     script.setAttribute("data-giscus", "true");
@@ -81,7 +88,10 @@ const giscusTheme =
       "data-reactions-enabled",
       String(giscusConfig.reactionsEnabled)
     );
-    script.setAttribute("data-emit-metadata", String(giscusConfig.emitMetadata));
+    script.setAttribute(
+      "data-emit-metadata",
+      String(giscusConfig.emitMetadata)
+    );
     script.setAttribute("data-input-position", giscusConfig.inputPosition);
     script.setAttribute("data-theme", giscusConfig.theme);
     script.setAttribute("data-lang", giscusConfig.lang);
@@ -90,25 +100,34 @@ const giscusTheme =
     container.appendChild(script);
   };
 
+  const setupThemeSync = () => {
+    if (window.__giscusThemeObserverBound) return;
+
+    const observer = new MutationObserver(mutations => {
+      for (const mutation of mutations) {
+        if (
+          mutation.type === "attributes" &&
+          mutation.attributeName === "data-theme"
+        ) {
+          setGiscusTheme();
+        }
+      }
+    });
+
+    observer.observe(document.documentElement, {
+      attributes: true,
+      attributeFilter: ["data-theme"],
+    });
+
+    window.__giscusThemeObserverBound = true;
+  };
+
   const initGiscus = () => {
     loadGiscus();
     setGiscusTheme();
-  };
-
-  const setupThemeSync = () => {
-    const themeBtn = document.querySelector("#theme-btn");
-    if (!themeBtn || themeBtn.dataset.giscusThemeBound === "true") return;
-
-    themeBtn.addEventListener("click", () => {
-      window.setTimeout(setGiscusTheme, 0);
-    });
-    themeBtn.dataset.giscusThemeBound = "true";
+    setupThemeSync();
   };
 
   initGiscus();
-  setupThemeSync();
-  document.addEventListener("astro:after-swap", () => {
-    initGiscus();
-    setupThemeSync();
-  });
+  document.addEventListener("astro:after-swap", initGiscus);
 </script>
